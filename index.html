@@ -4,79 +4,336 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SASA MINI APP</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080b14;color:#fff;font-family:Arial,sans-serif}
-header{text-align:center;padding:25px 15px;color:#38a9ff}
-h1{font-size:30px;margin:5px}
-.subtitle{color:#aaa}
-.container{padding:18px;max-width:500px;margin:auto}
-.card{background:#151c2c;border:1px solid #263954;border-radius:18px;padding:20px;margin-bottom:16px}
-.balance{text-align:center}
-.balance strong{font-size:35px;color:#40b5ff;display:block;margin:12px}
-button{border:0;border-radius:12px;padding:13px;background:#168cff;color:white;font-size:16px;width:100%;margin-top:10px}
-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-nav button{background:#202b40;font-size:13px}
-section{display:none}
-section.active{display:block}
-.muted{color:#aab4c5;font-size:14px}
+body{
+ margin:0;
+ background:#070b14;
+ color:#fff;
+ font-family:Arial,sans-serif;
+ padding-bottom:95px;
+}
+header{
+ padding:24px 20px 15px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+}
+.logo{
+ font-size:25px;
+ font-weight:900;
+ color:#45b5ff;
+ letter-spacing:2px;
+}
+.user-icon{
+ width:43px;height:43px;
+ border-radius:50%;
+ background:#17263d;
+ display:grid;place-items:center;
+ border:1px solid #28649a;
+ font-size:21px;
+}
+.container{max-width:480px;margin:auto;padding:10px 17px}
+.welcome{color:#91a3bb;font-size:14px}
+h2{margin:7px 0 20px;font-size:23px}
+.card{
+ background:linear-gradient(145deg,#17243a,#101725);
+ border:1px solid #263c59;
+ border-radius:22px;
+ padding:20px;
+ margin-bottom:17px;
+ box-shadow:0 8px 30px #0005;
+}
+.balance-card{
+ background:linear-gradient(135deg,#102d4b,#111a2c 70%);
+ border:1px solid #2875ae;
+ text-align:center;
+ padding:25px 18px;
+}
+.small-title{color:#a9bfd6;font-size:14px}
+.balance{
+ font-size:42px;
+ font-weight:bold;
+ color:#54bdff;
+ margin:13px 0;
+}
+.points{font-size:12px;color:#9eacc0}
+.primary{
+ width:100%;
+ border:0;
+ padding:15px;
+ border-radius:14px;
+ color:white;
+ font-size:16px;
+ font-weight:bold;
+ background:linear-gradient(90deg,#0879e9,#31b7ff);
+ margin-top:17px;
+}
+.primary:active{transform:scale(.98)}
+.stats{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px;
+}
+.stat{
+ background:#131e30;
+ border:1px solid #263b57;
+ border-radius:17px;
+ padding:17px 12px;
+}
+.stat span{display:block;color:#9eafc4;font-size:13px}
+.stat strong{display:block;margin-top:10px;font-size:20px;color:#55baff}
+.section-title{font-size:18px;margin:22px 3px 13px}
+.menu-grid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px;
+}
+.menu-item{
+ background:#131e30;
+ border:1px solid #263b57;
+ border-radius:17px;
+ padding:18px 12px;
+ text-align:center;
+}
+.menu-item .emoji{font-size:27px}
+.menu-item p{margin:10px 0 0;font-size:14px}
+.page{display:none}
+.page.active{display:block}
+.task{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:10px;
+}
+.task button{
+ background:#087de9;
+ color:white;
+ border:0;
+ border-radius:10px;
+ padding:10px 13px;
+}
+.task-info{font-size:14px}
+.task-info small{display:block;color:#9eafc4;margin-top:7px}
+.bottom-nav{
+ position:fixed;
+ bottom:0;left:0;right:0;
+ background:#0d1523;
+ border-top:1px solid #26364d;
+ display:grid;
+ grid-template-columns:repeat(5,1fr);
+ padding:12px 4px calc(12px + env(safe-area-inset-bottom));
+ z-index:10;
+}
+.nav-btn{
+ border:0;
+ background:none;
+ color:#8798ae;
+ font-size:11px;
+}
+.nav-btn b{display:block;font-size:21px;margin-bottom:5px}
+.nav-btn.active{color:#4dbaff}
+.muted{color:#98a9bf;font-size:13px;line-height:1.8}
+.shop-item{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ padding:14px 0;
+ border-bottom:1px solid #29384c;
+}
+.shop-item button{
+ border:0;background:#087de9;color:white;
+ padding:9px 13px;border-radius:10px;
+}
+.profile{text-align:center}
+.avatar{
+ width:75px;height:75px;
+ border-radius:50%;
+ background:#183553;
+ border:2px solid #42b5ff;
+ display:grid;place-items:center;
+ font-size:32px;margin:5px auto 15px;
+}
 </style>
 </head>
+
 <body>
+
 <header>
-<h1>SASA MINI APP</h1>
-<div class="subtitle">منصتك الذكية للنقاط والمكافآت</div>
+ <div class="logo">SASA.</div>
+ <div class="user-icon">👤</div>
 </header>
+
 <div class="container">
-<div class="card balance">
-<div>رصيدك الافتراضي</div>
-<strong id="balance">0</strong>
-<div class="muted">نقطة تجريبية</div>
-<button onclick="mine()">ابدأ التجميع</button>
-<p id="status" class="muted">جاهز للتجميع</p>
+
+<div id="home" class="page active">
+ <div class="welcome">مرحباً بك في عالم SASA</div>
+ <h2>اجمع نقاطك وابدأ رحلتك 🚀</h2>
+
+ <div class="card balance-card">
+  <div class="small-title">إجمالي رصيدك</div>
+  <div class="balance" id="balance">0</div>
+  <div class="points">SASA POINTS • نقاط افتراضية</div>
+  <button class="primary" onclick="mine()">⚡ ابدأ التجميع</button>
+  <p class="muted" id="status">جاهز لبدء التجميع</p>
+ </div>
+
+ <div class="stats">
+  <div class="stat">
+   <span>⚡ نقاط اليوم</span>
+   <strong id="today">0</strong>
+  </div>
+  <div class="stat">
+   <span>🎯 المهام المكتملة</span>
+   <strong id="completed">0</strong>
+  </div>
+ </div>
+
+ <div class="section-title">اكتشف SASA</div>
+ <div class="menu-grid">
+  <div class="menu-item" onclick="showPage('tasks')">
+   <div class="emoji">🎯</div><p>المهام</p>
+  </div>
+  <div class="menu-item" onclick="showPage('friends')">
+   <div class="emoji">👥</div><p>الأصدقاء</p>
+  </div>
+  <div class="menu-item" onclick="showPage('shop')">
+   <div class="emoji">🎁</div><p>المتجر</p>
+  </div>
+  <div class="menu-item" onclick="showPage('profile')">
+   <div class="emoji">👤</div><p>حسابي</p>
+  </div>
+ </div>
 </div>
-<nav>
-<button onclick="show('tasks')">المهام</button>
-<button onclick="show('shop')">المتجر</button>
-<button onclick="show('account')">حسابي</button>
+
+<div id="tasks" class="page">
+ <h2>🎯 المهام والمكافآت</h2>
+ <div class="card">
+  <div class="task">
+   <div class="task-info">
+    <b>مكافأة البداية</b>
+    <small>احصل على نقاطك التجريبية</small>
+   </div>
+   <button id="rewardButton" onclick="reward()">+5 نقاط</button>
+  </div>
+ </div>
+ <p class="muted">ستتم إضافة المزيد من المهام في التحديثات القادمة.</p>
+</div>
+
+<div id="friends" class="page">
+ <h2>👥 دعوة الأصدقاء</h2>
+ <div class="card">
+  <h3>شارك SASA مع أصدقائك</h3>
+  <p class="muted">نظام الإحالات قيد التطوير. سنضيف رابط دعوة خاصاً بكل مستخدم لاحقاً.</p>
+ </div>
+</div>
+
+<div id="shop" class="page">
+ <h2>🎁 متجر SASA</h2>
+ <div class="card">
+  <div class="shop-item">
+   <span>🏅 شارة العضوية</span>
+   <button onclick="buy(100)">100 نقطة</button>
+  </div>
+  <div class="shop-item">
+   <span>💎 شارة VIP تجريبية</span>
+   <button onclick="buy(250)">250 نقطة</button>
+  </div>
+  <p class="muted">المتجر تجريبي، ولا توجد عمليات شراء أو تحويل أموال حقيقية.</p>
+ </div>
+</div>
+
+<div id="profile" class="page">
+ <h2>👤 حسابي</h2>
+ <div class="card profile">
+  <div class="avatar">👤</div>
+  <h3 id="username">عضو SASA</h3>
+  <p class="muted" id="userid">حساب تجريبي</p>
+  <p>رصيدك: <strong id="profileBalance">0</strong> نقطة</p>
+ </div>
+</div>
+
+</div>
+
+<nav class="bottom-nav">
+ <button class="nav-btn active" onclick="showPage('home',this)"><b>⌂</b>الرئيسية</button>
+ <button class="nav-btn" onclick="showPage('tasks',this)"><b>🎯</b>المهام</button>
+ <button class="nav-btn" onclick="showPage('friends',this)"><b>👥</b>الأصدقاء</button>
+ <button class="nav-btn" onclick="showPage('shop',this)"><b>🎁</b>المتجر</button>
+ <button class="nav-btn" onclick="showPage('profile',this)"><b>👤</b>حسابي</button>
 </nav>
-<section id="tasks" class="active card">
-<h3>المهام والمكافآت</h3>
-<p>اجمع نقاطًا افتراضية من خلال المهام التجريبية.</p>
-<button onclick="reward()">استلام مكافأة تجريبية</button>
-</section>
-<section id="shop" class="card">
-<h3>متجر المكافآت</h3>
-<p>المتجر تجريبي، والنقاط ليست أموالًا حقيقية.</p>
-<p>شارة العضوية — 100 نقطة</p>
-</section>
-<section id="account" class="card">
-<h3>حسابي</h3>
-<p id="user">مرحبًا بك في SASA MINI APP</p>
-<p class="muted">نسخة تجريبية</p>
-</section>
-</div>
+
 <script>
-let balance=Number(localStorage.getItem('sasaBalance')||0);
+const tg = window.Telegram?.WebApp;
+if(tg){tg.ready();tg.expand();}
+
+const telegramUser = tg?.initDataUnsafe?.user;
+const userKey = telegramUser?.id || "demo";
+let balance = Number(localStorage.getItem("sasa_"+userKey)||0);
+let today = Number(localStorage.getItem("today_"+userKey)||0);
+let completed = Number(localStorage.getItem("completed_"+userKey)||0);
+let rewardTaken = localStorage.getItem("reward_"+userKey)==="yes";
+
 function update(){
-document.getElementById('balance').textContent=balance;
-localStorage.setItem('sasaBalance',balance);
+ document.getElementById("balance").textContent=balance;
+ document.getElementById("today").textContent=today;
+ document.getElementById("completed").textContent=completed;
+ document.getElementById("profileBalance").textContent=balance;
+ localStorage.setItem("sasa_"+userKey,balance);
+ localStorage.setItem("today_"+userKey,today);
+ localStorage.setItem("completed_"+userKey,completed);
+ document.getElementById("rewardButton").textContent=rewardTaken?"تم الاستلام":" +5 نقاط";
+ document.getElementById("rewardButton").disabled=rewardTaken;
 }
+
 function mine(){
-balance+=1;
-update();
-document.getElementById('status').textContent='تمت إضافة نقطة تجريبية!';
+ balance+=1;
+ today+=1;
+ update();
+ document.getElementById("status").textContent="تمت إضافة نقطة تجريبية بنجاح!";
 }
+
 function reward(){
-balance+=5;
-update();
-alert('مبروك! حصلت على 5 نقاط تجريبية');
+ if(rewardTaken)return;
+ balance+=5;
+ completed++;
+ rewardTaken=true;
+ localStorage.setItem("reward_"+userKey,"yes");
+ update();
+ alert("مبروك! حصلت على 5 نقاط تجريبية 🎉");
 }
-function show(id){
-document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
-document.getElementById(id).classList.add('active');
+
+function buy(cost){
+ if(balance<cost){
+  alert("رصيدك غير كافٍ!");
+  return;
+ }
+ balance-=cost;
+ update();
+ alert("تم استبدال النقاط تجريبياً!");
+}
+
+function showPage(id,btn){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
+ if(btn)btn.classList.add("active");
+ else{
+  const buttons=document.querySelectorAll(".nav-btn");
+  const index=["home","tasks","friends","shop","profile"].indexOf(id);
+  buttons[index].classList.add("active");
+ }
+}
+
+if(telegramUser){
+ document.getElementById("username").textContent=
+ telegramUser.first_name || "عضو SASA";
+ document.getElementById("userid").textContent="عضو تيليجرام";
 }
 update();
 </script>
+
 </body>
 </html>
