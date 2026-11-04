@@ -3,425 +3,543 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="theme-color" content="#070b13">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#070d1b">
 <title>SASA MINI APP</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#070b13;--panel:#101a2a;--panel2:#0c1422;
-  --blue:#168cff;--cyan:#42d5ff;--text:#f4f8ff;
-  --muted:#8b9bb2;--line:#1c2b40;--green:#36e6a1;
-  --font:'Tajawal',-apple-system,BlinkMacSystemFont,sans-serif;
+ --bg:#070b14;--bg2:#0a1222;--panel:#101c30;--panel2:#132541;--line:rgba(105,177,255,.17);
+ --blue:#258cff;--cyan:#55d9ff;--blue2:#1260ce;--text:#f4f8ff;--muted:#9eb0c9;
+ --green:#48d6a0;--gold:#ffd36a;--shadow:0 16px 38px rgba(0,0,0,.28);
+ --ease:cubic-bezier(.22,.8,.22,1);
 }
 *{box-sizing:border-box}
-body{
- margin:0;background:var(--bg);color:var(--text);font-family:var(--font);
- font-weight:700;min-height:100vh;overflow-x:hidden;
- background-image:radial-gradient(ellipse at 10% 0%,#0c2b5055,transparent 42%),
- radial-gradient(ellipse at 100% 35%,#063e6b33,transparent 38%);
-}
-button,input{font:inherit}
-button{cursor:pointer;color:inherit}
-.glow-bg{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:-1}
-.orb{position:absolute;border-radius:50%;filter:blur(55px);opacity:.2;animation:float 12s ease-in-out infinite alternate}
-.orb.one{width:220px;height:220px;background:#087cff;top:8%;left:-100px}
-.orb.two{width:190px;height:190px;background:#00c9ff;right:-100px;top:55%;animation-delay:-5s}
-@keyframes float{to{transform:translate(50px,-40px) scale(1.25)}}
-.app{max-width:520px;margin:auto;padding:18px 16px 110px}
-.top{display:flex;align-items:center;justify-content:space-between;margin:8px 0 22px}
-.brand{display:flex;align-items:center;gap:10px}
-.logo{width:43px;height:43px;border-radius:15px;background:linear-gradient(145deg,#168cff,#0751b4);
- display:grid;place-items:center;font-size:21px;font-weight:900;box-shadow:0 0 25px #168cff55}
-.brand-name{font-size:20px;font-weight:900;letter-spacing:.5px}
-.brand-sub{font-size:11px;color:var(--muted);font-weight:700}
-.top-actions{display:flex;gap:8px}
-.icon-btn{width:40px;height:40px;border:1px solid var(--line);border-radius:14px;background:#101a2acc}
-.card{background:linear-gradient(145deg,#14243aee,#0c1524ee);border:1px solid #243a55;
- border-radius:23px;padding:18px;box-shadow:0 14px 38px #0003}
-.hero{position:relative;overflow:hidden;margin-bottom:15px}
-.hero:after{content:"";position:absolute;width:170px;height:170px;border-radius:50%;background:#168cff22;filter:blur(25px);right:-45px;top:-65px}
-.hello{color:#a7bdd7;font-size:14px}
-.hero-title{font-size:23px;font-weight:900;margin:7px 0 15px}
-.balance-label{font-size:12px;color:#a9bdd5}
-.balance{font-size:38px;font-weight:900;letter-spacing:.5px;margin:2px 0}
-.balance small{font-size:14px;color:#8cbfff}
-.hero-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.level{font-size:12px;color:#a9bdd5}
-.progress{height:7px;background:#26364c;border-radius:20px;overflow:hidden;margin-top:9px}
-.progress span{display:block;height:100%;width:35%;background:linear-gradient(90deg,#168cff,#53ddff);border-radius:20px}
-.primary{border:0;border-radius:14px;padding:12px 18px;background:linear-gradient(110deg,#0877ee,#16baff);
- font-weight:900;box-shadow:0 7px 22px #087cff35}
-.secondary{border:1px solid #2b4665;background:#12243a;border-radius:13px;padding:10px 14px;font-weight:800}
-.section-head{display:flex;justify-content:space-between;align-items:center;margin:23px 2px 12px}
-.section-head h2{font-size:18px;margin:0;font-weight:900}
-.muted{color:var(--muted);font-size:12px}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
-.stat{padding:15px;border-radius:18px;background:#101b2b;border:1px solid var(--line)}
-.stat-icon{font-size:21px}
-.stat-num{font-size:22px;font-weight:900;margin-top:7px}
-.stat-label{font-size:12px;color:var(--muted)}
-.page{display:none;animation:pageIn .42s cubic-bezier(.2,.8,.2,1)}
-.page.active{display:block}
-@keyframes pageIn{from{opacity:0;transform:translateY(13px) scale(.985);filter:blur(5px)}to{opacity:1;transform:none;filter:blur(0)}}
-@supports (view-transition-name:root){
- ::view-transition-old(root){animation:fadeOut .18s ease both}
- ::view-transition-new(root){animation:fadeIn .36s cubic-bezier(.2,.8,.2,1) both}
- @keyframes fadeOut{to{opacity:0;filter:blur(7px);transform:scale(.98)}}
- @keyframes fadeIn{from{opacity:0;filter:blur(8px);transform:scale(1.02)}to{opacity:1;filter:blur(0);transform:scale(1)}}
-}
-.task{display:flex;align-items:center;gap:12px;padding:14px;margin-bottom:10px;border:1px solid var(--line);
- border-radius:17px;background:#101a29}
-.task-icon{width:43px;height:43px;display:grid;place-items:center;background:#102c4a;border-radius:14px;font-size:20px;flex-shrink:0}
+html{background:var(--bg);scroll-behavior:smooth}
+body{margin:0;min-height:100vh;background:
+ radial-gradient(ellipse at 90% -10%,rgba(22,113,220,.22),transparent 38%),
+ radial-gradient(ellipse at 0% 40%,rgba(24,83,166,.12),transparent 35%),var(--bg);
+ color:var(--text);font-family:'Tajawal',sans-serif;font-size:17px;overflow-x:hidden}
+button{font:inherit;color:inherit;border:0;cursor:pointer}
+button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.app{width:min(100%,560px);margin:auto;min-height:100vh;padding:max(16px,env(safe-area-inset-top)) 16px calc(104px + env(safe-area-inset-bottom))}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin:4px 2px 22px}
+.brand{display:flex;align-items:center;gap:11px}
+.logo{width:46px;height:46px;border-radius:16px;display:grid;place-items:center;font-size:23px;font-weight:900;
+ background:linear-gradient(145deg,#43cfff,#1266dc 65%,#123c88);box-shadow:0 7px 24px #0879ff55,inset 0 1px 1px #ffffff66}
+.brand h1{font-size:23px;line-height:1;margin:0;font-weight:900;letter-spacing:.5px}
+.brand h1 span{color:var(--cyan)}
+.brand small{display:block;color:var(--muted);font-size:13px;margin-top:4px;font-weight:600}
+.icon-btn{width:44px;height:44px;border-radius:15px;background:#12213a;border:1px solid var(--line);font-size:20px;transition:.22s var(--ease)}
+.icon-btn:active,.action:active,.nav-btn:active{transform:scale(.96)}
+.page{display:none;opacity:0;transform:translateY(14px) scale(.99);filter:blur(3px)}
+.page.active{display:block;animation:pageIn .42s var(--ease) forwards}
+.page.leaving{display:block;animation:pageOut .18s ease forwards;pointer-events:none}
+@keyframes pageIn{to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+@keyframes pageOut{to{opacity:0;transform:translateY(-7px) scale(.99);filter:blur(2px)}}
+.greeting{display:flex;align-items:center;justify-content:space-between;margin:0 2px 16px}
+.greeting h2{font-size:23px;margin:0 0 3px;font-weight:900}
+.greeting p{font-size:15px;color:var(--muted);margin:0}
+.online{font-size:12px;color:var(--green);display:flex;align-items:center;gap:6px}
+.online:before{content:"";width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 10px var(--green)}
+.card{background:linear-gradient(145deg,rgba(21,42,72,.96),rgba(12,24,42,.97));border:1px solid var(--line);border-radius:23px;padding:19px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.balance{background:linear-gradient(125deg,#103d7d,#0d65bd 55%,#123a78);border-color:#63caff55;min-height:174px}
+.balance:after{content:"";position:absolute;width:190px;height:190px;border:1px solid #a7eaff33;border-radius:50%;left:-60px;top:-65px;box-shadow:0 0 0 18px #b8eaff0b,0 0 0 38px #b8eaff08}
+.balance-label{font-size:16px;color:#d9efff;font-weight:700}
+.points{font-size:48px;line-height:1.05;font-weight:900;letter-spacing:1px;margin:8px 0 2px}
+.points-sub{font-size:13px;color:#c8e9ff;letter-spacing:2px;font-weight:800}
+.gem{position:absolute;left:20px;top:37px;font-size:58px;filter:drop-shadow(0 8px 14px #001b55)}
+.balance-note{font-size:13px;color:#d4ecff;margin-top:12px}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:25px 2px 13px}
+.section-head h3{font-size:21px;margin:0;font-weight:900}
+.section-head span{font-size:14px;color:var(--cyan);font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.tile{min-height:116px;padding:16px;border-radius:20px;background:linear-gradient(145deg,#142744,#0d192c);border:1px solid var(--line);text-align:right;transition:transform .22s var(--ease),border-color .22s,box-shadow .22s}
+.tile:active{transform:scale(.97)}
+.tile .emoji{font-size:27px;display:block;margin-bottom:8px}
+.tile b{display:block;font-size:17px}
+.tile small{display:block;color:var(--muted);font-size:14px;margin-top:3px}
+.action{padding:13px 18px;border-radius:15px;background:linear-gradient(110deg,#1687ff,#1760ce);font-weight:800;font-size:16px;box-shadow:0 8px 22px #087aff36;transition:transform .2s var(--ease),filter .2s}
+.action.secondary{background:#172a45;border:1px solid var(--line);box-shadow:none}
+.action.full{width:100%;margin-top:13px}
+.task-list,.shop-list{display:grid;gap:12px}
+.task,.shop-item{display:flex;align-items:center;gap:13px;padding:15px;border-radius:19px;background:linear-gradient(145deg,#13243d,#0d192b);border:1px solid var(--line)}
+.task-icon{width:48px;height:48px;flex:0 0 48px;border-radius:15px;background:#17477b;color:#bdeeff;display:grid;place-items:center;font-size:23px}
 .task-info{flex:1;min-width:0}
-.task-title{font-size:14px;font-weight:900}
-.task-desc{font-size:11px;color:var(--muted);margin-top:3px}
-.reward{font-size:12px;color:#65c8ff;white-space:nowrap}
-.done{border-color:#1e765d;background:#10251f}
-.done .task-icon{background:#123e31}
-.done .reward{color:var(--green)}
-.task-action{margin-top:7px;font-size:11px}
-.nav{position:fixed;bottom:0;left:0;right:0;z-index:10;padding:10px 9px calc(10px + env(safe-area-inset-bottom));
- background:#080f1deF;backdrop-filter:blur(22px);border-top:1px solid #1b2c43}
-.nav-inner{max-width:520px;margin:auto;display:flex;justify-content:space-around;gap:4px}
-.nav button{border:0;background:transparent;color:#8093ac;display:flex;flex-direction:column;align-items:center;gap:4px;
- font-size:10px;font-weight:800;min-width:54px;padding:5px 3px;border-radius:13px}
-.nav button b{font-size:19px}
-.nav button.active{color:#56c7ff;background:#102947}
-.field{width:100%;padding:13px 14px;background:#091321;border:1px solid #263b56;border-radius:13px;color:white;outline:none;margin:8px 0 13px}
-.setting-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
-.setting-row:last-child{border:0}
-.switch{width:48px;height:27px;border:0;border-radius:30px;background:#34445a;padding:3px}
-.switch:after{content:"";display:block;width:21px;height:21px;border-radius:50%;background:white;transition:.25s}
-.switch.on{background:#087fea}
-.switch.on:after{transform:translateX(21px)}
-[dir="ltr"] .switch.on:after{transform:translateX(21px)}
-input[type=range]{width:100%;accent-color:#168cff}
-.reward-ring{position:fixed;inset:0;pointer-events:none;z-index:30;display:none;place-items:center}
-.reward-ring.show{display:grid}
-.ring{width:100px;height:100px;border:3px solid #4bd5ff;border-radius:50%;box-shadow:0 0 35px #168cff;
- animation:ring .85s ease-out forwards}
-@keyframes ring{to{transform:scale(5);opacity:0}}
-.toast{position:fixed;top:20px;left:50%;transform:translate(-50%,-100px);z-index:50;
- background:#142b43;border:1px solid #2a6594;padding:12px 20px;border-radius:14px;transition:.35s;font-size:13px}
-.toast.show{transform:translate(-50%,0)}
-.shop-item{display:flex;align-items:center;gap:12px;margin-bottom:11px}
-.shop-item .task-icon{font-size:23px}
-.shop-item button{margin-inline-start:auto}
-.small-title{font-size:13px;color:#a8bad0}
-.empty-note{padding:18px;text-align:center;color:var(--muted);font-size:13px}
+.task-info b{display:block;font-size:17px}
+.task-info small{display:block;color:var(--muted);font-size:14px;margin-top:3px}
+.reward{font-size:14px;color:var(--gold);font-weight:900;white-space:nowrap}
+.task.done{border-color:#42d6a055;background:linear-gradient(145deg,#12342f,#10243a)}
+.task.done .task-icon{background:#145b4a}
+.task button{margin-top:8px;padding:8px 12px;font-size:13px;border-radius:11px;background:#176bc6;font-weight:800}
+.task.done button{background:#175b4c;color:#aaf3d8}
+.progress-wrap{padding:16px;margin-bottom:14px}
+.progress-top{display:flex;justify-content:space-between;font-size:15px;font-weight:800;margin-bottom:10px}
+.progress{height:9px;background:#263b56;border-radius:99px;overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:99px;transition:width .4s var(--ease)}
+.info{font-size:14px;line-height:1.7;color:var(--muted);margin:13px 3px}
+.big-number{font-size:37px;font-weight:900;color:var(--cyan);margin:6px 0}
+.ref-box{direction:ltr;text-align:left;word-break:break-all;padding:14px;background:#091525;border:1px dashed #3b91d6;border-radius:14px;color:#c9eaff;font-size:14px;margin:14px 0}
+.setting{display:flex;align-items:center;justify-content:space-between;padding:15px 2px;border-bottom:1px solid var(--line);font-size:17px}
+.switch{width:52px;height:29px;border-radius:99px;background:#30445f;padding:3px;transition:.2s}
+.switch i{display:block;width:23px;height:23px;background:#fff;border-radius:50%;transition:.2s}
+.switch.on{background:#147be1}.switch.on i{transform:translateX(-23px)}
+.nav{position:fixed;z-index:20;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,560px);padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(7,14,26,.94);backdrop-filter:blur(18px);border-top:1px solid #5daeff24;display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.nav-btn{position:relative;background:transparent;color:#8398b5;border-radius:15px;padding:8px 2px 6px;font-size:12px;font-weight:700;display:grid;justify-items:center;gap:4px;transition:color .2s,transform .2s}
+.nav-btn .nav-icon{font-size:22px;line-height:1.2;transition:transform .25s var(--ease)}
+.nav-btn.active{color:#7edfff;background:linear-gradient(180deg,#153d673d,transparent)}
+.nav-btn.active:before{content:"";position:absolute;top:-10px;width:25px;height:3px;border-radius:9px;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+.nav-btn.active .nav-icon{transform:translateY(-2px) scale(1.08)}
+.toast{position:fixed;z-index:50;bottom:calc(92px + env(safe-area-inset-bottom));left:50%;transform:translate(-50%,15px);opacity:0;pointer-events:none;background:#173553;border:1px solid #56caff66;border-radius:14px;padding:12px 18px;font-weight:700;font-size:15px;box-shadow:var(--shadow);transition:.25s;white-space:nowrap;max-width:90%}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.empty{text-align:center;color:var(--muted);padding:24px 10px}
+.footer-note{text-align:center;color:#7187a4;font-size:12px;margin:22px 0 0}
+@media(min-width:430px){.app{padding-left:20px;padding-right:20px}.points{font-size:54px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
-<div class="glow-bg"><div class="orb one"></div><div class="orb two"></div></div>
-<div class="toast" id="toast"></div>
-<div class="reward-ring" id="rewardRing"><div class="ring"></div></div>
-
 <div class="app">
- <header class="top">
-  <div class="brand">
-   <div class="logo">S</div>
-   <div><div class="brand-name">SASA <span style="color:#39bfff">MINI</span></div><div class="brand-sub" data-i18n="subtitle">منصتك للمهمات والمكافآت</div></div>
-  </div>
-  <div class="top-actions">
-   <button class="icon-btn" onclick="showPage('settings')" aria-label="Settings">⚙️</button>
-   <button class="icon-btn" onclick="toggleLanguage()" aria-label="Language">文</button>
-  </div>
+ <header class="topbar">
+  <div class="brand"><div class="logo">S</div><div><h1>SASA <span>MINI APP</span></h1><small>رحلتك تبدأ من هنا</small></div></div>
+  <button class="icon-btn" onclick="notify('أهلاً بك في SASA MINI APP ✨')" aria-label="الإشعارات">♢</button>
  </header>
-
  <main>
   <section class="page active" id="home">
-   <div class="card hero">
-    <div class="hello" data-i18n="welcome">أهلاً بيك 👋</div>
-    <div class="hero-title" data-i18n="ready">جاهز تبدأ يوم جديد؟</div>
-    <div class="balance-label" data-i18n="yourpoints">رصيد نقاطك التجريبي</div>
-    <div class="balance"><span id="points">0</span> <small data-i18n="points">نقطة</small></div>
-    <div class="hero-bottom">
-     <div style="flex:1"><div class="level" data-i18n="level">المستوى الأول · مبتدئ</div><div class="progress"><span id="levelProgress"></span></div></div>
-     <button class="primary" onclick="showPage('tasks')" data-i18n="start">ابدأ الآن</button>
-    </div>
+   <div class="greeting"><div><h2 id="welcome">أهلاً بك 👋</h2><p id="username">عضو SASA</p></div><span class="online">متصل</span></div>
+   <div class="card balance">
+    <div class="balance-label">رصيد نقاطك التجريبي</div><div class="points" id="homePoints">0</div>
+    <div class="points-sub">SASA POINTS</div><div class="balance-note">نقاط داخل التطبيق للتجربة فقط</div><div class="gem">💎</div>
    </div>
+   <div class="section-head"><h3>استكشف التطبيق</h3><span>اختر وجهتك ✦</span></div>
    <div class="grid">
-    <div class="stat"><div class="stat-icon">🎯</div><div class="stat-num" id="completed">0/10</div><div class="stat-label" data-i18n="completed">مهام مكتملة اليوم</div></div>
-    <div class="stat"><div class="stat-icon">🔥</div><div class="stat-num" id="streak">1</div><div class="stat-label" data-i18n="streak">أيام النشاط</div></div>
+    <button class="tile" onclick="showPage('tasks')"><span class="emoji">🎯</span><b>المهام اليومية</b><small>أنجز مهامك واجمع نقاطاً</small></button>
+    <button class="tile" onclick="showPage('friends')"><span class="emoji">👥</span><b>الأصدقاء</b><small>شارك رابط التطبيق</small></button>
+    <button class="tile" onclick="showPage('shop')"><span class="emoji">🎁</span><b>المتجر</b><small>عناصر ومزايا تجريبية</small></button>
+    <button class="tile" onclick="showPage('wallet')"><span class="emoji">💠</span><b>محفظة النقاط</b><small>تابع رصيدك وسجلك</small></button>
    </div>
-   <div class="section-head"><h2 data-i18n="quick">الوصول السريع</h2><span class="muted" data-i18n="explore">اكتشف التطبيق</span></div>
-   <div class="grid">
-    <button class="card" onclick="showPage('tasks')" style="text-align:start"><div class="stat-icon">📋</div><b data-i18n="daily">المهام اليومية</b><div class="muted" data-i18n="tenTasks">10 مهام جديدة</div></button>
-    <button class="card" onclick="showPage('shop')" style="text-align:start"><div class="stat-icon">🎁</div><b data-i18n="store">متجر المكافآت</b><div class="muted" data-i18n="exchange">استبدل نقاطك</div></button>
-   </div>
+   <div class="section-head"><h3>إنجازك اليوم</h3><span id="homeProgressText">0 / 4</span></div>
+   <div class="card progress-wrap"><div class="progress-top"><span>تقدم المهام</span><span id="homePercent">0%</span></div><div class="progress"><i id="homeProgress"></i></div></div>
+   <p class="footer-note">SASA MINI APP · نسخة تجريبية</p>
   </section>
-
   <section class="page" id="tasks">
-   <div class="section-head"><h2 data-i18n="daily">المهام اليومية</h2><span class="muted" id="dayLabel">اليوم الأول</span></div>
-   <div class="card" style="margin-bottom:13px">
-    <div class="hero-bottom"><b data-i18n="todayProgress">تقدمك اليوم</b><b id="taskProgress">0 / 10</b></div>
-    <div class="progress"><span id="taskBar"></span></div>
-    <p class="muted" data-i18n="completeTasks">أنجز خطوات داخل التطبيق واجمع نقاطًا تجريبية.</p>
-   </div>
-   <div id="taskList"></div>
+   <div class="section-head"><h3>🎯 المهام اليومية</h3><span id="taskCount">0 / 4</span></div>
+   <div class="card progress-wrap"><div class="progress-top"><span>تقدمك اليوم</span><span id="taskPercent">0%</span></div><div class="progress"><i id="taskProgress"></i></div></div>
+   <div class="task-list" id="taskList"></div>
+   <p class="info">المهام هنا تجريبية، والنقاط المعروضة ليست أموالاً حقيقية ولا يمكن سحبها أو تحويلها.</p>
   </section>
-
   <section class="page" id="shop">
-   <div class="section-head"><h2 data-i18n="store">متجر المكافآت</h2><span class="muted" data-i18n="demo">تجريبي</span></div>
-   <div class="card" style="margin-bottom:14px"><div class="small-title" data-i18n="availablePoints">نقاطك المتاحة</div><div class="balance"><span id="shopPoints">0</span> <small data-i18n="points">نقطة</small></div></div>
-   <div id="shopList"></div>
+   <div class="section-head"><h3>🎁 متجر SASA</h3><span>نقاطك: <b id="shopPoints">0</b></span></div>
+   <div class="shop-list" id="shopList"></div>
+   <p class="info">المتجر مخصص لعناصر شكلية داخل النسخة التجريبية فقط.</p>
   </section>
-
   <section class="page" id="wallet">
-   <div class="section-head"><h2 data-i18n="wallet">المحفظة</h2><span class="muted" data-i18n="demo">تجريبي</span></div>
-   <div class="card">
-    <div class="small-title" data-i18n="pointsBalance">رصيد النقاط</div>
-    <div class="balance"><span id="walletPoints">0</span> <small data-i18n="points">نقطة</small></div>
-    <p class="muted" data-i18n="walletNote">هذه نقاط داخل التطبيق للتجربة فقط، وليست أموالًا أو رصيدًا قابلًا للسحب.</p>
-   </div>
-   <div class="section-head"><h2 data-i18n="activity">سجل النشاط</h2></div>
-   <div class="card" id="history"><div class="empty-note" data-i18n="noActivity">لا يوجد نشاط حتى الآن.</div></div>
+   <div class="section-head"><h3>💠 محفظة النقاط</h3><span>تجريبي</span></div>
+   <div class="card balance"><div class="balance-label">إجمالي نقاطك</div><div class="points" id="walletPoints">0</div><div class="points-sub">SASA POINTS</div><div class="balance-note">رصيد افتراضي داخل التطبيق</div><div class="gem">✦</div></div>
+   <div class="section-head"><h3>سجل النشاط</h3></div>
+   <div class="card" id="history"><div class="empty">لا يوجد نشاط حتى الآن</div></div>
+   <p class="info">لا توجد أموال حقيقية أو عمليات سحب أو تحويل في هذه النسخة.</p>
   </section>
-
-  <section class="page" id="referrals">
-   <div class="section-head"><h2 data-i18n="invite">دعوة الأصدقاء</h2></div>
+  <section class="page" id="friends">
+   <div class="section-head"><h3>👥 دعوة الأصدقاء</h3><span>مشاركة فقط</span></div>
    <div class="card">
-    <div style="font-size:45px;text-align:center;margin:8px">👥</div>
-    <h2 style="text-align:center;font-weight:900" data-i18n="inviteTitle">شارك التجربة مع أصدقائك</h2>
-    <p class="muted" style="text-align:center" data-i18n="inviteDesc">شارك رابط التطبيق مع أصدقائك. ستظهر مكافآت الدعوات عند تفعيل نظام التحقق.</p>
-    <button class="primary" style="width:100%;margin-top:12px" onclick="shareApp()" data-i18n="share">مشاركة التطبيق</button>
-    <div class="empty-note" data-i18n="inviteStatus">مكافآت الدعوات غير مفعّلة في النسخة التجريبية.</div>
+    <div style="font-size:42px;text-align:center;margin:5px">🚀</div>
+    <h3 style="text-align:center;font-size:22px;margin:5px 0">شارك SASA مع أصحابك</h3>
+    <p class="info" style="text-align:center">انسخ رابط التطبيق أو شاركه. لا تُضاف نقاط تلقائياً بمجرد فتح الرابط.</p>
+    <div class="ref-box" id="inviteLink">جارٍ تجهيز الرابط...</div>
+    <button class="action full" onclick="copyInvite()">نسخ رابط المشاركة</button>
+    <button class="action secondary full" onclick="shareInvite()">مشاركة الرابط</button>
    </div>
+   <p class="info">أي نظام إحالات أو مكافآت يحتاج تحققاً آمناً من الخادم قبل اعتماد أي نتيجة.</p>
   </section>
-
   <section class="page" id="settings">
-   <div class="section-head"><h2 data-i18n="settings">الإعدادات</h2></div>
+   <div class="section-head"><h3>⚙️ الإعدادات</h3><span>تحكم بالتطبيق</span></div>
    <div class="card">
-    <h3 data-i18n="sound">الصوت</h3>
-    <div class="setting-row"><div><b data-i18n="music">موسيقى الخلفية</b><div class="muted" data-i18n="musicDesc">صوت هادئ أثناء استخدام التطبيق</div></div><button class="switch" id="musicToggle" onclick="toggleMusic()"></button></div>
-    <div class="setting-row"><div style="width:100%"><b data-i18n="musicLevel">مستوى الموسيقى</b><input id="musicVolume" type="range" min="0" max="100" value="15" oninput="setMusicVolume(this.value)"></div><span id="musicVal">15%</span></div>
-    <div class="setting-row"><div><b data-i18n="effects">المؤثرات الصوتية</b><div class="muted" data-i18n="effectsDesc">أصوات النقر والمكافآت</div></div><button class="switch on" id="effectsToggle" onclick="toggleEffects()"></button></div>
-    <div class="setting-row"><div style="width:100%"><b data-i18n="effectsLevel">مستوى المؤثرات</b><input id="effectsVolume" type="range" min="0" max="100" value="65" oninput="setEffectsVolume(this.value)"></div><span id="effectsVal">65%</span></div>
-    <button class="secondary" style="width:100%;margin-top:12px" onclick="playReward()" data-i18n="testSound">اختبار صوت المكافأة</button>
+    <div class="setting"><span>الموسيقى الخلفية</span><button class="switch" id="musicSwitch" onclick="toggleSetting('music')"><i></i></button></div>
+    <div class="setting"><span>المؤثرات الصوتية</span><button class="switch on" id="soundSwitch" onclick="toggleSetting('sound')"><i></i></button></div>
+    <div class="setting"><span>كتم كل الأصوات</span><button class="switch" id="muteSwitch" onclick="toggleSetting('muted')"><i></i></button></div>
+    <div class="setting"><span>مستوى صوت الموسيقى</span><b id="volumeLabel">70%</b></div>
+    <input id="musicVolume" type="range" min="0" max="100" value="70" style="width:100%;accent-color:#38bdf8" oninput="setMusicVolume(this.value)">
+    <div class="setting"><span>الاهتزاز عند التفاعل</span><button class="switch on" id="vibrateSwitch" onclick="toggleSetting('vibrate')"><i></i></button></div>
+    <div class="setting"><span>اللغة</span><button class="action secondary" onclick="toggleLanguage()" id="languageBtn">العربية</button></div>
+    <button class="action secondary full" onclick="resetDemo()">إعادة ضبط بيانات التجربة</button>
    </div>
-   <div class="card" style="margin-top:13px">
-    <h3 data-i18n="appearance">المظهر واللغة</h3>
-    <div class="setting-row"><b data-i18n="language">لغة التطبيق</b><button class="secondary" onclick="toggleLanguage()" id="langButton">English</button></div>
-    <div class="setting-row"><b data-i18n="motion">الحركة والمؤثرات البصرية</b><button class="switch on" id="motionToggle" onclick="toggleMotion()"></button></div>
-   </div>
-   <div class="card" style="margin-top:13px">
-    <h3 data-i18n="about">عن التطبيق</h3>
-    <div class="muted">SASA MINI APP · Version 2.0</div>
-   </div>
+   <p class="info">إعادة الضبط تمسح النقاط والمهام التجريبية المحفوظة على هذا الجهاز فقط.</p>
   </section>
  </main>
 </div>
-
-<nav class="nav">
- <div class="nav-inner">
-  <button class="active" data-page="home" onclick="showPage('home')"><b>⌂</b><span data-i18n="home">الرئيسية</span></button>
-  <button data-page="tasks" onclick="showPage('tasks')"><b>☷</b><span data-i18n="tasks">المهام</span></button>
-  <button data-page="shop" onclick="showPage('shop')"><b>▣</b><span data-i18n="store">المتجر</span></button>
-  <button data-page="wallet" onclick="showPage('wallet')"><b>◉</b><span data-i18n="wallet">المحفظة</span></button>
-  <button data-page="referrals" onclick="showPage('referrals')"><b>♧</b><span data-i18n="invite">الدعوات</span></button>
- </div>
+<nav class="nav" aria-label="التنقل الرئيسي">
+ <button class="nav-btn active" data-page="home" onclick="showPage('home')"><span class="nav-icon">⌂</span><span>الرئيسية</span></button>
+ <button class="nav-btn" data-page="tasks" onclick="showPage('tasks')"><span class="nav-icon">◈</span><span>المهام</span></button>
+ <button class="nav-btn" data-page="shop" onclick="showPage('shop')"><span class="nav-icon">🎁</span><span>المتجر</span></button>
+ <button class="nav-btn" data-page="wallet" onclick="showPage('wallet')"><span class="nav-icon">💠</span><span>النقاط</span></button>
+ <button class="nav-btn" data-page="settings" onclick="showPage('settings')"><span class="nav-icon">⚙</span><span>حسابي</span></button>
 </nav>
+<div class="toast" id="toast"></div>
 
 <script>
-const $=id=>document.getElementById(id);
-const translations={
- ar:{
- subtitle:"منصتك للمهمات والمكافآت",welcome:"أهلاً بيك 👋",ready:"جاهز تبدأ يوم جديد؟",
- yourpoints:"رصيد نقاطك التجريبي",points:"نقطة",level:"المستوى الأول · مبتدئ",start:"ابدأ الآن",
- completed:"مهام مكتملة اليوم",streak:"أيام النشاط",quick:"الوصول السريع",explore:"اكتشف التطبيق",
- daily:"المهام اليومية",tenTasks:"10 مهام جديدة",store:"متجر المكافآت",exchange:"استبدل نقاطك",
- wallet:"المحفظة",demo:"تجريبي",todayProgress:"تقدمك اليوم",completeTasks:"أنجز خطوات داخل التطبيق واجمع نقاطًا تجريبية.",
- availablePoints:"نقاطك المتاحة",pointsBalance:"رصيد النقاط",walletNote:"هذه نقاط داخل التطبيق للتجربة فقط، وليست أموالًا أو رصيدًا قابلًا للسحب.",
- activity:"سجل النشاط",noActivity:"لا يوجد نشاط حتى الآن.",invite:"دعوة الأصدقاء",inviteTitle:"شارك التجربة مع أصدقائك",
- inviteDesc:"شارك رابط التطبيق مع أصدقائك. ستظهر مكافآت الدعوات عند تفعيل نظام التحقق.",share:"مشاركة التطبيق",
- inviteStatus:"مكافآت الدعوات غير مفعّلة في النسخة التجريبية.",settings:"الإعدادات",sound:"الصوت",
- music:"موسيقى الخلفية",musicDesc:"صوت هادئ أثناء استخدام التطبيق",musicLevel:"مستوى الموسيقى",
- effects:"المؤثرات الصوتية",effectsDesc:"أصوات النقر والمكافآت",effectsLevel:"مستوى المؤثرات",
- testSound:"اختبار صوت المكافأة",appearance:"المظهر واللغة",language:"لغة التطبيق",motion:"الحركة والمؤثرات البصرية",
- about:"عن التطبيق",home:"الرئيسية",tasks:"المهام",day:"اليوم",claim:"إنجاز المهمة",claimed:"تم الإنجاز",
- pointsEarned:"تمت إضافة النقاط",needAction:"نفّذ الخطوة المطلوبة أولاً",copied:"تم نسخ الرابط",
- shareUnavailable:"افتح التطبيق من تيليجرام لمشاركة الرابط",redeem:"استبدال",notEnough:"نقاطك غير كافية",
- redeemed:"تم الاستبدال في النسخة التجريبية",item1:"شارة البداية",item2:"شارة النشاط",item3:"شارة التميز",
- item4:"خلفية خاصة",task1:"سجّل دخولك اليوم",desc1:"اضغط على زر تسجيل اليوم",task2:"اكتشف صفحة المهام",
- desc2:"افتح صفحة المهام اليومية",task3:"تعرّف على المتجر",desc3:"افتح متجر المكافآت",task4:"راجع محفظتك",
- desc4:"افتح صفحة المحفظة",task5:"جرّب إعدادات الصوت",desc5:"افتح الإعدادات واختبر الصوت",
- task6:"غيّر لغة التطبيق",desc6:"جرّب اللغة الثانية",task7:"شاهد سجل النشاط",desc7:"راجع سجل نشاطك",
- task8:"استكشف الدعوات",desc8:"افتح صفحة دعوة الأصدقاء",task9:"جرّب تحدي اليوم",desc9:"أجب عن سؤال التحدي",
- task10:"ارجع للرئيسية",desc10:"افتح الصفحة الرئيسية",challenge:"تحدي اليوم",answer:"اختر الإجابة الصحيحة",
- correct:"إجابة صحيحة!",wrong:"حاول مرة أخرى"
- },
- en:{
- subtitle:"Your tasks and rewards hub",welcome:"Welcome 👋",ready:"Ready for a new day?",
- yourpoints:"Your demo points balance",points:"points",level:"Level 1 · Beginner",start:"Start now",
- completed:"Tasks completed today",streak:"Active days",quick:"Quick access",explore:"Explore the app",
- daily:"Daily tasks",tenTasks:"10 new tasks",store:"Rewards store",exchange:"Exchange your points",
- wallet:"Wallet",demo:"DEMO",todayProgress:"Your progress today",completeTasks:"Complete in-app actions and collect demo points.",
- availablePoints:"Available points",pointsBalance:"Points balance",walletNote:"These are demo points inside the app, not money or withdrawable funds.",
- activity:"Activity history",noActivity:"No activity yet.",invite:"Invite friends",inviteTitle:"Share the experience",
- inviteDesc:"Share the app with friends. Referral rewards will appear when verification is enabled.",share:"Share app",
- inviteStatus:"Referral rewards are not active in this demo.",settings:"Settings",sound:"Sound",
- music:"Background audio",musicDesc:"Soft ambient sound while using the app",musicLevel:"Music volume",
- effects:"Sound effects",effectsDesc:"Tap and reward sounds",effectsLevel:"Effects volume",
- testSound:"Test reward sound",appearance:"Appearance & language",language:"App language",motion:"Visual motion",
- about:"About",home:"Home",tasks:"Tasks",day:"Day",claim:"Complete task",claimed:"Completed",
- pointsEarned:"Points added",needAction:"Complete the required action first",copied:"Link copied",
- shareUnavailable:"Open the app in Telegram to share a link",redeem:"Redeem",notEnough:"Not enough points",
- redeemed:"Redeemed in demo mode",item1:"Starter badge",item2:"Activity badge",item3:"Excellence badge",
- item4:"Special background",task1:"Daily check-in",desc1:"Tap the daily check-in button",task2:"Explore tasks",
- desc2:"Open the daily tasks page",task3:"Explore the store",desc3:"Open the rewards store",task4:"Check your wallet",
- desc4:"Open your wallet page",task5:"Try sound settings",desc5:"Open settings and test the sound",
- task6:"Switch app language",desc6:"Try the other language",task7:"View activity history",desc7:"Review your activity",
- task8:"Explore referrals",desc8:"Open the invite friends page",task9:"Try today's challenge",desc9:"Answer the daily question",
- task10:"Return to home",desc10:"Open the home page",challenge:"Daily challenge",answer:"Choose the correct answer",
- correct:"Correct answer!",wrong:"Try again"
+(() => {
+ const $ = id => document.getElementById(id);
+ const tg = window.Telegram?.WebApp;
+ try { tg?.ready(); tg?.expand(); } catch(e) {}
+ const user = tg?.initDataUnsafe?.user;
+ if (user) {
+   $('welcome').textContent = `أهلاً ${user.first_name || 'بك'} 👋`;
+   $('username').textContent = user.username ? '@' + user.username : 'عضو SASA';
  }
-};
-let lang=localStorage.getItem("sasa_lang")||"ar";
-let points=Number(localStorage.getItem("sasa_points")||0);
-let musicOn=localStorage.getItem("sasa_music")==="true";
-let effectsOn=localStorage.getItem("sasa_effects")!=="false";
-let motionOn=localStorage.getItem("sasa_motion")!=="false";
-let musicVol=Number(localStorage.getItem("sasa_musicvol")||15);
-let effectsVol=Number(localStorage.getItem("sasa_effectsvol")||65);
-let history=JSON.parse(localStorage.getItem("sasa_history")||"[]");
-let today=new Date().toISOString().slice(0,10);
-let savedDay=localStorage.getItem("sasa_day");
-if(savedDay!==today){localStorage.setItem("sasa_day",today);localStorage.setItem("sasa_done","[]");}
-let done=JSON.parse(localStorage.getItem("sasa_done")||"[]");
-let dayNumber=Math.floor((Date.now()-new Date(localStorage.getItem("sasa_started")||Date.now()))/86400000)%7+1;
-if(!localStorage.getItem("sasa_started"))localStorage.setItem("sasa_started",Date.now());
-
-const taskSets=[
- [["task1","desc1",10,"check"],["task2","desc2",10,"tasks"],["task3","desc3",10,"shop"],["task4","desc4",10,"wallet"],["task5","desc5",15,"sound"],["task6","desc6",10,"language"],["task7","desc7",10,"history"],["task8","desc8",10,"referrals"],["task9","desc9",20,"quiz"],["task10","desc10",10,"home"]],
- [["task2","desc2",10,"tasks"],["task3","desc3",10,"shop"],["task4","desc4",10,"wallet"],["task5","desc5",15,"sound"],["task6","desc6",10,"language"],["task7","desc7",10,"history"],["task8","desc8",10,"referrals"],["task9","desc9",20,"quiz"],["task10","desc10",10,"home"],["task1","desc1",10,"check"]],
- [["task3","desc3",10,"shop"],["task4","desc4",10,"wallet"],["task5","desc5",15,"sound"],["task6","desc6",10,"language"],["task7","desc7",10,"history"],["task8","desc8",10,"referrals"],["task9","desc9",20,"quiz"],["task10","desc10",10,"home"],["task1","desc1",10,"check"],["task2","desc2",10,"tasks"]],
- [["task4","desc4",10,"wallet"],["task5","desc5",15,"sound"],["task6","desc6",10,"language"],["task7","desc7",10,"history"],["task8","desc8",10,"referrals"],["task9","desc9",20,"quiz"],["task10","desc10",10,"home"],["task1","desc1",10,"check"],["task2","desc2",10,"tasks"],["task3","desc3",10,"shop"]],
- [["task5","desc5",15,"sound"],["task6","desc6",10,"language"],["task7","desc7",10,"history"],["task8","desc8",10,"referrals"],["task9","desc9",20,"quiz"],["task10","desc10",10,"home"],["task1","desc1",10,"check"],["task2","desc2",10,"tasks"],["task3","desc3",10,"shop"],["task4","desc4",10,"wallet"]],
- [["task6","desc6",10,"language"],["task7","desc7",10,"history"],["task8","desc8",10,"referrals"],["task9","desc9",20,"quiz"],["task10","desc10",10,"home"],["task1","desc1",10,"check"],["task2","desc2",10,"tasks"],["task3","desc3",10,"shop"],["task4","desc4",10,"wallet"],["task5","desc5",15,"sound"]],
- [["task7","desc7",10,"history"],["task8","desc8",10,"referrals"],["task9","desc9",20,"quiz"],["task10","desc10",10,"home"],["task1","desc1",10,"check"],["task2","desc2",10,"tasks"],["task3","desc3",10,"shop"],["task4","desc4",10,"wallet"],["task5","desc5",15,"sound"],["task6","desc6",10,"language"]]
-];
-let currentTasks=taskSets[dayNumber-1];
-let visited=new Set();
-let audioCtx=null,ambientOsc=null,ambientGain=null;
-
-function t(k){return translations[lang][k]||k}
-function save(){localStorage.setItem("sasa_points",points);localStorage.setItem("sasa_done",JSON.stringify(done));localStorage.setItem("sasa_history",JSON.stringify(history))}
-function toast(msg){$("toast").textContent=msg;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),2100)}
-function renderLang(){
- document.documentElement.lang=lang;document.documentElement.dir=lang==="ar"?"rtl":"ltr";
- document.querySelectorAll("[data-i18n]").forEach(el=>{let k=el.dataset.i18n;el.textContent=t(k)});
- $("langButton").textContent=lang==="ar"?"English":"العربية";
- $("dayLabel").textContent=(lang==="ar"?"اليوم ":"Day ")+dayNumber;
- renderTasks();renderAll();
-}
-function toggleLanguage(){lang=lang==="ar"?"en":"ar";localStorage.setItem("sasa_lang",lang);renderLang();playTone(520,.07)}
-function showPage(id){
- const update=()=>{
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  $(id).classList.add("active");
-  document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
-  visited.add(id);renderTasks();playTone(420,.04);
+ const todayKey = () => {
+  const d=new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
  };
- if(motionOn&&document.startViewTransition)document.startViewTransition(update);else update();
- window.scrollTo({top:0,behavior:motionOn?"smooth":"auto"});
-}
-function renderAll(){
- $("points").textContent=points;$("shopPoints").textContent=points;$("walletPoints").textContent=points;
- $("completed").textContent=done.length+"/10";$("taskProgress").textContent=done.length+" / 10";
- $("taskBar").style.width=(done.length*10)+"%";$("levelProgress").style.width=Math.min(100,points/5)+"%";
- renderHistory();renderShop();
-}
-function actionFor(action){
- if(action==="check"){if(!visited.has("checkin")){visited.add("checkin");return true}return false}
- if(action==="language")return visited.has("language");
- if(action==="sound")return visited.has("sound");
- if(action==="history")return visited.has("history");
- return visited.has(action);
-}
-function renderTasks(){
- $("taskList").innerHTML="";
- currentTasks.forEach((task,i)=>{
-  const [title,desc,reward,action]=task;const isDone=done.includes(i);
-  let div=document.createElement("div");div.className="task"+(isDone?" done":"");
-  let icons=["📅","🧭","🎁","👛","🔊","🌐","📊","👥","🧠","🏠"];
-  div.innerHTML=`<div class="task-icon">${isDone?"✓":icons[i]}</div><div class="task-info"><div class="task-title">${t(title)}</div><div class="task-desc">${t(desc)}</div><div class="task-action">${isDone?t("claimed"):""}</div></div><div class="reward">+${reward} ${t("points")}<br><button class="secondary" style="margin-top:7px;padding:7px 10px;font-size:11px" ${isDone?"disabled":""}>${isDone?"✓":t("claim")}</button></div>`;
-  div.querySelector("button").addEventListener("click",()=>completeTask(i,action,reward));
-  $("taskList").appendChild(div);
+ const defaultState = () => ({
+  points:0,day:todayKey(),done:[],history:[],
+  sound:true,music:false,muted:false,volume:70,
+  vibrate:true,lang:'ar',owned:[]
  });
-}
-function completeTask(i,action,reward){
- if(done.includes(i))return;
- if(action==="check")visited.add("checkin");
- if(action==="quiz"){
-  const answer=prompt(t("answer")+"\\n"+(lang==="ar"?"ما ناتج 7 × 8؟":"What is 7 × 8?"));
-  if(answer===null)return;
-  if(answer.trim()!=="56"){toast(t("wrong"));return}
-  toast(t("correct"));
- }else if(!actionFor(action)){toast(t("needAction"));return}
- done.push(i);points+=reward;history.unshift({date:new Date().toLocaleString(),amount:reward});
- save();renderTasks();renderAll();playReward();toast("+"+reward+" "+t("pointsEarned"));
-}
-function renderShop(){
- const items=[["🏅","item1",100],["🔥","item2",180],["💎","item3",300],["🌌","item4",450]];
- $("shopList").innerHTML=items.map(([icon,key,cost])=>`<div class="card shop-item"><div class="task-icon">${icon}</div><div><b>${t(key)}</b><div class="muted">${cost} ${t("points")}</div></div><button class="secondary" onclick="redeem(${cost})">${t("redeem")}</button></div>`).join("");
-}
-function redeem(cost){if(points<cost){toast(t("notEnough"));return}points-=cost;history.unshift({date:new Date().toLocaleString(),amount:-cost});save();renderAll();playReward();toast(t("redeemed"))}
-function renderHistory(){
- $("history").innerHTML=history.length?history.slice(0,12).map(x=>`<div class="setting-row"><span class="muted">${x.date}</span><b style="color:${x.amount>0?"#36e6a1":"#ff9b9b"}">${x.amount>0?"+":""}${x.amount} ${t("points")}</b></div>`).join(""):`<div class="empty-note">${t("noActivity")}</div>`;
-}
-function shareApp(){
- const tg=window.Telegram?.WebApp;
- if(tg?.initData){tg.openTelegramLink("https://t.me/share/url?url="+encodeURIComponent(location.href));}
- else if(navigator.share){navigator.share({title:"SASA MINI APP",url:location.href}).catch(()=>{})}
- else{toast(t("shareUnavailable"))}
-}
-function initAudio(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==="suspended")audioCtx.resume()}
-function playTone(freq=500,duration=.1,volume=1){
- if(!effectsOn||effectsVol===0)return;
- try{initAudio();let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type="sine";o.frequency.value=freq;
- g.gain.setValueAtTime((effectsVol/100)*.12*volume,audioCtx.currentTime);
- g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+duration);
- o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+duration)}catch(e){}
-}
-function playReward(){
- $("rewardRing").classList.remove("show");void $("rewardRing").offsetWidth;$("rewardRing").classList.add("show");
- if(effectsOn){playTone(520,.18,.8);setTimeout(()=>playTone(660,.2,.8),100);setTimeout(()=>playTone(790,.3,.8),210)}
-}
-function startAmbient(){
- initAudio();if(ambientOsc)return;
- ambientOsc=audioCtx.createOscillator();ambientGain=audioCtx.createGain();
- ambientOsc.type="sine";ambientOsc.frequency.value=110;
- ambientGain.gain.value=musicOn?musicVol/100*.012:0;
- ambientOsc.connect(ambientGain);ambientGain.connect(audioCtx.destination);ambientOsc.start();
-}
-function toggleMusic(){musicOn=!musicOn;localStorage.setItem("sasa_music",musicOn);updateSwitches();if(musicOn){startAmbient()}else if(ambientGain)ambientGain.gain.setTargetAtTime(0,audioCtx.currentTime,.1)}
-function setMusicVolume(v){musicVol=+v;$("musicVal").textContent=v+"%";localStorage.setItem("sasa_musicvol",v);if(musicOn){startAmbient();ambientGain.gain.setTargetAtTime(musicVol/100*.012,audioCtx.currentTime,.1)}}
-function toggleEffects(){effectsOn=!effectsOn;localStorage.setItem("sasa_effects",effectsOn);updateSwitches();if(effectsOn)playTone(600,.08)}
-function setEffectsVolume(v){effectsVol=+v;$("effectsVal").textContent=v+"%";localStorage.setItem("sasa_effectsvol",v)}
-function toggleMotion(){motionOn=!motionOn;localStorage.setItem("sasa_motion",motionOn);updateSwitches()}
-function updateSwitches(){
- $("musicToggle").classList.toggle("on",musicOn);$("effectsToggle").classList.toggle("on",effectsOn);$("motionToggle").classList.toggle("on",motionOn);
- $("musicVolume").value=musicVol;$("effectsVolume").value=effectsVol;$("musicVal").textContent=musicVol+"%";$("effectsVal").textContent=effectsVol+"%";
-}
-document.addEventListener("pointerdown",()=>{if(musicOn&&!ambientOsc)startAmbient()},{once:true});
-function init(){
- const tg=window.Telegram?.WebApp;if(tg){tg.ready();tg.expand();try{tg.setHeaderColor("#070b13");tg.setBackgroundColor("#070b13")}catch(e){}}
- updateSwitches();renderLang();
-}
-init();
-</script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-const SUPABASE_URL = "https://spxxnptaeqjrfrxfgzjw.supabase.co";
-const SUPABASE_KEY = "ضع_المفتاح_العام_هنا";
+ let state;
+ try {
+  state=JSON.parse(localStorage.getItem('sasa_demo_state')||'null')||defaultState();
+ } catch(e) {
+  state=defaultState();
+ }
+ if(state.day!==todayKey()){
+  state.day=todayKey();
+  state.done=[];
+  save();
+ }
+ function save(){
+  localStorage.setItem('sasa_demo_state',JSON.stringify(state));
+ }
+ const tasks=[
+  {id:'profile',icon:'👤',name:'تعرّف على ملفك',desc:'افتح صفحة حسابك وإعدادات التطبيق',points:10},
+  {id:'explore',icon:'🧭',name:'استكشف التطبيق',desc:'تنقّل بين أقسام التطبيق المختلفة',points:10},
+  {id:'language',icon:'🌐',name:'جرّب تغيير اللغة',desc:'بدّل اللغة ثم أعدها كما تفضّل',points:10},
+  {id:'share',icon:'📨',name:'شارك التطبيق',desc:'استخدم زر مشاركة رابط التطبيق',points:15}
+ ];
+ const items=[
+  {id:'blue',icon:'🔷',name:'شارة الأزرق',desc:'شارة شكلية تجريبية للملف الشخصي',cost:20},
+  {id:'spark',icon:'✨',name:'تأثير اللمعان',desc:'تأثير بصري تجريبي',cost:30},
+  {id:'crown',icon:'👑',name:'شارة التميّز',desc:'شارة شكلية داخل التطبيق',cost:45}
+ ];
+ function render(){
+  ['homePoints','walletPoints','shopPoints'].forEach(id=>{
+   $(id).textContent=state.points;
+  });
+  const count=state.done.length;
+  const pct=Math.round(count/tasks.length*100);
+  $('homeProgressText').textContent=`${count} / ${tasks.length}`;
+  $('homePercent').textContent=pct+'%';
+  $('homeProgress').style.width=pct+'%';
+  $('taskCount').textContent=`${count} / ${tasks.length}`;
+  $('taskPercent').textContent=pct+'%';
+  $('taskProgress').style.width=pct+'%';
+  $('taskList').innerHTML=tasks.map(t=>{
+   const done=state.done.includes(t.id);
+   return `<article class="task ${done?'done':''}">
+    <div class="task-icon">${t.icon}</div>
+    <div class="task-info">
+     <b>${t.name}</b><small>${t.desc}</small>
+     <button onclick="completeTask('${t.id}')" ${done?'disabled':''}>${done?'✓ مكتملة':'إنجاز المهمة'}</button>
+    </div>
+    <div class="reward">+${t.points} ✦</div>
+   </article>`;
+  }).join('');
+  $('shopList').innerHTML=items.map(it=>{
+   const owned=state.owned.includes(it.id);
+   return `<article class="shop-item">
+    <div class="task-icon">${it.icon}</div>
+    <div class="task-info"><b>${it.name}</b><small>${it.desc}</small></div>
+    <div>
+     <div class="reward">${it.cost} ✦</div>
+     <button class="action ${owned?'secondary':''}" style="padding:8px 11px;margin-top:7px;font-size:13px" onclick="buyItem('${it.id}')" ${owned?'disabled':''}>${owned?'تمت الإضافة':'استبدال'}</button>
+    </div>
+   </article>`;
+  }).join('');
+  $('history').innerHTML=state.history.length
+   ?state.history.slice(0,8).map(h=>`<div class="setting"><span>${h.label}</span><b style="color:${h.amount<0?'#ff9b9b':'#65e3b5'}">${h.amount>0?'+':''}${h.amount} ✦</b></div>`).join('')
+   :'<div class="empty">لا يوجد نشاط حتى الآن</div>';
+  $('soundSwitch').classList.toggle('on',state.sound);
+  $('musicSwitch').classList.toggle('on',state.music);
+  $('muteSwitch').classList.toggle('on',state.muted);
+  $('vibrateSwitch').classList.toggle('on',state.vibrate);
+  $('musicVolume').value=state.volume??70;
+  $('volumeLabel').textContent=(state.volume??70)+'%';
+  $('languageBtn').textContent=state.lang==='ar'?'العربية':'English';
+ }
+ function log(label,amount){
+  state.history.unshift({label,amount,at:Date.now()});
+  state.history=state.history.slice(0,20);
+ }
+ window.completeTask=id=>{
+  const t=tasks.find(x=>x.id===id);
+  if(!t||state.done.includes(id))return;
+  state.done.push(id);
+  state.points+=t.points;
+  log(t.name,t.points);
+  save();
+  render();
+  feedback();
+  notify(`أحسنت! حصلت على ${t.points} نقطة تجريبية ✨`);
+ };
+ window.buyItem=id=>{
+  const it=items.find(x=>x.id===id);
+  if(!it||state.owned.includes(id))return;
+  if(state.points<it.cost){
+   notify('رصيد النقاط التجريبي غير كافٍ');
+   return;
+  }
+  state.points-=it.cost;
+  state.owned.push(id);
+  log('استبدال: '+it.name,-it.cost);
+  save();
+  render();
+  feedback();
+  notify('تمت إضافة العنصر التجريبي إلى حسابك');
+ };
+ window.showPage=id=>{
+  const target=$(id);
+  if(!target)return;
+  const current=document.querySelector('.page.active');
+  if(current===target)return;
+  if(current){
+   current.classList.remove('active');
+   current.classList.add('leaving');
+   setTimeout(()=>current.classList.remove('leaving'),190);
+  }
+  target.classList.remove('leaving');
+  target.classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>{
+   b.classList.toggle('active',b.dataset.page===id);
+  });
+  if(id==='friends')buildInvite();
+  if(id==='tasks')state.done.includes('explore')||window.completeTask('explore');
+  if(id==='settings')state.done.includes('profile')||window.completeTask('profile');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+  feedback(false);
+ };
+ function buildInvite(){
+  const base=location.href.split('?')[0].split('#')[0];
+  $('inviteLink').textContent=base||'رابط التطبيق غير متاح في وضع المعاينة';
+ }
+ window.copyInvite=async()=>{
+  const value=$('inviteLink').textContent;
+  try{
+   await navigator.clipboard.writeText(value);
+   state.done.includes('share')||window.completeTask('share');
+   notify('تم نسخ رابط المشاركة');
+  }catch(e){
+   notify('تعذّر النسخ تلقائياً؛ اضغط مطولاً على الرابط لنسخه');
+  }
+ };
+ window.shareInvite=()=>{
+  const url=$('inviteLink').textContent;
+  const text='جرّب SASA MINI APP ✨';
+  if(tg?.openTelegramLink){
+   tg.openTelegramLink('https://t.me/share/url?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(text));
+  }else if(navigator.share){
+   navigator.share({title:'SASA MINI APP',text,url}).then(()=>{
+    state.done.includes('share')||window.completeTask('share');
+   }).catch(()=>{});
+  }else{
+   window.copyInvite();
+  }
+ };
+   window.toggleSetting=key=>{
+  state[key]=!state[key];
+  save();
+  render();
 
-const sasaSupabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
+  if(key==='music'){
+   if(state.music&&!state.muted)startMusic();
+   else stopMusic();
+  }else if(key==='muted'){
+   if(state.muted)stopMusic();
+   else if(state.music)startMusic();
+   else feedback();
+  }else{
+   feedback();
+  }
+  notify(state[key]?'تم التفعيل':'تم الإيقاف');
+ };
+
+ window.toggleLanguage=()=>{
+  state.lang=state.lang==='ar'?'en':'ar';
+  save();
+  $('languageBtn').textContent=state.lang==='ar'?'العربية':'English';
+  if(!state.done.includes('language'))window.completeTask('language');
+  notify(state.lang==='ar'?'تم اختيار العربية':'تم اختيار English');
+ };
+
+ window.resetDemo=()=>{
+  if(!confirm('هل تريد إعادة ضبط نقاط ومهام التجربة على هذا الجهاز؟'))return;
+  state=defaultState();
+  save();
+  render();
+  notify('تمت إعادة ضبط بيانات التجربة');
+ };
+
+ let toastTimer;
+ window.notify=msg=>{
+  const el=$('toast');
+  el.textContent=msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.classList.remove('show'),2300);
+ };
+
+ let audioCtx=null,musicTimer=null,musicStep=0;
+
+ function audio(){
+  const C=window.AudioContext||window.webkitAudioContext;
+  if(!C)return null;
+  if(!audioCtx)audioCtx=new C();
+  if(audioCtx.state==='suspended')audioCtx.resume();
+  return audioCtx;
+ }
+
+ function tone(freq=660,duration=.12,wave='sine',volume=.045,delay=0){
+  if(state.muted||!state.sound)return;
+  try{
+   const c=audio();
+   if(!c)return;
+   const o=c.createOscillator();
+   const g=c.createGain();
+   const t=c.currentTime+delay;
+   o.type=wave;
+   o.frequency.setValueAtTime(freq,t);
+   g.gain.setValueAtTime(.0001,t);
+   g.gain.exponentialRampToValueAtTime(Math.max(.0002,volume),t+.012);
+   g.gain.exponentialRampToValueAtTime(.0001,t+duration);
+   o.connect(g);
+   g.connect(c.destination);
+   o.start(t);
+   o.stop(t+duration+.02);
+  }catch(e){}
+ }
+
+ function playEffect(type='ding'){
+  const patterns={
+   ding:[[740,.12],[990,.16]],
+   buy:[[520,.08],[700,.08],[920,.2]],
+   button:[[540,.07]],
+   bell:[[880,.18],[660,.22]],
+   level:[[440,.1],[550,.1],[660,.1],[880,.22]],
+   friend:[[660,.1],[880,.1],[1040,.18]],
+   badge:[[600,.1],[800,.1],[1100,.25]],
+   error:[[260,.2],[210,.22]],
+   coin:[[880,.07],[1175,.08],[1568,.18]],
+   refresh:[[440,.1],[660,.1],[880,.18]],
+   welcome:[[523,.13],[659,.16]],
+   page:[[500,.07],[720,.08]],
+   close:[[720,.07],[480,.1]],
+   copy:[[900,.06],[1200,.1]],
+   spend:[[780,.07],[520,.1],[360,.15]],
+   back:[[700,.08],[440,.12]]
+  };
+  (patterns[type]||patterns.ding).forEach((n,i)=>{
+   tone(n[0],n[1],'sine',.035,i*.09);
+  });
+ }
+
+ function feedback(sound=true){
+  if(state.vibrate&&navigator.vibrate&&!state.muted)navigator.vibrate(12);
+  if(sound)playEffect('ding');
+ }
+
+ function startMusic(){
+  if(musicTimer||!state.music||state.muted)return;
+
+  const notes=[
+   196,247,294,370,294,247,220,262,
+   330,392,330,262,185,233,277,349
+  ];
+  musicStep=0;
+
+  musicTimer=setInterval(()=>{
+   if(!state.music||state.muted){
+    stopMusic();
+    return;
+   }
+
+   const c=audio();
+   if(!c)return;
+
+   const n=notes[musicStep%notes.length];
+   const v=(Number(state.volume??70)/100)*.018;
+
+   try{
+    const o=c.createOscillator();
+    const g=c.createGain();
+
+    o.type='triangle';
+    o.frequency.value=n;
+
+    g.gain.setValueAtTime(.0001,c.currentTime);
+    g.gain.exponentialRampToValueAtTime(
+     Math.max(.0001,v),c.currentTime+.025
+    );
+    g.gain.exponentialRampToValueAtTime(
+     .0001,c.currentTime+.22
+    );
+
+    o.connect(g);
+    g.connect(c.destination);
+    o.start();
+    o.stop(c.currentTime+.23);
+
+    if(musicStep%4===0){
+     const b=c.createOscillator();
+     const bg=c.createGain();
+
+     b.type='sine';
+     b.frequency.value=n/2;
+
+     bg.gain.setValueAtTime(.0001,c.currentTime);
+     bg.gain.exponentialRampToValueAtTime(
+      Math.max(.0001,v*.7),c.currentTime+.02
+     );
+     bg.gain.exponentialRampToValueAtTime(
+      .0001,c.currentTime+.16
+     );
+
+     b.connect(bg);
+     bg.connect(c.destination);
+     b.start();
+     b.stop(c.currentTime+.17);
+    }
+   }catch(e){}
+
+   musicStep++;
+  },260);
+ }
+
+ function stopMusic(){
+  if(musicTimer){
+   clearInterval(musicTimer);
+   musicTimer=null;
+  }
+ }
+
+ window.setMusicVolume=value=>{
+  state.volume=Number(value);
+  $('volumeLabel').textContent=value+'%';
+  save();
+ };
+
+ window.playSasaSound=playEffect;
+
+ buildInvite();
+ render();
+
+ document.addEventListener('pointerdown',()=>{
+  if(state.music&&!state.muted)startMusic();
+ },{once:true});
+
+})();
 </script>
 </body>
 </html>
