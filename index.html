@@ -3,63 +3,119 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#080d18">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#050b18">
 <title>SASA MINI APP</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
 <style>
 :root{
- --bg:#080d18;--panel:#111c2e;--panel2:#172944;
- --blue:#087ff0;--cyan:#45c5ff;--text:#f4f8ff;
- --muted:#91a4bf;--line:#263b58;
+ --bg:#050b18;--panel:#0b1830;--panel2:#102443;
+ --blue:#087cff;--cyan:#38caff;--text:#f5f9ff;
+ --muted:#91a9c8;--line:#174878;--gold:#ffd76b;
 }
 *{box-sizing:border-box}
 body{
- margin:0;background:radial-gradient(ellipse at top,#15345a 0,#080d18 48%);
- color:var(--text);font-family:Arial,sans-serif;min-height:100vh
+ margin:0;min-height:100vh;color:var(--text);
+ background:radial-gradient(ellipse at 50% -10%,#123a70 0%,#071225 42%,#030713 100%);
+ font-family:Arial,sans-serif;
 }
 button{font:inherit;cursor:pointer}
-.app{max-width:520px;margin:auto;padding:15px 15px 100px}
-header{display:flex;align-items:center;justify-content:space-between;margin:8px 0 25px}
-.logo{font-size:25px;font-weight:900;letter-spacing:2px}
+button:disabled{opacity:.45;cursor:not-allowed}
+.app{max-width:520px;margin:auto;padding:14px 14px 105px}
+header{display:flex;align-items:center;justify-content:space-between;margin:8px 0 23px}
+.logo{font-size:25px;font-weight:900;letter-spacing:1px;text-shadow:0 0 15px #168cff}
 .logo span{color:var(--cyan)}
-.online{font-size:11px;color:#8bdcff;background:#102b43;border:1px solid #245276;padding:8px 12px;border-radius:30px}
-.page{display:none}
+.online{font-size:11px;color:#8ce4ff;border:1px solid #1768a9;background:#09213b;padding:8px 12px;border-radius:30px}
+.page{display:none;animation:fade .3s ease}
 .page.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 h1{font-size:25px;margin:8px 0 18px}
-h2{font-size:18px;margin:23px 0 12px}
-.card{background:linear-gradient(145deg,#172b47,#101a2b);border:1px solid var(--line);border-radius:19px;padding:17px;margin-bottom:13px}
-.balance-card{background:linear-gradient(125deg,#0755a5,#102d54 65%,#111c2e);border-color:#247ac3}
+h2{font-size:18px;margin:22px 0 12px}
+p{line-height:1.7}
+.card{
+ background:linear-gradient(145deg,#102747,#09172c);
+ border:1px solid #174878;border-radius:19px;padding:17px;
+ margin-bottom:13px;box-shadow:0 8px 25px #0005;
+}
+.balance-card{
+ background:linear-gradient(125deg,#064b9a,#0b2850 65%,#0b1830);
+ border:1px solid #168cff;box-shadow:0 0 22px #087cff55;
+}
 .muted{color:var(--muted);font-size:12px;line-height:1.7}
-.amount{font-size:36px;font-weight:900;margin:12px 0}
-.blue-text{color:#a9e4ff}
+.amount{font-size:37px;font-weight:900;margin:12px 0;text-shadow:0 0 18px #38caff}
+.blue-text{color:#9ce8ff}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
-.tile{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:15px;min-height:105px;cursor:pointer}
-.tile .emoji{font-size:24px}
+.tile{
+ background:linear-gradient(145deg,#102849,#09162a);
+ border:1px solid #1763a1;border-radius:17px;padding:15px;
+ min-height:108px;cursor:pointer;transition:.2s;
+}
+.tile:active{transform:scale(.97);box-shadow:0 0 18px #087cff}
+.tile .emoji{font-size:25px}
 .tile b{display:block;margin:9px 0 5px}
-.tile small{font-size:11px;color:var(--muted)}
-.primary{width:100%;border:0;border-radius:12px;padding:13px;background:linear-gradient(90deg,#0879e8,#16a7ff);color:white;font-weight:bold}
-.secondary{background:#1b304b;color:#dcecff;border:1px solid #345171;border-radius:11px;padding:10px 13px}
+.tile small{color:var(--muted);font-size:11px}
+.primary{
+ width:100%;border:1px solid #7bdcff;border-radius:14px;
+ padding:13px;color:white;font-weight:bold;
+ background:linear-gradient(90deg,#005bd5,#08aaff);
+ box-shadow:0 0 17px #078bff88,inset 0 0 8px #ffffff33;
+}
+.secondary{
+ background:#102846;color:#dceeff;border:1px solid #28608f;
+ border-radius:12px;padding:10px 13px;
+}
 .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.task,.method,.shop-item{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.task,.method,.shop-item{
+ display:flex;align-items:center;gap:12px;
+ padding:14px 0;border-bottom:1px solid #173451;
+}
 .task:last-child,.method:last-child,.shop-item:last-child{border:0}
-.task-info,.method-info,.shop-info{flex:1}
-.task-info small,.method-info small,.shop-info small{display:block;color:var(--muted);font-size:11px;margin-top:5px}
-.task button,.buy{background:#0879d8;color:white;border:0;border-radius:10px;padding:9px 12px;font-size:12px}
-.task button:disabled,.buy:disabled{background:#263b50;color:#91a4bf}
+.task-info,.method-info,.shop-info{flex:1;min-width:0}
+.task-info small,.method-info small,.shop-info small{
+ display:block;color:var(--muted);font-size:11px;margin-top:5px;line-height:1.5
+}
+.task button,.buy{
+ background:#0879d8;color:white;border:1px solid #3abaff;
+ border-radius:10px;padding:9px 11px;font-size:12px;white-space:nowrap
+}
 .emoji{font-size:25px}
-.soon{font-size:10px;color:#ffda91;background:#49371c;padding:6px 9px;border-radius:20px;white-space:nowrap}
-.notice{background:#342b1c;border:1px solid #70552a;color:#ffdfa3;border-radius:12px;padding:12px;font-size:12px;line-height:1.7;margin:12px 0}
-.empty{text-align:center;color:var(--muted);font-size:13px;padding:18px}
-.nav{position:fixed;bottom:0;left:0;right:0;background:#0b1423f5;border-top:1px solid var(--line);z-index:5}
+.soon{font-size:10px;color:#ffda91;background:#49371c;padding:6px 9px;border-radius:20px}
+.notice{
+ background:#302719;border:1px solid #71562b;color:#ffe0a2;
+ border-radius:12px;padding:12px;font-size:12px;line-height:1.8;margin:12px 0
+}
+.progress-bg{height:8px;background:#1b3655;border-radius:20px;overflow:hidden;margin-top:12px}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#087cff,#49e5ff);transition:width .3s}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#050d1cf5;border-top:1px solid #174878;z-index:5;backdrop-filter:blur(12px)}
 .nav-inner{max-width:520px;margin:auto;display:flex;justify-content:space-around;padding:10px 3px calc(10px + env(safe-area-inset-bottom))}
-.nav button{border:0;background:none;color:#8ea3bf;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:5px}
-.nav button.active{color:#49baff}
+.nav button{border:0;background:none;color:#8ea8c8;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:5px}
+.nav button.active{color:#4bcaff;text-shadow:0 0 12px #168cff}
 .nav .ico{font-size:20px}
-input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#0a1423;color:white;margin:8px 0}
-.footer{text-align:center;color:#657993;font-size:10px;margin-top:25px}
+.method .details{flex:1}
+.empty{text-align:center;color:var(--muted);font-size:13px;padding:18px}
+input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#081426;color:white;margin:8px 0}
+.footer{text-align:center;color:#627b9b;font-size:10px;margin-top:25px}
+.reward-ring{
+ width:145px;height:145px;border-radius:50%;margin:20px auto;
+ display:flex;align-items:center;justify-content:center;
+ border:3px solid #28bfff;
+ box-shadow:0 0 12px #168cff,0 0 30px #087cff88,inset 0 0 22px #168cff77;
+ animation:ringPulse 1.5s ease-in-out infinite;
+}
+@keyframes ringPulse{
+ 0%,100%{transform:scale(.96);box-shadow:0 0 10px #168cff,0 0 25px #087cff77}
+ 50%{transform:scale(1.06);box-shadow:0 0 22px #38caff,0 0 50px #087cff}
+}
+.reward-number{font-size:30px;font-weight:900;color:#fff;text-shadow:0 0 18px #38caff}
+.reward-pop{animation:pop .5s ease}
+@keyframes pop{0%{transform:scale(.6);opacity:0}75%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
+.sound-toggle{display:flex;align-items:center;gap:8px}
+.switch{accent-color:#168cff;width:18px;height:18px}
+.small-label{font-size:11px;color:var(--muted)}
 </style>
 </head>
+
 <body>
 <div class="app">
 
@@ -74,7 +130,7 @@ input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);ba
  <h1>SASA MINI APP</h1>
 
  <div class="card balance-card">
-  <div class="muted" data-ar="رصيد نقاطك التجريبي" data-en="Your demo points balance">رصيد نقاطك التجريبي</div>
+  <div class="muted">رصيد نقاطك التجريبي</div>
   <div class="amount"><span id="balance">0</span> ✦</div>
   <div class="blue-text">SASA POINTS</div>
   <br>
@@ -83,16 +139,17 @@ input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);ba
 
  <h2>استكشف التطبيق</h2>
  <div class="grid">
-  <div class="tile" onclick="showPage('tasks')"><div class="emoji">🎯</div><b>المهام اليومية</b><small>اجمع نقاطك</small></div>
+  <div class="tile" onclick="showPage('tasks')"><div class="emoji">🎯</div><b>المهام اليومية</b><small>نفّذ المهام واجمع النقاط</small></div>
   <div class="tile" onclick="showPage('friends')"><div class="emoji">👥</div><b>الأصدقاء</b><small>شارك التطبيق</small></div>
-  <div class="tile" onclick="showPage('store')"><div class="emoji">🛍️</div><b>المتجر</b><small>استبدل نقاط العرض</small></div>
-  <div class="tile" onclick="showPage('wallet')"><div class="emoji">💳</div><b>المحفظة</b><small>السحب التجريبي</small></div>
+  <div class="tile" onclick="showPage('store')"><div class="emoji">🎁</div><b>متجر المكافآت</b><small>استبدل نقاط العرض</small></div>
+  <div class="tile" onclick="showPage('wallet')"><div class="emoji">💳</div><b>المحفظة</b><small>رصيدك التجريبي</small></div>
  </div>
 
- <h2>مرحباً بك في SASA</h2>
+ <h2>ابدأ رحلتك</h2>
  <div class="card">
-  <b>✨ ابدأ رحلتك</b>
-  <p class="muted">نفّذ المهام التجريبية، واجمع النقاط، واستكشف المتجر والمحفظة.</p>
+  <div class="row"><b>🚀 SASA MINI APP</b><span class="blue-text">NEON EDITION</span></div>
+  <p class="muted">نفّذ المهام، تابع تقدمك، واكتشف المكافآت التجريبية.</p>
+  <button class="primary" onclick="showPage('tasks')">ابدأ الآن</button>
  </div>
 </section>
 
@@ -100,174 +157,169 @@ input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);ba
 <section id="tasks" class="page">
  <h1>🎯 المهام اليومية</h1>
  <div class="card">
-  <div class="row"><b>تقدمك اليوم</b><b id="progress">0 / 10</b></div>
-  <div style="height:8px;background:#263954;border-radius:20px;margin-top:13px;overflow:hidden">
-   <div id="progressbar" style="height:100%;width:0%;background:#19aaff;border-radius:20px"></div>
-  </div>
+  <div class="row"><b>تقدمك اليوم</b><b id="progressText">0 / 10</b></div>
+  <div class="progress-bg"><div class="progress-fill" id="progressBar"></div></div>
+  <p class="muted">ابدأ المهمة ونفّذ المطلوب. عند اكتمال الوقت داخل القسم المطلوب، سيظهر زر التحقق.</p>
  </div>
- <div class="card" id="tasklist"></div>
- <p class="muted">المهام والنقاط هنا تجريبية ومحفوظة على هذا الجهاز فقط.</p>
+ <div class="card" id="taskList"></div>
+ <div class="notice">المهام الحالية تجريبية وتعتمد على التفاعل داخل التطبيق. لا تمنح نقاطًا مقابل نشاط خارجي لم يتم التحقق منه.</div>
 </section>
 
 <!-- الأصدقاء -->
 <section id="friends" class="page">
  <h1>👥 الأصدقاء</h1>
  <div class="card">
-  <div style="font-size:35px">🎁</div>
+  <div class="emoji">🎁</div>
   <h2>شارك SASA MINI APP</h2>
-  <p class="muted">شارك رابط التطبيق مع أصدقائك. لا يتم احتساب مكافآت إحالة حقيقية في هذه النسخة.</p>
+  <p class="muted">يمكنك مشاركة رابط التطبيق مع أصدقائك.</p>
   <button class="primary" onclick="shareApp()">مشاركة التطبيق</button>
  </div>
  <div class="card">
   <b>نظام الإحالات</b>
-  <p class="muted">ميزة عدّ الإحالات والمكافآت تحتاج إلى ربط خادمي آمن قبل تشغيلها.</p>
+  <p class="muted">تسجيل الإحالات والمكافآت يحتاج إلى خادم آمن للتحقق من الدعوات.</p>
   <div class="row"><span class="muted">إحالات مسجلة</span><b>0</b></div>
  </div>
 </section>
 
 <!-- المتجر -->
 <section id="store" class="page">
- <h1>🛍️ متجر النقاط</h1>
+ <h1>🎁 متجر المكافآت</h1>
  <div class="card balance-card">
-  <div class="muted">رصيد النقاط التجريبي</div>
-  <div class="amount"><span id="storebalance">0</span> ✦</div>
+  <div class="muted">رصيد نقاط العرض</div>
+  <div class="amount"><span id="storeBalance">0</span> ✦</div>
  </div>
- <div class="card" id="shoplist"></div>
- <p class="muted">عمليات الاستبدال تجريبية ولا تمنح منتجات أو أموالاً حقيقية.</p>
+ <div class="card">
+  <div class="row"><b>💎 مكافآت SASA</b><span class="small-label">DEMO STORE</span></div>
+  <div id="shopList"></div>
+ </div>
+ <div class="notice">المكافآت والشارات في هذا المتجر افتراضية للعرض فقط، ولا تمثل منتجات أو أموالًا حقيقية.</div>
 </section>
 
-<!-- المحفظة والسحب -->
+<!-- المحفظة -->
 <section id="wallet" class="page">
  <h1>💳 المحفظة والسحب</h1>
  <div class="card balance-card">
   <div class="muted">رصيد نقاط SASA التجريبي</div>
-  <div class="amount"><span id="walletbalance">0</span> ✦</div>
+  <div class="amount"><span id="walletBalance">0</span> ✦</div>
   <div class="blue-text">DEMO WALLET</div>
  </div>
-
- <div class="notice">
-  هذه محفظة تجريبية لعرض شكل التطبيق فقط. لا يوجد رصيد نقدي أو سحب أو تحويل أموال حقيقي في النسخة الحالية.
- </div>
-
- <h2>طرق السحب المستقبلية</h2>
+ <div class="notice">هذه محفظة تجريبية. لا يوجد رصيد نقدي أو سحب أو تحويل أموال حقيقي في هذه النسخة.</div>
+ <h2>طرق مستقبلية</h2>
  <div class="card">
-  <div class="method">
-   <div class="emoji">📱</div>
-   <div class="method-info"><b>رصيد الموبايل</b><small>خيار مستقبلي غير متاح</small></div>
-   <span class="soon">قريباً</span>
-  </div>
-  <div class="method">
-   <div class="emoji">💳</div>
-   <div class="method-info"><b>البطاقة البنكية</b><small>خيار مستقبلي غير متاح</small></div>
-   <span class="soon">قريباً</span>
-  </div>
-  <div class="method">
-   <div class="emoji">⭐</div>
-   <div class="method-info"><b>مكافآت تيليجرام</b><small>تخضع لشروط تيليجرام</small></div>
-   <span class="soon">قريباً</span>
-  </div>
+  <div class="method"><div class="emoji">📱</div><div class="method-info"><b>رصيد الموبايل</b><small>غير متاح في النسخة التجريبية</small></div><span class="soon">قريباً</span></div>
+  <div class="method"><div class="emoji">💳</div><div class="method-info"><b>البطاقة البنكية</b><small>غير متاح في النسخة التجريبية</small></div><span class="soon">قريباً</span></div>
+  <div class="method"><div class="emoji">⭐</div><div class="method-info"><b>مكافآت تيليجرام</b><small>تخضع لشروط تيليجرام</small></div><span class="soon">قريباً</span></div>
  </div>
-
  <h2>سجل العمليات التجريبي</h2>
- <div class="card" id="history"><div class="empty">لا توجد عمليات تجريبية حتى الآن</div></div>
- <button class="secondary" style="width:100%" onclick="showPage('store')">الانتقال إلى متجر النقاط</button>
+ <div class="card" id="history"><div class="empty">لا توجد عمليات حتى الآن</div></div>
+ <button class="secondary" style="width:100%" onclick="showPage('store')">اذهب إلى متجر المكافآت</button>
 </section>
 
-<!-- الحساب -->
+<!-- حسابي -->
 <section id="account" class="page">
- <h1>👤 الحساب والإعدادات</h1>
+ <h1>👤 حسابي</h1>
  <div class="card">
   <div class="emoji">👤</div>
   <h2 id="username">مستخدم SASA</h2>
-  <p class="muted" id="userid">مرحباً بك في SASA MINI APP</p>
-  <div class="row"><span class="muted">رصيد النقاط</span><b id="accountbalance">0 ✦</b></div>
+  <p class="muted" id="userInfo">مرحباً بك في SASA MINI APP</p>
+  <div class="row"><span class="muted">رصيد النقاط</span><b id="accountBalance">0 ✦</b></div>
  </div>
  <div class="card">
   <h2>⚙️ الإعدادات</h2>
   <div class="row">
-   <div><b>لغة التطبيق</b><p class="muted">اختر لغة العرض</p></div>
-   <button class="secondary" onclick="toggleLanguage()" id="langbutton">English</button>
+   <div><b>المؤثرات الصوتية</b><p class="muted">صوت المكافأة C</p></div>
+   <label class="sound-toggle"><input id="soundToggle" class="switch" type="checkbox" checked><span>تشغيل</span></label>
+  </div>
+  <hr style="border-color:#173451;margin:15px 0">
+  <div class="row">
+   <div><b>لغة التطبيق</b><p class="muted">اختيار اللغة</p></div>
+   <button class="secondary" onclick="toggleLanguage()" id="languageButton">English</button>
   </div>
  </div>
  <div class="card">
   <b>عن التطبيق</b>
-  <p class="muted">SASA MINI APP — الإصدار التجريبي.</p>
+  <p class="muted">SASA MINI APP — نسخة تجريبية.</p>
  </div>
 </section>
 
-<div class="footer">SASA MINI APP · DEMO VERSION</div>
+<div class="footer">SASA MINI APP · NEON BLUE EDITION</div>
 </div>
 
-<!-- شريط التنقل -->
 <nav class="nav">
  <div class="nav-inner">
   <button class="active" data-page="home" onclick="showPage('home')"><span class="ico">⌂</span>الرئيسية</button>
   <button data-page="tasks" onclick="showPage('tasks')"><span class="ico">🎯</span>المهام</button>
   <button data-page="friends" onclick="showPage('friends')"><span class="ico">👥</span>الأصدقاء</button>
-  <button data-page="store" onclick="showPage('store')"><span class="ico">🛍️</span>المتجر</button>
+  <button data-page="store" onclick="showPage('store')"><span class="ico">🎁</span>المتجر</button>
   <button data-page="account" onclick="showPage('account')"><span class="ico">👤</span>حسابي</button>
  </div>
 </nav>
 
 <script>
-const tg = window.Telegram?.WebApp;
+const tg=window.Telegram?.WebApp;
 if(tg){tg.ready();tg.expand();}
 
-const taskData = [
- ["افتح التطبيق اليوم",5],
- ["تعرّف على الصفحة الرئيسية",5],
- ["افتح قسم المهام",5],
- ["افتح قسم الأصدقاء",5],
- ["تعرّف على المتجر",10],
- ["افتح المحفظة التجريبية",10],
- ["تعرّف على الإعدادات",5],
- ["استكشف خيارات اللغة",10],
- ["ارجع إلى الرئيسية",5],
- ["أكمل جولة SASA",15]
+const today=new Date().toISOString().slice(0,10);
+const savedDay=localStorage.getItem("sasa_day");
+
+if(savedDay!==today){
+ localStorage.setItem("sasa_day",today);
+ localStorage.setItem("sasa_tasks_done","[]");
+ localStorage.setItem("sasa_task_states","{}");
+}
+
+let balance=Number(localStorage.getItem("sasa_balance")||0);
+let completed=JSON.parse(localStorage.getItem("sasa_tasks_done")||"[]");
+let states=JSON.parse(localStorage.getItem("sasa_task_states")||"{}");
+let history=JSON.parse(localStorage.getItem("sasa_history")||"[]");
+let soundOn=localStorage.getItem("sasa_sound")!=="off";
+let currentPage="home";
+let activeTask=null;
+let timer=null;
+let secondsLeft=0;
+let lang=localStorage.getItem("sasa_lang")||"ar";
+
+const tasks=[
+ {name:"استكشف متجر المكافآت",desc:"افتح المتجر وتعرّف على المكافآت",reward:5,page:"store",duration:8},
+ {name:"تعرّف على المحفظة",desc:"افتح المحفظة واقرأ معلوماتها",reward:5,page:"wallet",duration:8},
+ {name:"اكتشف صفحة الأصدقاء",desc:"افتح قسم الأصدقاء",reward:5,page:"friends",duration:8},
+ {name:"راجع إعدادات حسابك",desc:"افتح صفحة حسابي",reward:10,page:"account",duration:8},
+ {name:"ارجع إلى الرئيسية",desc:"افتح الصفحة الرئيسية",reward:5,page:"home",duration:8},
+ {name:"استكشف المهام",desc:"افتح قائمة المهام اليومية",reward:10,page:"tasks",duration:8},
+ {name:"تعرّف على رصيدك",desc:"شاهد بطاقة رصيد النقاط في الرئيسية",reward:5,page:"home",duration:10},
+ {name:"اكتشف طرق المكافآت",desc:"افتح متجر المكافآت مرة أخرى",reward:10,page:"store",duration:10},
+ {name:"راجع سجل المحفظة",desc:"افتح قسم المحفظة",reward:10,page:"wallet",duration:10},
+ {name:"أكمل جولة SASA",desc:"اقضِ بعض الوقت في صفحة حسابك",reward:15,page:"account",duration:12}
 ];
 
-const products = [
- {name:"شارة مستخدم مميز",price:50,emoji:"🏅"},
- {name:"شارة VIP تجريبية",price:100,emoji:"💎"},
- {name:"خلفية خاصة تجريبية",price:150,emoji:"🌌"}
+const products=[
+ {name:"شارة مستخدم مميز",price:50,emoji:"🏅",desc:"شارة افتراضية لحساب العرض"},
+ {name:"شارة VIP تجريبية",price:100,emoji:"💎",desc:"مستوى VIP تجريبي"},
+ {name:"خلفية نيون خاصة",price:150,emoji:"🌌",desc:"خلفية افتراضية"},
+ {name:"هدية SASA",price:200,emoji:"🎁",desc:"هدية افتراضية في المتجر"}
 ];
 
-let balance = Number(localStorage.getItem("sasa_balance") || 0);
-let completed = JSON.parse(localStorage.getItem("sasa_tasks") || "[]");
-let history = JSON.parse(localStorage.getItem("sasa_history") || "[]");
-let lang = localStorage.getItem("sasa_lang") || "ar";
-
-const user = tg?.initDataUnsafe?.user;
+const user=tg?.initDataUnsafe?.user;
 if(user){
- document.getElementById("username").textContent =
-  user.first_name || "مستخدم SASA";
- document.getElementById("userid").textContent =
-  user.username ? "@"+user.username : "مستخدم تيليجرام";
- document.getElementById("welcome").textContent =
-  "أهلاً بك، "+(user.first_name || "صديقنا");
+ document.getElementById("username").textContent=user.first_name||"مستخدم SASA";
+ document.getElementById("userInfo").textContent=user.username?"@"+user.username:"مستخدم تيليجرام";
+ document.getElementById("welcome").textContent="أهلاً بك، "+(user.first_name||"صديقنا");
 }
 
 function save(){
  localStorage.setItem("sasa_balance",String(balance));
- localStorage.setItem("sasa_tasks",JSON.stringify(completed));
+ localStorage.setItem("sasa_tasks_done",JSON.stringify(completed));
+ localStorage.setItem("sasa_task_states",JSON.stringify(states));
  localStorage.setItem("sasa_history",JSON.stringify(history));
+ localStorage.setItem("sasa_sound",soundOn?"on":"off");
  localStorage.setItem("sasa_lang",lang);
 }
 
-function update(){
- ["balance","storebalance","walletbalance"].forEach(id=>{
-  document.getElementById(id).textContent=balance;
- });
- document.getElementById("accountbalance").textContent=balance+" ✦";
- document.getElementById("progress").textContent=completed.length+" / 10";
- document.getElementById("progressbar").style.width=(completed.length*10)+"%";
- renderTasks();
- renderShop();
- renderHistory();
- save();
-}
-
 function showPage(id){
+ if(activeTask && currentPage!==id){
+  // يتوقف احتساب وقت المهمة عند مغادرة الصفحة المطلوبة
+ }
+ currentPage=id;
  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
  document.getElementById(id).classList.add("active");
  document.querySelectorAll(".nav button").forEach(b=>{
@@ -277,59 +329,146 @@ function showPage(id){
  update();
 }
 
+function update(){
+ ["balance","storeBalance","walletBalance"].forEach(id=>{
+  document.getElementById(id).textContent=balance;
+ });
+ document.getElementById("accountBalance").textContent=balance+" ✦";
+ document.getElementById("progressText").textContent=completed.length+" / "+tasks.length;
+ document.getElementById("progressBar").style.width=(completed.length/tasks.length*100)+"%";
+ document.getElementById("soundToggle").checked=soundOn;
+ renderTasks();renderShop();renderHistory();
+ save();
+}
+
 function renderTasks(){
- const list=document.getElementById("tasklist");
+ const list=document.getElementById("taskList");
  list.innerHTML="";
- taskData.forEach((task,i)=>{
+ tasks.forEach((task,i)=>{
   const done=completed.includes(i);
+  const state=states[i]||"new";
   const row=document.createElement("div");
   row.className="task";
   const info=document.createElement("div");
   info.className="task-info";
   const title=document.createElement("b");
-  title.textContent=task[0];
-  const detail=document.createElement("small");
-  detail.textContent="مكافأة تجريبية: "+task[1]+" نقطة";
-  info.append(title,detail);
+  title.textContent=(done?"✓ ": "🎯 ")+task.name;
+  const desc=document.createElement("small");
+  desc.textContent=task.desc+" · "+task.reward+" نقطة تجريبية";
+  info.append(title,desc);
   const btn=document.createElement("button");
-  btn.textContent=done?"تمت ✓":"استلام";
-  btn.disabled=done;
-  btn.onclick=()=>claimTask(i);
+  if(done){
+   btn.textContent="تم الاستلام ✓";btn.disabled=true;
+  }else if(state==="ready"){
+   btn.textContent="تحقق";
+   btn.onclick=()=>verifyTask(i);
+  }else if(state==="started"){
+   btn.textContent=(activeTask===i?"جاري التنفيذ":"متابعة");
+   btn.onclick=()=>startTask(i);
+  }else{
+   btn.textContent="ابدأ المهمة";
+   btn.onclick=()=>startTask(i);
+  }
   row.append(info,btn);
   list.append(row);
  });
 }
 
-function claimTask(i){
+function startTask(i){
  if(completed.includes(i))return;
+ activeTask=i;
+ states[i]="started";
+ secondsLeft=tasks[i].duration;
+ showPage(tasks[i].page);
+ renderTaskTimer();
+ if(timer)clearInterval(timer);
+ timer=setInterval(()=>{
+  if(activeTask!==i)return;
+  if(currentPage!==tasks[i].page || document.visibilityState!=="visible")return;
+  secondsLeft--;
+  renderTaskTimer();
+  if(secondsLeft<=0){
+   clearInterval(timer);timer=null;
+   activeTask=null;states[i]="ready";
+   renderTasks();
+   const box=document.getElementById("taskTimer");
+   if(box)box.innerHTML="اكتمل الوقت! ارجع لقسم المهام واضغط تحقق.";
+   save();
+  }
+ },1000);
+}
+
+function renderTaskTimer(){
+ let box=document.getElementById("taskTimer");
+ if(!box){
+  box=document.createElement("div");
+  box.id="taskTimer";
+  box.className="notice";
+  const page=document.getElementById(tasks[activeTask].page);
+  page.appendChild(box);
+ }
+ box.innerHTML="⏳ جاري تنفيذ المهمة... الوقت المتبقي: <b>"+Math.max(0,secondsLeft)+"</b> ثانية";
+}
+
+function verifyTask(i){
+ if(states[i]!=="ready" || completed.includes(i))return;
  completed.push(i);
- balance+=taskData[i][1];
+ states[i]="done";
+ history.unshift("مكافأة مهمة تجريبية: "+tasks[i].name+" · +"+tasks[i].reward+" نقطة");
+ balance+=tasks[i].reward;
  update();
+ playReward();
+ showReward(tasks[i].reward);
+}
+
+function playReward(){
+ if(!soundOn)return;
+ try{
+  const AudioContext=window.AudioContext||window.webkitAudioContext;
+  if(!AudioContext)return;
+  const ctx=new AudioContext();
+  const notes=[523.25,659.25,783.99];
+  notes.forEach((freq,index)=>{
+   const osc=ctx.createOscillator();
+   const gain=ctx.createGain();
+   const start=ctx.currentTime+index*.24;
+   osc.type="sine";
+   osc.frequency.value=freq;
+   gain.gain.setValueAtTime(.0001,start);
+   gain.gain.exponentialRampToValueAtTime(.12,start+.04);
+   gain.gain.exponentialRampToValueAtTime(.0001,start+.55);
+   osc.connect(gain);gain.connect(ctx.destination);
+   osc.start(start);osc.stop(start+.58);
+  });
+ }catch(e){}
+}
+
+function showReward(points){
+ const modal=document.createElement("div");
+ modal.style.cssText="position:fixed;inset:0;background:#020817eF;z-index:20;display:flex;align-items:center;justify-content:center;padding:20px";
+ modal.innerHTML='<div class="card reward-pop" style="width:100%;max-width:350px;text-align:center;border-color:#20aaff;box-shadow:0 0 35px #087cff88"><div style="font-size:42px">🎉</div><h2>مبروك! المهمة اكتملت</h2><div class="reward-ring"><div class="reward-number">+'+points+' ✦</div></div><p class="blue-text">SASA POINTS</p><p class="muted">تمت إضافة النقاط التجريبية إلى رصيد العرض.</p><button class="primary" id="rewardClose">رائع!</button></div>';
+ document.body.appendChild(modal);
+ document.getElementById("rewardClose").onclick=()=>modal.remove();
 }
 
 function renderShop(){
- const list=document.getElementById("shoplist");
+ const list=document.getElementById("shopList");
  list.innerHTML="";
  products.forEach((p,i)=>{
   const row=document.createElement("div");
   row.className="shop-item";
   const emoji=document.createElement("div");
-  emoji.className="emoji";
-  emoji.textContent=p.emoji;
+  emoji.className="emoji";emoji.textContent=p.emoji;
   const info=document.createElement("div");
   info.className="shop-info";
-  const name=document.createElement("b");
-  name.textContent=p.name;
-  const price=document.createElement("small");
-  price.textContent=p.price+" نقطة";
-  info.append(name,price);
+  const name=document.createElement("b");name.textContent=p.name;
+  const desc=document.createElement("small");desc.textContent=p.desc+" · "+p.price+" نقطة";
+  info.append(name,desc);
   const btn=document.createElement("button");
-  btn.className="buy";
-  btn.textContent="استبدال";
+  btn.className="buy";btn.textContent="استبدال";
   btn.disabled=balance<p.price;
   btn.onclick=()=>redeem(i);
-  row.append(emoji,info,btn);
-  list.append(row);
+  row.append(emoji,info,btn);list.append(row);
  });
 }
 
@@ -337,23 +476,21 @@ function redeem(i){
  const p=products[i];
  if(balance<p.price)return;
  balance-=p.price;
- history.unshift("استبدال تجريبي: "+p.name+" — "+p.price+" نقطة");
+ history.unshift("استبدال تجريبي: "+p.name+" · "+p.price+" نقطة");
  update();
- alert("تم تسجيل الاستبدال التجريبي داخل التطبيق.");
+ playReward();
+ alert("تم تسجيل الاستبدال التجريبي.");
 }
 
 function renderHistory(){
  const box=document.getElementById("history");
  box.innerHTML="";
  if(!history.length){
-  box.innerHTML='<div class="empty">لا توجد عمليات تجريبية حتى الآن</div>';
-  return;
+  box.innerHTML='<div class="empty">لا توجد عمليات حتى الآن</div>';return;
  }
  history.slice(0,10).forEach(item=>{
-  const row=document.createElement("p");
-  row.className="muted";
-  row.textContent="✓ "+item;
-  box.append(row);
+  const p=document.createElement("p");
+  p.className="muted";p.textContent="✓ "+item;box.append(p);
  });
 }
 
@@ -370,20 +507,21 @@ function shareApp(){
 
 function toggleLanguage(){
  lang=lang==="ar"?"en":"ar";
- localStorage.setItem("sasa_lang",lang);
  document.documentElement.lang=lang;
  document.documentElement.dir=lang==="ar"?"rtl":"ltr";
- document.getElementById("langbutton").textContent=lang==="ar"?"English":"العربية";
- document.querySelectorAll("[data-ar]").forEach(el=>{
-  el.textContent=el.dataset[lang];
- });
+ document.getElementById("languageButton").textContent=lang==="ar"?"English":"العربية";
  alert(lang==="ar"?"تم اختيار العربية":"English selected");
+ save();
 }
 
-update();
-document.getElementById("langbutton").textContent=lang==="ar"?"English":"العربية";
+document.getElementById("soundToggle").addEventListener("change",e=>{
+ soundOn=e.target.checked;save();
+});
+
+document.getElementById("languageButton").textContent=lang==="ar"?"English":"العربية";
 document.documentElement.lang=lang;
 document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+update();
 </script>
 </body>
 </html>
