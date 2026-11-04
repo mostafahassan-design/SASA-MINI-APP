@@ -1,339 +1,389 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#080d18">
 <title>SASA MINI APP</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
 <style>
+:root{
+ --bg:#080d18;--panel:#111c2e;--panel2:#172944;
+ --blue:#087ff0;--cyan:#45c5ff;--text:#f4f8ff;
+ --muted:#91a4bf;--line:#263b58;
+}
 *{box-sizing:border-box}
 body{
- margin:0;
- background:#070b14;
- color:#fff;
- font-family:Arial,sans-serif;
- padding-bottom:95px;
+ margin:0;background:radial-gradient(ellipse at top,#15345a 0,#080d18 48%);
+ color:var(--text);font-family:Arial,sans-serif;min-height:100vh
 }
-header{
- padding:24px 20px 15px;
- display:flex;
- justify-content:space-between;
- align-items:center;
-}
-.logo{
- font-size:25px;
- font-weight:900;
- color:#45b5ff;
- letter-spacing:2px;
-}
-.user-icon{
- width:43px;height:43px;
- border-radius:50%;
- background:#17263d;
- display:grid;place-items:center;
- border:1px solid #28649a;
- font-size:21px;
-}
-.container{max-width:480px;margin:auto;padding:10px 17px}
-.welcome{color:#91a3bb;font-size:14px}
-h2{margin:7px 0 20px;font-size:23px}
-.card{
- background:linear-gradient(145deg,#17243a,#101725);
- border:1px solid #263c59;
- border-radius:22px;
- padding:20px;
- margin-bottom:17px;
- box-shadow:0 8px 30px #0005;
-}
-.balance-card{
- background:linear-gradient(135deg,#102d4b,#111a2c 70%);
- border:1px solid #2875ae;
- text-align:center;
- padding:25px 18px;
-}
-.small-title{color:#a9bfd6;font-size:14px}
-.balance{
- font-size:42px;
- font-weight:bold;
- color:#54bdff;
- margin:13px 0;
-}
-.points{font-size:12px;color:#9eacc0}
-.primary{
- width:100%;
- border:0;
- padding:15px;
- border-radius:14px;
- color:white;
- font-size:16px;
- font-weight:bold;
- background:linear-gradient(90deg,#0879e9,#31b7ff);
- margin-top:17px;
-}
-.primary:active{transform:scale(.98)}
-.stats{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:12px;
-}
-.stat{
- background:#131e30;
- border:1px solid #263b57;
- border-radius:17px;
- padding:17px 12px;
-}
-.stat span{display:block;color:#9eafc4;font-size:13px}
-.stat strong{display:block;margin-top:10px;font-size:20px;color:#55baff}
-.section-title{font-size:18px;margin:22px 3px 13px}
-.menu-grid{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:12px;
-}
-.menu-item{
- background:#131e30;
- border:1px solid #263b57;
- border-radius:17px;
- padding:18px 12px;
- text-align:center;
-}
-.menu-item .emoji{font-size:27px}
-.menu-item p{margin:10px 0 0;font-size:14px}
+button{font:inherit;cursor:pointer}
+.app{max-width:520px;margin:auto;padding:15px 15px 100px}
+header{display:flex;align-items:center;justify-content:space-between;margin:8px 0 25px}
+.logo{font-size:25px;font-weight:900;letter-spacing:2px}
+.logo span{color:var(--cyan)}
+.online{font-size:11px;color:#8bdcff;background:#102b43;border:1px solid #245276;padding:8px 12px;border-radius:30px}
 .page{display:none}
 .page.active{display:block}
-.task{
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:10px;
-}
-.task button{
- background:#087de9;
- color:white;
- border:0;
- border-radius:10px;
- padding:10px 13px;
-}
-.task-info{font-size:14px}
-.task-info small{display:block;color:#9eafc4;margin-top:7px}
-.bottom-nav{
- position:fixed;
- bottom:0;left:0;right:0;
- background:#0d1523;
- border-top:1px solid #26364d;
- display:grid;
- grid-template-columns:repeat(5,1fr);
- padding:12px 4px calc(12px + env(safe-area-inset-bottom));
- z-index:10;
-}
-.nav-btn{
- border:0;
- background:none;
- color:#8798ae;
- font-size:11px;
-}
-.nav-btn b{display:block;font-size:21px;margin-bottom:5px}
-.nav-btn.active{color:#4dbaff}
-.muted{color:#98a9bf;font-size:13px;line-height:1.8}
-.shop-item{
- display:flex;
- justify-content:space-between;
- align-items:center;
- padding:14px 0;
- border-bottom:1px solid #29384c;
-}
-.shop-item button{
- border:0;background:#087de9;color:white;
- padding:9px 13px;border-radius:10px;
-}
-.profile{text-align:center}
-.avatar{
- width:75px;height:75px;
- border-radius:50%;
- background:#183553;
- border:2px solid #42b5ff;
- display:grid;place-items:center;
- font-size:32px;margin:5px auto 15px;
-}
+h1{font-size:25px;margin:8px 0 18px}
+h2{font-size:18px;margin:23px 0 12px}
+.card{background:linear-gradient(145deg,#172b47,#101a2b);border:1px solid var(--line);border-radius:19px;padding:17px;margin-bottom:13px}
+.balance-card{background:linear-gradient(125deg,#0755a5,#102d54 65%,#111c2e);border-color:#247ac3}
+.muted{color:var(--muted);font-size:12px;line-height:1.7}
+.amount{font-size:36px;font-weight:900;margin:12px 0}
+.blue-text{color:#a9e4ff}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:15px;min-height:105px;cursor:pointer}
+.tile .emoji{font-size:24px}
+.tile b{display:block;margin:9px 0 5px}
+.tile small{font-size:11px;color:var(--muted)}
+.primary{width:100%;border:0;border-radius:12px;padding:13px;background:linear-gradient(90deg,#0879e8,#16a7ff);color:white;font-weight:bold}
+.secondary{background:#1b304b;color:#dcecff;border:1px solid #345171;border-radius:11px;padding:10px 13px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.task,.method,.shop-item{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.task:last-child,.method:last-child,.shop-item:last-child{border:0}
+.task-info,.method-info,.shop-info{flex:1}
+.task-info small,.method-info small,.shop-info small{display:block;color:var(--muted);font-size:11px;margin-top:5px}
+.task button,.buy{background:#0879d8;color:white;border:0;border-radius:10px;padding:9px 12px;font-size:12px}
+.task button:disabled,.buy:disabled{background:#263b50;color:#91a4bf}
+.emoji{font-size:25px}
+.soon{font-size:10px;color:#ffda91;background:#49371c;padding:6px 9px;border-radius:20px;white-space:nowrap}
+.notice{background:#342b1c;border:1px solid #70552a;color:#ffdfa3;border-radius:12px;padding:12px;font-size:12px;line-height:1.7;margin:12px 0}
+.empty{text-align:center;color:var(--muted);font-size:13px;padding:18px}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#0b1423f5;border-top:1px solid var(--line);z-index:5}
+.nav-inner{max-width:520px;margin:auto;display:flex;justify-content:space-around;padding:10px 3px calc(10px + env(safe-area-inset-bottom))}
+.nav button{border:0;background:none;color:#8ea3bf;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:5px}
+.nav button.active{color:#49baff}
+.nav .ico{font-size:20px}
+input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#0a1423;color:white;margin:8px 0}
+.footer{text-align:center;color:#657993;font-size:10px;margin-top:25px}
 </style>
 </head>
-
 <body>
+<div class="app">
 
 <header>
- <div class="logo">SASA.</div>
- <div class="user-icon">👤</div>
+ <div class="logo">SASA <span>MINI</span></div>
+ <div class="online">● ONLINE</div>
 </header>
 
-<div class="container">
-
-<div id="home" class="page active">
- <div class="welcome">مرحباً بك في عالم SASA</div>
- <h2>اجمع نقاطك وابدأ رحلتك 🚀</h2>
+<!-- الرئيسية -->
+<section id="home" class="page active">
+ <p class="muted" id="welcome">أهلاً بك في تطبيقك</p>
+ <h1>SASA MINI APP</h1>
 
  <div class="card balance-card">
-  <div class="small-title">إجمالي رصيدك</div>
-  <div class="balance" id="balance">0</div>
-  <div class="points">SASA POINTS • نقاط افتراضية</div>
-  <button class="primary" onclick="mine()">⚡ ابدأ التجميع</button>
-  <p class="muted" id="status">جاهز لبدء التجميع</p>
+  <div class="muted" data-ar="رصيد نقاطك التجريبي" data-en="Your demo points balance">رصيد نقاطك التجريبي</div>
+  <div class="amount"><span id="balance">0</span> ✦</div>
+  <div class="blue-text">SASA POINTS</div>
+  <br>
+  <button class="secondary" onclick="showPage('wallet')">المحفظة والسحب ←</button>
  </div>
 
- <div class="stats">
-  <div class="stat">
-   <span>⚡ نقاط اليوم</span>
-   <strong id="today">0</strong>
-  </div>
-  <div class="stat">
-   <span>🎯 المهام المكتملة</span>
-   <strong id="completed">0</strong>
-  </div>
+ <h2>استكشف التطبيق</h2>
+ <div class="grid">
+  <div class="tile" onclick="showPage('tasks')"><div class="emoji">🎯</div><b>المهام اليومية</b><small>اجمع نقاطك</small></div>
+  <div class="tile" onclick="showPage('friends')"><div class="emoji">👥</div><b>الأصدقاء</b><small>شارك التطبيق</small></div>
+  <div class="tile" onclick="showPage('store')"><div class="emoji">🛍️</div><b>المتجر</b><small>استبدل نقاط العرض</small></div>
+  <div class="tile" onclick="showPage('wallet')"><div class="emoji">💳</div><b>المحفظة</b><small>السحب التجريبي</small></div>
  </div>
 
- <div class="section-title">اكتشف SASA</div>
- <div class="menu-grid">
-  <div class="menu-item" onclick="showPage('tasks')">
-   <div class="emoji">🎯</div><p>المهام</p>
-  </div>
-  <div class="menu-item" onclick="showPage('friends')">
-   <div class="emoji">👥</div><p>الأصدقاء</p>
-  </div>
-  <div class="menu-item" onclick="showPage('shop')">
-   <div class="emoji">🎁</div><p>المتجر</p>
-  </div>
-  <div class="menu-item" onclick="showPage('profile')">
-   <div class="emoji">👤</div><p>حسابي</p>
-  </div>
- </div>
-</div>
-
-<div id="tasks" class="page">
- <h2>🎯 المهام والمكافآت</h2>
+ <h2>مرحباً بك في SASA</h2>
  <div class="card">
-  <div class="task">
-   <div class="task-info">
-    <b>مكافأة البداية</b>
-    <small>احصل على نقاطك التجريبية</small>
-   </div>
-   <button id="rewardButton" onclick="reward()">+5 نقاط</button>
-  </div>
+  <b>✨ ابدأ رحلتك</b>
+  <p class="muted">نفّذ المهام التجريبية، واجمع النقاط، واستكشف المتجر والمحفظة.</p>
  </div>
- <p class="muted">ستتم إضافة المزيد من المهام في التحديثات القادمة.</p>
-</div>
+</section>
 
-<div id="friends" class="page">
- <h2>👥 دعوة الأصدقاء</h2>
+<!-- المهام -->
+<section id="tasks" class="page">
+ <h1>🎯 المهام اليومية</h1>
  <div class="card">
-  <h3>شارك SASA مع أصدقائك</h3>
-  <p class="muted">نظام الإحالات قيد التطوير. سنضيف رابط دعوة خاصاً بكل مستخدم لاحقاً.</p>
+  <div class="row"><b>تقدمك اليوم</b><b id="progress">0 / 10</b></div>
+  <div style="height:8px;background:#263954;border-radius:20px;margin-top:13px;overflow:hidden">
+   <div id="progressbar" style="height:100%;width:0%;background:#19aaff;border-radius:20px"></div>
+  </div>
  </div>
-</div>
+ <div class="card" id="tasklist"></div>
+ <p class="muted">المهام والنقاط هنا تجريبية ومحفوظة على هذا الجهاز فقط.</p>
+</section>
 
-<div id="shop" class="page">
- <h2>🎁 متجر SASA</h2>
+<!-- الأصدقاء -->
+<section id="friends" class="page">
+ <h1>👥 الأصدقاء</h1>
  <div class="card">
-  <div class="shop-item">
-   <span>🏅 شارة العضوية</span>
-   <button onclick="buy(100)">100 نقطة</button>
-  </div>
-  <div class="shop-item">
-   <span>💎 شارة VIP تجريبية</span>
-   <button onclick="buy(250)">250 نقطة</button>
-  </div>
-  <p class="muted">المتجر تجريبي، ولا توجد عمليات شراء أو تحويل أموال حقيقية.</p>
+  <div style="font-size:35px">🎁</div>
+  <h2>شارك SASA MINI APP</h2>
+  <p class="muted">شارك رابط التطبيق مع أصدقائك. لا يتم احتساب مكافآت إحالة حقيقية في هذه النسخة.</p>
+  <button class="primary" onclick="shareApp()">مشاركة التطبيق</button>
  </div>
-</div>
-
-<div id="profile" class="page">
- <h2>👤 حسابي</h2>
- <div class="card profile">
-  <div class="avatar">👤</div>
-  <h3 id="username">عضو SASA</h3>
-  <p class="muted" id="userid">حساب تجريبي</p>
-  <p>رصيدك: <strong id="profileBalance">0</strong> نقطة</p>
+ <div class="card">
+  <b>نظام الإحالات</b>
+  <p class="muted">ميزة عدّ الإحالات والمكافآت تحتاج إلى ربط خادمي آمن قبل تشغيلها.</p>
+  <div class="row"><span class="muted">إحالات مسجلة</span><b>0</b></div>
  </div>
+</section>
+
+<!-- المتجر -->
+<section id="store" class="page">
+ <h1>🛍️ متجر النقاط</h1>
+ <div class="card balance-card">
+  <div class="muted">رصيد النقاط التجريبي</div>
+  <div class="amount"><span id="storebalance">0</span> ✦</div>
+ </div>
+ <div class="card" id="shoplist"></div>
+ <p class="muted">عمليات الاستبدال تجريبية ولا تمنح منتجات أو أموالاً حقيقية.</p>
+</section>
+
+<!-- المحفظة والسحب -->
+<section id="wallet" class="page">
+ <h1>💳 المحفظة والسحب</h1>
+ <div class="card balance-card">
+  <div class="muted">رصيد نقاط SASA التجريبي</div>
+  <div class="amount"><span id="walletbalance">0</span> ✦</div>
+  <div class="blue-text">DEMO WALLET</div>
+ </div>
+
+ <div class="notice">
+  هذه محفظة تجريبية لعرض شكل التطبيق فقط. لا يوجد رصيد نقدي أو سحب أو تحويل أموال حقيقي في النسخة الحالية.
+ </div>
+
+ <h2>طرق السحب المستقبلية</h2>
+ <div class="card">
+  <div class="method">
+   <div class="emoji">📱</div>
+   <div class="method-info"><b>رصيد الموبايل</b><small>خيار مستقبلي غير متاح</small></div>
+   <span class="soon">قريباً</span>
+  </div>
+  <div class="method">
+   <div class="emoji">💳</div>
+   <div class="method-info"><b>البطاقة البنكية</b><small>خيار مستقبلي غير متاح</small></div>
+   <span class="soon">قريباً</span>
+  </div>
+  <div class="method">
+   <div class="emoji">⭐</div>
+   <div class="method-info"><b>مكافآت تيليجرام</b><small>تخضع لشروط تيليجرام</small></div>
+   <span class="soon">قريباً</span>
+  </div>
+ </div>
+
+ <h2>سجل العمليات التجريبي</h2>
+ <div class="card" id="history"><div class="empty">لا توجد عمليات تجريبية حتى الآن</div></div>
+ <button class="secondary" style="width:100%" onclick="showPage('store')">الانتقال إلى متجر النقاط</button>
+</section>
+
+<!-- الحساب -->
+<section id="account" class="page">
+ <h1>👤 الحساب والإعدادات</h1>
+ <div class="card">
+  <div class="emoji">👤</div>
+  <h2 id="username">مستخدم SASA</h2>
+  <p class="muted" id="userid">مرحباً بك في SASA MINI APP</p>
+  <div class="row"><span class="muted">رصيد النقاط</span><b id="accountbalance">0 ✦</b></div>
+ </div>
+ <div class="card">
+  <h2>⚙️ الإعدادات</h2>
+  <div class="row">
+   <div><b>لغة التطبيق</b><p class="muted">اختر لغة العرض</p></div>
+   <button class="secondary" onclick="toggleLanguage()" id="langbutton">English</button>
+  </div>
+ </div>
+ <div class="card">
+  <b>عن التطبيق</b>
+  <p class="muted">SASA MINI APP — الإصدار التجريبي.</p>
+ </div>
+</section>
+
+<div class="footer">SASA MINI APP · DEMO VERSION</div>
 </div>
 
-</div>
-
-<nav class="bottom-nav">
- <button class="nav-btn active" onclick="showPage('home',this)"><b>⌂</b>الرئيسية</button>
- <button class="nav-btn" onclick="showPage('tasks',this)"><b>🎯</b>المهام</button>
- <button class="nav-btn" onclick="showPage('friends',this)"><b>👥</b>الأصدقاء</button>
- <button class="nav-btn" onclick="showPage('shop',this)"><b>🎁</b>المتجر</button>
- <button class="nav-btn" onclick="showPage('profile',this)"><b>👤</b>حسابي</button>
+<!-- شريط التنقل -->
+<nav class="nav">
+ <div class="nav-inner">
+  <button class="active" data-page="home" onclick="showPage('home')"><span class="ico">⌂</span>الرئيسية</button>
+  <button data-page="tasks" onclick="showPage('tasks')"><span class="ico">🎯</span>المهام</button>
+  <button data-page="friends" onclick="showPage('friends')"><span class="ico">👥</span>الأصدقاء</button>
+  <button data-page="store" onclick="showPage('store')"><span class="ico">🛍️</span>المتجر</button>
+  <button data-page="account" onclick="showPage('account')"><span class="ico">👤</span>حسابي</button>
+ </div>
 </nav>
 
 <script>
 const tg = window.Telegram?.WebApp;
 if(tg){tg.ready();tg.expand();}
 
-const telegramUser = tg?.initDataUnsafe?.user;
-const userKey = telegramUser?.id || "demo";
-let balance = Number(localStorage.getItem("sasa_"+userKey)||0);
-let today = Number(localStorage.getItem("today_"+userKey)||0);
-let completed = Number(localStorage.getItem("completed_"+userKey)||0);
-let rewardTaken = localStorage.getItem("reward_"+userKey)==="yes";
+const taskData = [
+ ["افتح التطبيق اليوم",5],
+ ["تعرّف على الصفحة الرئيسية",5],
+ ["افتح قسم المهام",5],
+ ["افتح قسم الأصدقاء",5],
+ ["تعرّف على المتجر",10],
+ ["افتح المحفظة التجريبية",10],
+ ["تعرّف على الإعدادات",5],
+ ["استكشف خيارات اللغة",10],
+ ["ارجع إلى الرئيسية",5],
+ ["أكمل جولة SASA",15]
+];
+
+const products = [
+ {name:"شارة مستخدم مميز",price:50,emoji:"🏅"},
+ {name:"شارة VIP تجريبية",price:100,emoji:"💎"},
+ {name:"خلفية خاصة تجريبية",price:150,emoji:"🌌"}
+];
+
+let balance = Number(localStorage.getItem("sasa_balance") || 0);
+let completed = JSON.parse(localStorage.getItem("sasa_tasks") || "[]");
+let history = JSON.parse(localStorage.getItem("sasa_history") || "[]");
+let lang = localStorage.getItem("sasa_lang") || "ar";
+
+const user = tg?.initDataUnsafe?.user;
+if(user){
+ document.getElementById("username").textContent =
+  user.first_name || "مستخدم SASA";
+ document.getElementById("userid").textContent =
+  user.username ? "@"+user.username : "مستخدم تيليجرام";
+ document.getElementById("welcome").textContent =
+  "أهلاً بك، "+(user.first_name || "صديقنا");
+}
+
+function save(){
+ localStorage.setItem("sasa_balance",String(balance));
+ localStorage.setItem("sasa_tasks",JSON.stringify(completed));
+ localStorage.setItem("sasa_history",JSON.stringify(history));
+ localStorage.setItem("sasa_lang",lang);
+}
 
 function update(){
- document.getElementById("balance").textContent=balance;
- document.getElementById("today").textContent=today;
- document.getElementById("completed").textContent=completed;
- document.getElementById("profileBalance").textContent=balance;
- localStorage.setItem("sasa_"+userKey,balance);
- localStorage.setItem("today_"+userKey,today);
- localStorage.setItem("completed_"+userKey,completed);
- document.getElementById("rewardButton").textContent=rewardTaken?"تم الاستلام":" +5 نقاط";
- document.getElementById("rewardButton").disabled=rewardTaken;
+ ["balance","storebalance","walletbalance"].forEach(id=>{
+  document.getElementById(id).textContent=balance;
+ });
+ document.getElementById("accountbalance").textContent=balance+" ✦";
+ document.getElementById("progress").textContent=completed.length+" / 10";
+ document.getElementById("progressbar").style.width=(completed.length*10)+"%";
+ renderTasks();
+ renderShop();
+ renderHistory();
+ save();
 }
 
-function mine(){
- balance+=1;
- today+=1;
- update();
- document.getElementById("status").textContent="تمت إضافة نقطة تجريبية بنجاح!";
-}
-
-function reward(){
- if(rewardTaken)return;
- balance+=5;
- completed++;
- rewardTaken=true;
- localStorage.setItem("reward_"+userKey,"yes");
- update();
- alert("مبروك! حصلت على 5 نقاط تجريبية 🎉");
-}
-
-function buy(cost){
- if(balance<cost){
-  alert("رصيدك غير كافٍ!");
-  return;
- }
- balance-=cost;
- update();
- alert("تم استبدال النقاط تجريبياً!");
-}
-
-function showPage(id,btn){
+function showPage(id){
  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
  document.getElementById(id).classList.add("active");
- document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
- if(btn)btn.classList.add("active");
- else{
-  const buttons=document.querySelectorAll(".nav-btn");
-  const index=["home","tasks","friends","shop","profile"].indexOf(id);
-  buttons[index].classList.add("active");
+ document.querySelectorAll(".nav button").forEach(b=>{
+  b.classList.toggle("active",b.dataset.page===id);
+ });
+ window.scrollTo(0,0);
+ update();
+}
+
+function renderTasks(){
+ const list=document.getElementById("tasklist");
+ list.innerHTML="";
+ taskData.forEach((task,i)=>{
+  const done=completed.includes(i);
+  const row=document.createElement("div");
+  row.className="task";
+  const info=document.createElement("div");
+  info.className="task-info";
+  const title=document.createElement("b");
+  title.textContent=task[0];
+  const detail=document.createElement("small");
+  detail.textContent="مكافأة تجريبية: "+task[1]+" نقطة";
+  info.append(title,detail);
+  const btn=document.createElement("button");
+  btn.textContent=done?"تمت ✓":"استلام";
+  btn.disabled=done;
+  btn.onclick=()=>claimTask(i);
+  row.append(info,btn);
+  list.append(row);
+ });
+}
+
+function claimTask(i){
+ if(completed.includes(i))return;
+ completed.push(i);
+ balance+=taskData[i][1];
+ update();
+}
+
+function renderShop(){
+ const list=document.getElementById("shoplist");
+ list.innerHTML="";
+ products.forEach((p,i)=>{
+  const row=document.createElement("div");
+  row.className="shop-item";
+  const emoji=document.createElement("div");
+  emoji.className="emoji";
+  emoji.textContent=p.emoji;
+  const info=document.createElement("div");
+  info.className="shop-info";
+  const name=document.createElement("b");
+  name.textContent=p.name;
+  const price=document.createElement("small");
+  price.textContent=p.price+" نقطة";
+  info.append(name,price);
+  const btn=document.createElement("button");
+  btn.className="buy";
+  btn.textContent="استبدال";
+  btn.disabled=balance<p.price;
+  btn.onclick=()=>redeem(i);
+  row.append(emoji,info,btn);
+  list.append(row);
+ });
+}
+
+function redeem(i){
+ const p=products[i];
+ if(balance<p.price)return;
+ balance-=p.price;
+ history.unshift("استبدال تجريبي: "+p.name+" — "+p.price+" نقطة");
+ update();
+ alert("تم تسجيل الاستبدال التجريبي داخل التطبيق.");
+}
+
+function renderHistory(){
+ const box=document.getElementById("history");
+ box.innerHTML="";
+ if(!history.length){
+  box.innerHTML='<div class="empty">لا توجد عمليات تجريبية حتى الآن</div>';
+  return;
+ }
+ history.slice(0,10).forEach(item=>{
+  const row=document.createElement("p");
+  row.className="muted";
+  row.textContent="✓ "+item;
+  box.append(row);
+ });
+}
+
+function shareApp(){
+ const link=location.href;
+ if(tg){
+  tg.openTelegramLink("https://t.me/share/url?url="+encodeURIComponent(link)+"&text="+encodeURIComponent("جرّب SASA MINI APP"));
+ }else if(navigator.share){
+  navigator.share({title:"SASA MINI APP",url:link}).catch(()=>{});
+ }else{
+  alert("افتح التطبيق من تيليجرام لمشاركة الرابط.");
  }
 }
 
-if(telegramUser){
- document.getElementById("username").textContent=
- telegramUser.first_name || "عضو SASA";
- document.getElementById("userid").textContent="عضو تيليجرام";
+function toggleLanguage(){
+ lang=lang==="ar"?"en":"ar";
+ localStorage.setItem("sasa_lang",lang);
+ document.documentElement.lang=lang;
+ document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+ document.getElementById("langbutton").textContent=lang==="ar"?"English":"العربية";
+ document.querySelectorAll("[data-ar]").forEach(el=>{
+  el.textContent=el.dataset[lang];
+ });
+ alert(lang==="ar"?"تم اختيار العربية":"English selected");
 }
-update();
-</script>
 
+update();
+document.getElementById("langbutton").textContent=lang==="ar"?"English":"العربية";
+document.documentElement.lang=lang;
+document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+</script>
 </body>
 </html>
