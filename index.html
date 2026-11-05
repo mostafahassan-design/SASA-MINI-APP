@@ -8,155 +8,167 @@
 <title>SASA MINI APP</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
 <style>
 :root{
 --bg:#070b14;--panel:#101c30;--line:rgba(105,177,255,.17);
---blue:#258cff;--cyan:#55d9ff;--text:#f4f8ff;--muted:#9eb0c9;
---green:#48d6a0;--gold:#ffd36a;--red:#ff7777
+--blue:#258cff;--cyan:#55d9ff;--text:#f4f8ff;
+--muted:#9eb0c9;--green:#48d6a0;--gold:#ffd36a;--red:#ff7777
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
 body{
 margin:0;min-height:100vh;color:var(--text);
-font-family:'Tajawal',sans-serif;font-size:16px;
+font-family:'Tajawal',sans-serif;
+background:radial-gradient(ellipse at 15% 20%,#12315b55,transparent 40%),
+radial-gradient(ellipse at 85% 65%,#075b8850,transparent 38%),#070b14;
+}
+button,input,select{font:inherit}
+button{color:inherit;border:0;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+
+/* LOADING SCREEN */
+#loadingScreen{
+position:fixed;inset:0;z-index:9999;
+display:flex;align-items:center;justify-content:center;
+flex-direction:column;text-align:center;
 background:
-radial-gradient(ellipse at 15% 20%,#12315b55,transparent 40%),
-radial-gradient(ellipse at 85% 65%,#075b8850,transparent 38%),
-#070b14;background-attachment:fixed
+radial-gradient(circle at 50% 45%,#123d70 0%,#091629 38%,#050914 78%);
+transition:opacity .65s ease,visibility .65s ease;
 }
-body:before,body:after{
-content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
+#loadingScreen.hide{opacity:0;visibility:hidden;pointer-events:none}
+.loader-stars{
+position:absolute;inset:0;overflow:hidden;pointer-events:none;
 background-image:
-radial-gradient(2px 2px at 20% 30%,#a8e8ff 98%,transparent),
-radial-gradient(1px 1px at 70% 20%,#fff 98%,transparent),
-radial-gradient(2px 2px at 85% 75%,#55d9ff 98%,transparent),
-radial-gradient(1px 1px at 40% 85%,#fff 98%,transparent),
-radial-gradient(2px 2px at 55% 55%,#8acfff 98%,transparent);
-background-size:230px 230px;animation:stars 35s linear infinite
+radial-gradient(2px 2px at 15% 20%,#fff 98%,transparent),
+radial-gradient(2px 2px at 80% 25%,#55d9ff 98%,transparent),
+radial-gradient(1px 1px at 45% 70%,#fff 98%,transparent),
+radial-gradient(2px 2px at 75% 85%,#55d9ff 98%,transparent);
+background-size:190px 190px;
+animation:starMove 22s linear infinite;
 }
-body:after{opacity:.35;background-size:170px 190px;animation-duration:55s;animation-direction:reverse}
-@keyframes stars{to{transform:translateY(-230px)}}
-button{font:inherit;color:inherit;border:0;cursor:pointer}
-button:disabled{opacity:.48;cursor:not-allowed}
+@keyframes starMove{to{transform:translateY(-190px)}}
+.loader-logo{
+width:112px;height:112px;border-radius:35px;
+display:grid;place-items:center;
+font-size:58px;font-weight:900;color:white;
+background:linear-gradient(145deg,#55d9ff,#1266dc);
+box-shadow:0 0 35px #168cff88,0 0 90px #168cff33;
+animation:logoPulse 2s ease-in-out infinite alternate;
+position:relative;
+}
+@keyframes logoPulse{
+to{transform:scale(1.06);box-shadow:0 0 55px #55d9ffbb,0 0 110px #168cff66}
+}
+.loader-title{font-size:29px;font-weight:900;letter-spacing:1px;margin-top:25px}
+.loader-title span{color:var(--cyan)}
+.loader-subtitle{color:#a9c7e8;font-size:14px;margin-top:8px}
+.loader-track{
+width:210px;height:6px;background:#263c5b;
+border-radius:30px;overflow:hidden;margin-top:35px;
+}
+.loader-progress{
+height:100%;width:0%;
+border-radius:30px;
+background:linear-gradient(90deg,#258cff,#55d9ff);
+box-shadow:0 0 15px #55d9ff;
+transition:width .35s ease;
+}
+#loadingMessage{font-size:12px;color:#8daaca;margin-top:14px}
+.loader-version{position:absolute;bottom:35px;color:#617c9f;font-size:11px}
+
+/* APP */
 .app{width:min(100%,560px);margin:auto;min-height:100vh;padding:20px 16px 110px}
-.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
 .brand{display:flex;align-items:center;gap:11px}
 .logo{
 width:46px;height:46px;border-radius:16px;display:grid;place-items:center;
 font-size:23px;font-weight:900;background:linear-gradient(145deg,#43cfff,#1266dc);
-box-shadow:0 7px 20px #0879ff44;animation:glow 3s ease-in-out infinite alternate
+box-shadow:0 7px 20px #0879ff44
 }
-@keyframes glow{to{box-shadow:0 7px 32px #55d9ff88}}
 .brand h1{font-size:22px;margin:0;font-weight:900}
 .brand h1 span{color:var(--cyan)}
 .brand small{display:block;color:var(--muted);font-size:13px;margin-top:4px}
 .icon-btn{width:44px;height:44px;border-radius:15px;background:#12213a;border:1px solid var(--line);font-size:20px}
 .page{display:none}
-.page.active{display:block;animation:enter .3s ease}
-@keyframes enter{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.page.active{display:block;animation:enter .25s ease}
+@keyframes enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .greeting{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .greeting h2{font-size:23px;margin:0 0 3px;font-weight:900}
 .greeting p{font-size:15px;color:var(--muted);margin:0}
 .online{font-size:12px;color:var(--green)}
-.card{background:linear-gradient(145deg,#152a48,#0c182a);border:1px solid var(--line);border-radius:23px;padding:19px;margin-bottom:14px}
-.balance{
-background:linear-gradient(125deg,#103d7d,#0d65bd 55%,#123a78);
-min-height:174px;position:relative;overflow:hidden;
-box-shadow:0 15px 45px #0879ff22,inset 0 1px 0 #ffffff20
-}
-.balance:after{
-content:"";position:absolute;width:180px;height:180px;border-radius:50%;
-left:-75px;bottom:-110px;background:#55d9ff22;filter:blur(12px);pointer-events:none
-}
-.balance-label{font-size:16px;color:#d9efff;font-weight:700}
-.points{font-size:46px;font-weight:900;margin:8px 0 2px}
-.points-sub{font-size:13px;color:#c8e9ff;letter-spacing:2px;font-weight:800}
-.balance-note{font-size:13px;color:#d4ecff;margin-top:12px}
-.gem{position:absolute;left:20px;top:37px;font-size:58px;filter:drop-shadow(0 0 14px #8de5ff88)}
-.section-head{display:flex;justify-content:space-between;align-items:center;margin:25px 2px 13px}
-.section-head h3{font-size:21px;margin:0;font-weight:900}
-.section-head span{font-size:13px;color:var(--cyan)}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.tile{
-min-height:116px;padding:16px;border-radius:20px;
-background:linear-gradient(145deg,#142744,#0d192c);
-border:1px solid var(--line);text-align:right;transition:.2s
-}
-.tile:active,.item:active{transform:scale(.98)}
-.tile .emoji{font-size:27px;display:block;margin-bottom:8px}
-.tile b{display:block;font-size:17px}
-.tile small{display:block;color:var(--muted);font-size:14px;margin-top:3px}
-.action{padding:12px 17px;border-radius:15px;background:linear-gradient(110deg,#1687ff,#1760ce);font-weight:800;font-size:15px}
+.card{background:linear-gradient(145deg,#152a48,#0c182a);border:1px solid var(--line);border-radius:23px;padding:18px;margin-bottom:14px}
+.balance{background:linear-gradient(125deg,#103d7d,#0d65bd 55%,#123a78);min-height:155px;position:relative;overflow:hidden;box-shadow:0 15px 45px #0879ff22}
+.balance-label{font-size:15px;color:#d9efff;font-weight:700}
+.points{font-size:42px;font-weight:900;margin:8px 0 2px}
+.points-sub{font-size:12px;color:#c8e9ff;letter-spacing:2px;font-weight:800}
+.balance-note{font-size:12px;color:#d4ecff;margin-top:10px}
+.gem{position:absolute;left:18px;top:35px;font-size:48px}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:23px 2px 12px;gap:8px}
+.section-head h3{font-size:20px;margin:0;font-weight:900}
+.section-head span{font-size:12px;color:var(--cyan)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.tile{min-height:110px;padding:15px;border-radius:19px;background:linear-gradient(145deg,#142744,#0d192c);border:1px solid var(--line);text-align:right}
+.tile .emoji{font-size:26px;display:block;margin-bottom:7px}
+.tile b{display:block;font-size:16px}
+.tile small{display:block;color:var(--muted);font-size:13px;margin-top:3px}
+.action{padding:12px 16px;border-radius:14px;background:linear-gradient(110deg,#1687ff,#1760ce);font-weight:800;font-size:14px}
 .action.secondary{background:#172a45;border:1px solid var(--line)}
-.action.full{width:100%;margin-top:12px}
-.list{display:grid;gap:12px}
-.item{
-display:flex;align-items:center;gap:12px;padding:14px;
-border-radius:19px;background:linear-gradient(145deg,#13243d,#0d192b);
-border:1px solid var(--line);transition:.2s;min-width:0
-}
-.item-icon{
-width:48px;height:48px;flex:0 0 48px;border-radius:15px;
-background:linear-gradient(145deg,#17477b,#102c4c);
-display:grid;place-items:center;font-size:23px
-}
+.action.danger{background:#552532;border:1px solid #ff777755}
+.action.full{width:100%;margin-top:10px}
+.list{display:grid;gap:10px}
+.item{display:flex;align-items:center;gap:11px;padding:13px;border-radius:17px;background:linear-gradient(145deg,#13243d,#0d192b);border:1px solid var(--line);min-width:0}
+.item-icon{width:44px;height:44px;flex:0 0 44px;border-radius:14px;background:linear-gradient(145deg,#17477b,#102c4c);display:grid;place-items:center;font-size:21px}
 .item-info{flex:1;min-width:0}
-.item-info b{display:block;font-size:15px}
-.item-info small{display:block;color:var(--muted);font-size:13px;margin-top:3px;line-height:1.5}
-.reward{font-size:13px;color:var(--gold);font-weight:900;white-space:nowrap}
+.item-info b{display:block;font-size:14px}
+.item-info small{display:block;color:var(--muted);font-size:12px;margin-top:3px;line-height:1.5}
 .tag{font-size:11px;color:#9fdfff;background:#123b5b;padding:5px 8px;border-radius:20px;white-space:nowrap}
 .tag.gold{color:#ffe09a;background:#493819}
-.info{font-size:14px;line-height:1.7;color:var(--muted);margin:13px 3px}
-.status{padding:14px;border-radius:15px;background:#102b36;border:1px solid #48d6a055;color:#a9f4d8;margin-bottom:15px;font-size:14px;line-height:1.6}
+.info{font-size:13px;line-height:1.7;color:var(--muted);margin:12px 3px}
+.status{padding:12px;border-radius:14px;background:#102b36;border:1px solid #48d6a055;color:#a9f4d8;margin-bottom:13px;font-size:13px;line-height:1.6}
 .status.error{background:#351b25;border-color:#ff777755;color:#ffc0c0}
 .status.loading{background:#152744;border-color:var(--line);color:#cdeaff}
-.progress{height:9px;background:#263b56;border-radius:99px;overflow:hidden}
-.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--cyan))}
-.ref-box{direction:ltr;text-align:left;word-break:break-all;padding:14px;background:#091525;border:1px dashed #3b91d6;border-radius:14px;color:#c9eaff;font-size:14px;margin:14px 0}
-.setting{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:15px 2px;border-bottom:1px solid var(--line)}
-.switch{width:52px;height:29px;border-radius:99px;background:#30445f;padding:3px;flex-shrink:0}
-.switch i{display:block;width:23px;height:23px;background:#fff;border-radius:50%;transition:.2s}
-.switch.on{background:#147be1}
-.switch.on i{transform:translateX(-23px)}
-.nav{
-position:fixed;z-index:20;bottom:0;left:50%;transform:translateX(-50%);
-width:min(100%,560px);padding:10px 12px calc(10px + env(safe-area-inset-bottom));
-background:rgba(7,14,26,.96);backdrop-filter:blur(18px);
-border-top:1px solid #5daeff24;display:grid;grid-template-columns:repeat(5,1fr);gap:4px
-}
-.nav-btn{background:transparent;color:#8398b5;border-radius:15px;padding:8px 2px 6px;font-size:12px;font-weight:700;display:grid;justify-items:center;gap:4px}
-.nav-btn .nav-icon{font-size:22px}
+.empty{text-align:center;color:var(--muted);padding:20px 8px;line-height:1.7}
+.footer-note{text-align:center;color:#7187a4;font-size:12px;margin:20px 0 0}
+.search,.field{width:100%;padding:12px 13px;border-radius:13px;background:#0c192b;border:1px solid var(--line);color:white;font:inherit;outline:none;margin:5px 0 10px}
+.field-label{display:block;font-size:13px;color:#c9d9ed;margin:8px 2px 3px}
+.field option{background:#0c192b}
+.nav{position:fixed;z-index:20;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,560px);padding:9px 10px calc(9px + env(safe-area-inset-bottom));background:rgba(7,14,26,.96);backdrop-filter:blur(18px);border-top:1px solid #5daeff24;display:grid;grid-template-columns:repeat(5,1fr);gap:3px}
+.nav-btn{background:transparent;color:#8398b5;border-radius:14px;padding:7px 2px 5px;font-size:11px;font-weight:700;display:grid;justify-items:center;gap:3px}
+.nav-btn .nav-icon{font-size:21px}
 .nav-btn.active{color:#7edfff;background:#153d673d}
-.toast{
-position:fixed;z-index:50;bottom:100px;left:50%;transform:translateX(-50%);
-background:#173553;border:1px solid #56caff66;border-radius:14px;
-padding:12px 18px;font-weight:700;font-size:14px;display:none;max-width:90%;text-align:center
-}
+.toast{position:fixed;z-index:50;bottom:100px;left:50%;transform:translateX(-50%);background:#173553;border:1px solid #56caff66;border-radius:14px;padding:11px 16px;font-weight:700;font-size:13px;display:none;max-width:90%;text-align:center}
 .toast.show{display:block;animation:enter .2s ease}
-.empty{text-align:center;color:var(--muted);padding:24px 10px;line-height:1.7}
-.footer-note{text-align:center;color:#7187a4;font-size:12px;margin:22px 0 0}
-.search{width:100%;padding:13px 15px;border-radius:14px;background:#0c192b;border:1px solid var(--line);color:white;font:inherit;outline:none;margin-bottom:13px}
-.search:focus{border-color:var(--cyan)}
-.level-line{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;margin:12px 0 7px}
+.ref-box{direction:ltr;text-align:left;word-break:break-all;padding:13px;background:#091525;border:1px dashed #3b91d6;border-radius:13px;color:#c9eaff;font-size:13px;margin:12px 0}
+.profile-avatar{width:72px;height:72px;border-radius:24px;display:grid;place-items:center;font-size:34px;background:linear-gradient(145deg,#1687ff,#15345b);border:1px solid #6ccfff55;margin:0 auto 10px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mini-balance{padding:14px;border-radius:16px;background:#0b1a2e;border:1px solid var(--line)}
+.mini-balance small{display:block;color:var(--muted);font-size:12px}
+.mini-balance b{display:block;font-size:22px;margin-top:5px;overflow-wrap:anywhere}
+.tx-amount{font-weight:900;direction:ltr;white-space:nowrap}
+.tx-amount.credit,.tx-amount.release{color:var(--green)}
+.tx-amount.debit,.tx-amount.hold{color:var(--gold)}
 .product-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
-.product{
-padding:15px 12px;border:1px solid var(--line);border-radius:18px;
-background:linear-gradient(145deg,#152a48,#0c182a);text-align:center;min-width:0
-}
+.product{padding:15px 12px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#152a48,#0c182a);text-align:center}
 .product .art{font-size:35px;margin-bottom:8px}
 .product b{display:block;font-size:14px}
 .product small{display:block;color:var(--gold);margin:6px 0;font-weight:800}
-.product button{width:100%;font-size:12px;padding:9px;border-radius:11px;background:#172a45;color:#a9c5e7}
-.profile-avatar{
-width:76px;height:76px;border-radius:25px;display:grid;place-items:center;
-font-size:37px;background:linear-gradient(145deg,#1687ff,#15345b);
-border:1px solid #6ccfff55;margin:auto auto 12px
-}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
-@media(min-width:430px){.app{padding-left:20px;padding-right:20px}}
 </style>
 </head>
+
 <body>
+
+<!-- LOADING -->
+<div id="loadingScreen">
+ <div class="loader-stars"></div>
+ <div class="loader-logo">S</div>
+ <div class="loader-title">SASA <span>MINI APP</span></div>
+ <div class="loader-subtitle">رحلتك تبدأ من هنا ✦</div>
+ <div class="loader-track"><div class="loader-progress" id="loaderProgress"></div></div>
+ <div id="loadingMessage">جارٍ تجهيز عالم SASA...</div>
+ <div class="loader-version">SASA MINI APP · SPACE EXPERIENCE</div>
+</div>
+
 <div class="app">
 <header class="topbar">
  <div class="brand">
@@ -178,55 +190,77 @@ border:1px solid #6ccfff55;margin:auto auto 12px
   <div class="balance-label">رصيد نقاطك</div>
   <div class="points" id="homePoints">—</div>
   <div class="points-sub">SASA POINTS</div>
-  <div class="balance-note">رصيدك المسجل في قاعدة البيانات</div>
+  <div class="balance-note">رصيد النقاط المسجل في قاعدة البيانات</div>
   <div class="gem">💎</div>
  </div>
  <div class="card">
-  <div style="display:flex;justify-content:space-between;align-items:center">
-   <b>🚀 رحلتك في SASA</b><span class="tag">المستوى قيد التجهيز</span>
+  <div class="two-col">
+   <div class="mini-balance"><small>رصيد الدولار</small><b id="homeDollars">$—</b></div>
+   <div class="mini-balance"><small>محجوز للسحب</small><b id="homeReserved">$—</b></div>
   </div>
-  <div class="level-line"><span>تقدم المستوى</span><span>سيظهر بعد تفعيل نظام الخبرة</span></div>
-  <div class="progress"><i style="width:0%"></i></div>
+  <button class="action full" onclick="showPage('wallet')">فتح المحفظة</button>
  </div>
  <div class="section-head"><h3>استكشف التطبيق</h3><span>اختر وجهتك ✦</span></div>
  <div class="grid">
-  <button class="tile" onclick="showPage('tasks')"><span class="emoji">🎯</span><b>المهام اليومية</b><small>15 خانة للمهام</small></button>
+  <button class="tile" onclick="showPage('tasks')"><span class="emoji">🎯</span><b>المهام اليومية</b><small>10 مهام + 5 إعلانات</small></button>
   <button class="tile" onclick="showPage('friends')"><span class="emoji">👥</span><b>الأصدقاء</b><small>مشاركة رابط البوت</small></button>
-  <button class="tile" onclick="showPage('shop')"><span class="emoji">🎁</span><b>المتجر</b><small>64 عنصرًا تجريبيًا</small></button>
-  <button class="tile" onclick="showPage('wallet')"><span class="emoji">💠</span><b>المحفظة</b><small>رصيد حسابك</small></button>
+  <button class="tile" onclick="showPage('shop')"><span class="emoji">🎁</span><b>المتجر</b><small>عناصر SASA</small></button>
+  <button class="tile" onclick="showPage('wallet')"><span class="emoji">💠</span><b>المحفظة</b><small>النقاط والدولار والسحب</small></button>
  </div>
- <p class="footer-note">SASA MINI APP · نقاط افتراضية داخل التطبيق</p>
+ <p class="footer-note">SASA MINI APP · الأرصدة حسب سجل الخادم</p>
 </section>
 
 <section class="page" id="tasks">
- <div class="section-head"><h3>🎯 المهام اليومية</h3><span>10 مهام عادية + 5 إعلانات</span></div>
- <div class="status">المهام معروضة للتجهيز. لن تحصل على نقاط إلا بعد ربط نظام تحقق آمن بالخادم.</div>
+ <div class="section-head"><h3>🎯 المهام اليومية</h3><span>10 + 5 إعلانات</span></div>
+ <div class="status">المهام والإعلانات غير مفعّلة حتى الآن. لن تُضاف مكافآت إلا بعد التحقق الآمن من الخادم.</div>
  <div class="section-head"><h3>المهام اليومية</h3><span>10 خانات</span></div>
  <div class="list" id="regularTasks"></div>
  <div class="section-head"><h3>📺 مهام الإعلانات</h3><span>5 خانات</span></div>
  <div class="list" id="adTasks"></div>
- <p class="info">الإعلانات غير مفعّلة حاليًا. لا تضغط أي إعلان أو تتوقع مكافأة قبل اعتماد مزود الإعلانات والتحقق من المشاهدة من الخادم.</p>
 </section>
 
 <section class="page" id="shop">
  <div class="section-head"><h3>🎁 متجر SASA</h3><span>رصيدك: <b id="shopPoints">—</b></span></div>
- <div class="status">كتالوج تجريبي. الشراء متوقف لحين ربط نظام خصم النقاط وحفظ ملكية العناصر على الخادم.</div>
+ <div class="status">الشراء متوقف لحين ربط واجهة المتجر بدوال الشراء وتفعيل العناصر.</div>
  <input id="shopSearch" class="search" placeholder="ابحث عن عنصر..." oninput="renderShop(this.value)">
  <div class="product-grid" id="products"></div>
 </section>
 
 <section class="page" id="wallet">
- <div class="section-head"><h3>💠 محفظة النقاط</h3><span>حسابك</span></div>
+ <div class="section-head"><h3>💠 محفظة SASA</h3><button class="action secondary" onclick="refreshWallet()">تحديث</button></div>
+ <div id="walletStatus" class="status loading">جارٍ تحميل بيانات المحفظة...</div>
  <div class="card balance">
-  <div class="balance-label">إجمالي نقاطك</div>
+  <div class="balance-label">رصيد النقاط</div>
   <div class="points" id="walletPoints">—</div>
   <div class="points-sub">SASA POINTS</div>
-  <div class="balance-note">رصيد افتراضي داخل التطبيق</div>
-  <div class="gem">✦</div>
+  <div class="balance-note">نقاط داخل التطبيق وليست رصيد سحب نقدي</div>
+  <div class="gem">💎</div>
  </div>
- <div class="section-head"><h3>سجل النشاط</h3></div>
- <div class="card"><div class="empty">سجل العمليات سيظهر بعد ربط نظام المعاملات.</div></div>
- <p class="info">النقاط ليست أموالًا حقيقية ولا يمكن سحبها أو تحويلها.</p>
+ <div class="card">
+  <div class="two-col">
+   <div class="mini-balance"><small>الدولار المتاح</small><b id="walletDollars">$—</b></div>
+   <div class="mini-balance"><small>الدولار المحجوز</small><b id="walletReserved">$—</b></div>
+  </div>
+ </div>
+ <div class="section-head"><h3>طلب سحب</h3><span>قيد المراجعة</span></div>
+ <div class="card">
+  <div class="status">إرسال الطلب لا يعني تنفيذ التحويل. لا يوجد مزود دفع مربوط حاليًا. استخدم وسيلة دفع تخص شخصًا بالغًا وبموافقته. لا تدخل بيانات بطاقة بنكية أو رمز أمان.</div>
+  <label class="field-label" for="withdrawAmount">المبلغ بالدولار</label>
+  <input class="field" id="withdrawAmount" type="number" inputmode="decimal" min="1" step="0.01" placeholder="مثال: 5">
+  <label class="field-label" for="withdrawMethod">طريقة السحب</label>
+  <select class="field" id="withdrawMethod">
+   <option value="vodafone_cash">فودافون كاش</option>
+   <option value="usdt_trc20">USDT - TRC20</option>
+  </select>
+  <label class="field-label" for="withdrawDestination" id="destinationLabel">رقم فودافون كاش</label>
+  <input class="field" id="withdrawDestination" type="text" autocomplete="off" placeholder="01xxxxxxxxx">
+  <button class="action full" id="withdrawButton" onclick="createWithdrawal()">إرسال طلب السحب</button>
+  <p class="info">الطلب سيظهر بحالة «قيد المراجعة». التحويل الفعلي يحتاج مزود دفع معتمد.</p>
+ </div>
+ <div class="section-head"><h3>طلبات السحب</h3><span>آخر الطلبات</span></div>
+ <div class="list" id="withdrawalsList"><div class="empty">جارٍ التحميل...</div></div>
+ <div class="section-head"><h3>سجل حركة الدولار</h3><span>آخر العمليات</span></div>
+ <div class="list" id="ledgerList"><div class="empty">جارٍ التحميل...</div></div>
 </section>
 
 <section class="page" id="friends">
@@ -234,7 +268,7 @@ border:1px solid #6ccfff55;margin:auto auto 12px
  <div class="card">
   <div style="font-size:42px;text-align:center">🚀</div>
   <h3 style="text-align:center">شارك SASA مع أصحابك</h3>
-  <p class="info" style="text-align:center">يمكنك مشاركة رابط البوت. نظام الإحالات والتحقق من الأصدقاء لم يتم تفعيله بعد.</p>
+  <p class="info" style="text-align:center">يمكنك مشاركة رابط البوت. مكافآت الإحالة لا تُضاف قبل تفعيل التحقق.</p>
   <div class="ref-box" id="inviteLink">https://t.me/mostafa_sasa710bot</div>
   <button class="action full" onclick="copyInvite()">نسخ رابط البوت</button>
   <button class="action secondary full" onclick="shareInvite()">مشاركة الرابط</button>
@@ -247,14 +281,10 @@ border:1px solid #6ccfff55;margin:auto auto 12px
   <div class="profile-avatar">👤</div>
   <h3 style="text-align:center;margin:0 0 5px" id="profileName">عضو SASA</h3>
   <p class="info" style="text-align:center">ملف الحساب الأساسي من تيليجرام</p>
-  <div class="setting"><span>معرّف تيليجرام</span><b id="telegramId">—</b></div>
-  <div class="setting"><span>اسم المستخدم</span><b id="profileUsername">—</b></div>
-  <div class="setting"><span>المؤثرات الصوتية</span><button class="switch on" id="soundSwitch" onclick="toggleSound()"><i></i></button></div>
-  <div class="setting"><span>الاهتزاز</span><button class="switch on" id="vibrateSwitch" onclick="toggleVibrate()"><i></i></button></div>
-  <div class="setting"><span>اللغة</span><button class="action secondary" onclick="toggleLanguage()" id="languageBtn">العربية</button></div>
+  <div class="item"><div class="item-info"><b>معرّف تيليجرام</b><small id="telegramId">—</small></div></div>
+  <div class="item"><div class="item-info"><b>اسم المستخدم</b><small id="profileUsername">—</small></div></div>
   <button class="action secondary full" onclick="loadProfile()">تحديث بيانات الحساب</button>
  </div>
- <p class="info">تغيير الاسم والصورة والشارات يحتاج حفظًا آمنًا في قاعدة البيانات، وسيتم تفعيله في مرحلة ربط الملف الشخصي.</p>
 </section>
 </main>
 </div>
@@ -263,93 +293,88 @@ border:1px solid #6ccfff55;margin:auto auto 12px
  <button class="nav-btn active" data-page="home" onclick="showPage('home')"><span class="nav-icon">⌂</span><span>الرئيسية</span></button>
  <button class="nav-btn" data-page="tasks" onclick="showPage('tasks')"><span class="nav-icon">◈</span><span>المهام</span></button>
  <button class="nav-btn" data-page="shop" onclick="showPage('shop')"><span class="nav-icon">🎁</span><span>المتجر</span></button>
- <button class="nav-btn" data-page="wallet" onclick="showPage('wallet')"><span class="nav-icon">💠</span><span>النقاط</span></button>
+ <button class="nav-btn" data-page="wallet" onclick="showPage('wallet')"><span class="nav-icon">💠</span><span>المحفظة</span></button>
  <button class="nav-btn" data-page="settings" onclick="showPage('settings')"><span class="nav-icon">⚙</span><span>حسابي</span></button>
 </nav>
 <div class="toast" id="toast"></div>
 
 <script>
-(() => {
+(()=>{
 "use strict";
 
-const API_URL = "https://spxxnptaeqjrfrxfgzjw.supabase.co/functions/v1/sasa-api";
-const BOT_URL = "https://t.me/mostafa_sasa710bot";
-const tg = window.Telegram?.WebApp;
+const API_URL="https://spxxnptaeqjrfrxfgzjw.supabase.co/functions/v1/sasa-api";
+const BOT_URL="https://t.me/mostafa_sasa710bot";
+const tg=window.Telegram?.WebApp;
+let profile=null,wallet=null,loadingWallet=false,requestBusy=false;
 
-let profile = null;
-let soundEnabled = true;
-let vibrateEnabled = true;
-let language = "ar";
-let audioContext = null;
+const $=id=>document.getElementById(id);
 
-const $ = id => document.getElementById(id);
-
-const regularTaskData = [
- ["👤","إكمال الملف الشخصي","تجهيز التحقق من بيانات الحساب"],
- ["🧭","استكشاف التطبيق","تجهيز تسجيل النشاط"],
- ["🌐","تجربة اللغة","تجهيز نظام الترجمة"],
- ["📨","مشاركة التطبيق","تجهيز التحقق من المشاركة"],
- ["🎯","زيارة المهام","تجهيز تسجيل إكمال المهمة"],
- ["🎁","زيارة المتجر","تجهيز تسجيل النشاط"],
- ["💠","زيارة المحفظة","تجهيز سجل العمليات"],
- ["⚙️","زيارة الإعدادات","تجهيز تسجيل النشاط"],
- ["🚀","دعوة صديق","تجهيز نظام الإحالات"],
- ["🏅","اكتشاف الشارات","تجهيز نظام الإنجازات"]
+const regularTaskData=[
+["👤","إكمال الملف الشخصي"],["🧭","استكشاف التطبيق"],
+["🌐","تجربة اللغة"],["📨","مشاركة التطبيق"],
+["🎯","زيارة المهام"],["🎁","زيارة المتجر"],
+["💠","زيارة المحفظة"],["⚙️","زيارة الإعدادات"],
+["🚀","دعوة صديق"],["🏅","اكتشاف الشارات"]
 ];
 
-const adTaskData = [
- "مشاهدة الإعلان الأول","مشاهدة الإعلان الثاني",
- "مشاهدة الإعلان الثالث","مشاهدة الإعلان الرابع",
- "مشاهدة الإعلان الخامس"
+const adTaskData=[
+"مشاهدة الإعلان الأول","مشاهدة الإعلان الثاني",
+"مشاهدة الإعلان الثالث","مشاهدة الإعلان الرابع",
+"مشاهدة الإعلان الخامس"
 ];
 
-const productData = [
- ["🔷","شارة الأزرق",20],["✨","تأثير اللمعان",30],["👑","شارة التميّز",45],
- ["🌌","إطار المجرة",50],["💎","جوهرة زرقاء",25],["🪐","كوكب صغير",35],
- ["🌟","نجمة ذهبية",40],["🚀","إطار الصاروخ",55],["🌙","هلال فضي",30],
- ["☄️","مذنب",45],["🛰️","قمر صناعي",60],["🌠","شهاب",35],
- ["💫","دوامة نجوم",40],["🔮","كرة فضائية",50],["🧿","عين زرقاء",25],
- ["🏆","كأس التميّز",80],["🎖️","ميدالية",65],["🥇","شارة ذهبية",90],
- ["🥈","شارة فضية",70],["🥉","شارة برونزية",50],["🦋","فراشة",35],
- ["🐉","تنين",75],["🦄","وحيد القرن",80],["🐬","دلفين",45],
- ["🦁","أسد",65],["🐺","ذئب",60],["🦊","ثعلب",50],
- ["🐼","باندا",45],["🐯","نمر",60],["🦅","نسر",70],
- ["🌈","قوس قزح",40],["🔥","لهب",55],["⚡","برق",45],
- ["❄️","ثلج",35],["🌊","موجة",40],["🍀","برسيم",30],
- ["🌺","زهرة",35],["🌻","عباد الشمس",35],["🍁","ورقة خريف",30],
- ["🎨","ألوان",45],["🎧","سماعة",50],["🎮","يد تحكم",60],
- ["📀","قرص",30],["💻","حاسوب",75],["📱","هاتف",70],
- ["⌚","ساعة",55],["📷","كاميرا",50],["🎸","جيتار",65],
- ["🎹","بيانو",65],["🎤","ميكروفون",45],["🎬","فيلم",50],
- ["🏁","علم النهاية",40],["🎯","هدف",35],["🧩","لغز",45],
- ["♟️","قطعة شطرنج",40],["🎲","نرد",30],["🃏","ورقة لعب",35],
- ["🛡️","درع",60],["⚔️","رمز أسطوري",70],["🔱","رمح",65],
- ["🪄","عصا سحرية",75],["📜","مخطوطة",50],["🗝️","مفتاح",45],
- ["🏰","قلعة",90]
+const productData=[
+["🔷","شارة الأزرق",20],["✨","تأثير اللمعان",30],
+["👑","شارة التميّز",45],["🌌","إطار المجرة",50],
+["💎","جوهرة زرقاء",25],["🪐","كوكب صغير",35],
+["🌟","نجمة ذهبية",40],["🚀","إطار الصاروخ",55],
+["🌙","هلال فضي",30],["☄️","مذنب",45],
+["🛰️","قمر صناعي",60],["🌠","شهاب",35],
+["💫","دوامة نجوم",40],["🔮","كرة فضائية",50],
+["🧿","عين زرقاء",25],["🏆","كأس التميّز",80],
+["🎖️","ميدالية",65],["🥇","شارة ذهبية",90],
+["🥈","شارة فضية",70],["🥉","شارة برونزية",50],
+["🦋","فراشة",35],["🐉","تنين",75],
+["🦄","وحيد القرن",80],["🐬","دلفين",45],
+["🦁","أسد",65],["🐺","ذئب",60],
+["🦊","ثعلب",50],["🐼","باندا",45],
+["🐯","نمر",60],["🦅","نسر",70]
 ];
 
-function notify(message) {
+/* LOADING */
+let loadProgress=0;
+const loadTimer=setInterval(()=>{
+ loadProgress=Math.min(loadProgress+7,90);
+ $("loaderProgress").style.width=loadProgress+"%";
+},180);
+
+function finishLoading(message="تم تجهيز التطبيق"){
+ clearInterval(loadTimer);
+ $("loaderProgress").style.width="100%";
+ $("loadingMessage").textContent=message;
+ setTimeout(()=>$("loadingScreen").classList.add("hide"),450);
+}
+
+function notify(message){
  const el=$("toast");
  el.textContent=message;
  el.classList.add("show");
  clearTimeout(notify.timer);
- notify.timer=setTimeout(()=>el.classList.remove("show"),2600);
+ notify.timer=setTimeout(()=>el.classList.remove("show"),2800);
 }
 
 function setConnection(message,type="loading"){
- const el=$("connection");
- el.textContent=message;
- el.className="status "+type;
+ $("connection").textContent=message;
+ $("connection").className="status "+type;
 }
 
-function feedback(){
- if(vibrateEnabled){
-  try{
-   if(tg?.HapticFeedback) tg.HapticFeedback.impactOccurred("light");
-   else if(navigator.vibrate) navigator.vibrate(12);
-  }catch(e){}
- }
- if(soundEnabled) playTone(650,.07);
+function money(value){
+ const n=Number(value??0);
+ return "$"+(Number.isFinite(n)?n.toFixed(2):"0.00");
+}
+
+function fmt(value){
+ return Number(value??0).toLocaleString("en-US");
 }
 
 function showPage(id){
@@ -361,167 +386,305 @@ function showPage(id){
   btn.classList.toggle("active",btn.dataset.page===id);
  });
  window.scrollTo({top:0,behavior:"smooth"});
- feedback();
+ if(id==="wallet")refreshWallet();
+}
+
+async function api(action,extra={}){
+ if(!tg?.initData)throw new Error("افتح التطبيق من داخل بوت تيليجرام");
+ const response=await fetch(API_URL,{
+  method:"POST",
+  headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({initData:tg.initData,action,...extra})
+ });
+ let result;
+ try{result=await response.json()}
+ catch{throw new Error("استجابة الخادم غير مفهومة")}
+ if(!response.ok||result.ok===false){
+  throw new Error(result.error||result.message||"حدث خطأ في الخادم");
+ }
+ return result;
 }
 
 function displayProfile(data){
  profile=data;
  const balance=Number(data.balance??0);
  const username=data.username?"@"+data.username:"عضو SASA";
- const formatted=balance.toLocaleString("en-US");
 
  $("welcome").textContent="أهلاً بك 👋";
  $("username").textContent=username;
- $("profileName").textContent=username;
+ $("profileName").textContent=data.display_name||username;
  $("profileUsername").textContent=username;
- $("homePoints").textContent=formatted;
- $("walletPoints").textContent=formatted;
- $("shopPoints").textContent=formatted;
+ $("homePoints").textContent=fmt(balance);
+ $("walletPoints").textContent=fmt(balance);
+ $("shopPoints").textContent=fmt(balance);
  $("telegramId").textContent=data.telegram_id??"—";
- setConnection("تم الاتصال بالحساب بنجاح ✓","success");
  $("onlineStatus").textContent="● متصل";
+ setConnection("تم الاتصال بالحساب بنجاح ✓","success");
 }
 
 async function loadProfile(){
  if(!tg||!tg.initData){
   setConnection("افتح التطبيق من داخل بوت تيليجرام لاختبار الاتصال.","error");
   $("welcome").textContent="افتح التطبيق من تيليجرام";
-  $("username").textContent="لا تتوفر بيانات تسجيل الدخول هنا";
-  $("homePoints").textContent="—";
-  $("walletPoints").textContent="—";
-  $("shopPoints").textContent="—";
+  finishLoading("تعذّر التحقق من الحساب");
   return;
  }
 
  setConnection("جارٍ التحقق من حساب تيليجرام...","loading");
+ $("loadingMessage").textContent="جارٍ تأمين اتصال حسابك...";
 
  try{
-  const response=await fetch(API_URL,{
-   method:"POST",
-   headers:{"Content-Type":"application/json"},
-   body:JSON.stringify({initData:tg.initData})
-  });
-
-  let result;
-  try{result=await response.json()}
-  catch{throw new Error("استجابة الخادم ليست بصيغة JSON")}
-
-  if(!response.ok)throw new Error(result.error||result.message||"فشل التحقق من الحساب");
-
+  const result=await api("login");
   const data=result.profile||result.data||result;
+
   if(data.telegram_id==null||data.balance==null){
-   throw new Error("الخادم لم يُرجع بيانات الحساب المتوقعة");
+   throw new Error("بيانات الحساب غير مكتملة");
   }
+
   displayProfile(data);
+  $("loadingMessage").textContent="جارٍ تحميل محفظتك...";
+  await refreshWallet(true);
+  finishLoading("أهلاً بك في SASA");
  }catch(error){
   console.error("SASA API:",error);
   setConnection("تعذّر تحميل الحساب: "+error.message,"error");
-  $("homePoints").textContent="—";
-  $("walletPoints").textContent="—";
-  $("shopPoints").textContent="—";
-  $("username").textContent="تعذّر تحميل بيانات الحساب";
+  finishLoading("تعذّر الاتصال، يمكنك إعادة المحاولة");
   notify("لم يتم الاتصال بالخادم");
  }
 }
 
-function renderTasks(){
- $("regularTasks").innerHTML=regularTaskData.map((task,index)=>`
-  <div class="item">
-   <div class="item-icon">${task[0]}</div>
-   <div class="item-info"><b>${task[1]}</b><small>${task[2]}</small></div>
-   <span class="tag">قريبًا</span>
-  </div>
- `).join("");
+async function refreshWallet(fromLogin=false){
+ if(loadingWallet||!tg?.initData)return;
+ loadingWallet=true;
+ $("walletStatus").textContent="جارٍ تحديث المحفظة...";
+ $("walletStatus").className="status loading";
 
- $("adTasks").innerHTML=adTaskData.map((name,index)=>`
+ try{
+  const result=await api("wallet_get");
+  wallet=result.wallet||result.data||result;
+
+  const points=wallet.points_balance??profile?.balance??0;
+  const dollars=wallet.dollar_balance??0;
+  const reserved=wallet.dollar_reserved_balance??0;
+
+  $("walletPoints").textContent=fmt(points);
+  $("homePoints").textContent=fmt(points);
+  $("shopPoints").textContent=fmt(points);
+  $("walletDollars").textContent=money(dollars);
+  $("walletReserved").textContent=money(reserved);
+  $("homeDollars").textContent=money(dollars);
+  $("homeReserved").textContent=money(reserved);
+
+  renderLedger(wallet.ledger||wallet.transactions||wallet.dollar_ledger||[]);
+  renderWithdrawals(wallet.withdrawals||[]);
+
+  $("walletStatus").textContent="تم تحديث بيانات المحفظة ✓";
+  $("walletStatus").className="status";
+ }catch(error){
+  console.error("wallet_get:",error);
+  $("walletStatus").textContent="تعذّر تحميل المحفظة: "+error.message;
+  $("walletStatus").className="status error";
+  $("ledgerList").innerHTML='<div class="empty">تعذّر تحميل سجل العمليات</div>';
+  $("withdrawalsList").innerHTML='<div class="empty">تعذّر تحميل طلبات السحب</div>';
+ }finally{
+  loadingWallet=false;
+ }
+}
+
+function entryLabel(type){
+ return({
+  credit:"إضافة رصيد",
+  debit:"خصم",
+  hold:"حجز للسحب",
+  release:"إرجاع رصيد"
+ })[type]||type||"عملية";
+}
+
+function renderLedger(rows){
+ const el=$("ledgerList");
+ if(!Array.isArray(rows)||!rows.length){
+  el.innerHTML='<div class="empty">لا توجد عمليات دولار مسجلة حتى الآن</div>';
+  return;
+ }
+
+ el.innerHTML=rows.map(x=>{
+  const type=x.entry_type||"";
+  const sign=type==="credit"||type==="release"?"+":"−";
+  const date=x.created_at?new Date(x.created_at).toLocaleString("ar-EG"):"";
+  return `
+   <div class="item">
+    <div class="item-icon">💵</div>
+    <div class="item-info">
+     <b>${entryLabel(type)}</b>
+     <small>${safe(x.reason||"حركة محفظة")} · ${safe(date)}</small>
+    </div>
+    <span class="tx-amount ${safe(type)}">${sign}${money(x.amount)}</span>
+   </div>`;
+ }).join("");
+}
+
+function statusLabel(status){
+ return({
+  pending:"قيد المراجعة",
+  approved:"تمت الموافقة",
+  paid:"تم الدفع",
+  rejected:"مرفوض",
+  cancelled:"ملغي"
+ })[status]||status||"غير معروف";
+}
+
+function renderWithdrawals(rows){
+ const el=$("withdrawalsList");
+
+ if(!Array.isArray(rows)||!rows.length){
+  el.innerHTML='<div class="empty">لا توجد طلبات سحب حتى الآن</div>';
+  return;
+ }
+
+ el.innerHTML=rows.map(x=>{
+  const method=x.payment_method==="usdt_trc20"?"USDT TRC20":
+   x.payment_method==="vodafone_cash"?"فودافون كاش":"Visa";
+  const date=x.created_at?new Date(x.created_at).toLocaleString("ar-EG"):"";
+  const cancel=x.status==="pending";
+
+  return `
+   <div class="item">
+    <div class="item-icon">💸</div>
+    <div class="item-info">
+     <b>${money(x.amount)} · ${method}</b>
+     <small>${statusLabel(x.status)} · ${safe(date)}</small>
+     <small>صافي المبلغ: ${money(x.net_amount??x.amount)}</small>
+    </div>
+    ${cancel?`<button class="action danger" onclick="cancelWithdrawal('${safeAttr(x.id)}')">إلغاء</button>`:`<span class="tag">${statusLabel(x.status)}</span>`}
+   </div>`;
+ }).join("");
+}
+
+function safe(value){
+ return String(value??"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+
+function safeAttr(value){
+ return String(value??"").replace(/[^a-zA-Z0-9-]/g,"");
+}
+
+$("withdrawMethod").addEventListener("change",()=>{
+ const usdt=$("withdrawMethod").value==="usdt_trc20";
+ $("destinationLabel").textContent=usdt?
+  "عنوان محفظة USDT على شبكة TRC20":"رقم فودافون كاش";
+ $("withdrawDestination").placeholder=usdt?
+  "عنوان يبدأ بحرف T":"01xxxxxxxxx";
+});
+
+async function createWithdrawal(){
+ if(requestBusy)return;
+
+ const amountText=$("withdrawAmount").value.trim();
+ const method=$("withdrawMethod").value;
+ const destination=$("withdrawDestination").value.trim();
+
+ if(!/^\d+(\.\d{1,2})?$/.test(amountText)||Number(amountText)<=0){
+  notify("اكتب مبلغًا صحيحًا حتى منزلتين عشريتين");
+  return;
+ }
+
+ if(!destination){
+  notify("اكتب بيانات وسيلة الاستلام");
+  return;
+ }
+
+ if(!confirm("تأكيد إرسال طلب السحب؟ سيتم حجز المبلغ حتى مراجعة الطلب، ولن يتم تحويله تلقائيًا."))return;
+
+ requestBusy=true;
+ $("withdrawButton").disabled=true;
+ $("withdrawButton").textContent="جارٍ إرسال الطلب...";
+
+ try{
+  await api("withdrawal_create",{
+   amount:amountText,
+   payment_method:method,
+   destination_value:destination
+  });
+
+  $("withdrawAmount").value="";
+  $("withdrawDestination").value="";
+  notify("تم تسجيل طلب السحب بنجاح، وهو قيد المراجعة");
+  await refreshWallet();
+ }catch(error){
+  console.error(error);
+  notify("لم يتم إرسال الطلب: "+error.message);
+ }finally{
+  requestBusy=false;
+  $("withdrawButton").disabled=false;
+  $("withdrawButton").textContent="إرسال طلب السحب";
+ }
+}
+
+async function cancelWithdrawal(id){
+ if(!id||!confirm("هل تريد إلغاء طلب السحب؟ سيتم إرجاع المبلغ إذا كان الطلب ما زال قيد الانتظار."))return;
+
+ try{
+  await api("withdrawal_cancel",{withdrawal_id:id});
+  notify("تم إلغاء الطلب وإرجاع المبلغ إن كان قابلًا للإلغاء");
+  await refreshWallet();
+ }catch(error){
+  notify("تعذّر إلغاء الطلب: "+error.message);
+ }
+}
+
+function renderTasks(){
+ $("regularTasks").innerHTML=regularTaskData.map(t=>`
+  <div class="item">
+   <div class="item-icon">${t[0]}</div>
+   <div class="item-info"><b>${t[1]}</b><small>بانتظار تفعيل المهمة والتحقق منها</small></div>
+   <span class="tag">قريبًا</span>
+  </div>`).join("");
+
+ $("adTasks").innerHTML=adTaskData.map(n=>`
   <div class="item">
    <div class="item-icon">📺</div>
-   <div class="item-info"><b>${name}</b><small>بانتظار ربط مزود الإعلانات والتحقق من المشاهدة</small></div>
+   <div class="item-info"><b>${n}</b><small>بانتظار مزود إعلانات وتحقق خادمي</small></div>
    <span class="tag gold">غير مفعّل</span>
-  </div>
- `).join("");
+  </div>`).join("");
 }
 
 function renderShop(search=""){
  const term=String(search).trim().toLowerCase();
  const filtered=productData.filter(p=>p[1].toLowerCase().includes(term));
+
  $("products").innerHTML=filtered.map(p=>`
   <div class="product">
    <div class="art">${p[0]}</div>
    <b>${p[1]}</b>
    <small>${p[2]} ✦</small>
-   <button disabled>الشراء غير مفعّل</button>
-  </div>
- `).join("")||'<div class="empty">لا توجد نتائج بحث</div>';
+   <button disabled class="action secondary full">الشراء غير مفعّل</button>
+  </div>`).join("")||'<div class="empty">لا توجد نتائج بحث</div>';
 }
 
 async function copyInvite(){
  try{
-  if(navigator.clipboard?.writeText){
-   await navigator.clipboard.writeText(BOT_URL);
-   notify("تم نسخ رابط البوت");
-  }else{
-   const field=document.createElement("textarea");
-   field.value=BOT_URL;
-   document.body.appendChild(field);
-   field.select();
-   document.execCommand("copy");
-   field.remove();
-   notify("تم نسخ رابط البوت");
-  }
- }catch(e){notify("تعذّر النسخ على هذا الجهاز")}
+  await navigator.clipboard.writeText(BOT_URL);
+  notify("تم نسخ رابط البوت");
+ }catch(e){
+  notify("تعذّر النسخ على هذا الجهاز");
+ }
 }
 
 function shareInvite(){
  const url="https://t.me/share/url?url="+encodeURIComponent(BOT_URL);
  if(tg?.openTelegramLink)tg.openTelegramLink(url);
- else window.open(url,"_blank");
-}
-
-function playTone(frequency,duration){
- if(!soundEnabled)return;
- try{
-  const AudioClass=window.AudioContext||window.webkitAudioContext;
-  if(!AudioClass)return;
-  audioContext ||= new AudioClass();
-  if(audioContext.state==="suspended")audioContext.resume();
-  const oscillator=audioContext.createOscillator();
-  const gain=audioContext.createGain();
-  oscillator.frequency.value=frequency;
-  oscillator.type="sine";
-  gain.gain.setValueAtTime(.035,audioContext.currentTime);
-  gain.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+duration);
-  oscillator.connect(gain);
-  gain.connect(audioContext.destination);
-  oscillator.start();
-  oscillator.stop(audioContext.currentTime+duration);
- }catch(e){}
-}
-
-function toggleSound(){
- soundEnabled=!soundEnabled;
- $("soundSwitch").classList.toggle("on",soundEnabled);
- notify(soundEnabled?"تم تشغيل المؤثرات":"تم إيقاف المؤثرات");
- if(soundEnabled)playTone(700,.1);
-}
-
-function toggleVibrate(){
- vibrateEnabled=!vibrateEnabled;
- $("vibrateSwitch").classList.toggle("on",vibrateEnabled);
- notify(vibrateEnabled?"تم تشغيل الاهتزاز":"تم إيقاف الاهتزاز");
-}
-
-function toggleLanguage(){
- notify("الترجمة الكاملة ستُفعّل في تحديث مستقل.");
+ else location.href=url;
 }
 
 window.showPage=showPage;
 window.loadProfile=loadProfile;
+window.refreshWallet=refreshWallet;
+window.createWithdrawal=createWithdrawal;
+window.cancelWithdrawal=cancelWithdrawal;
 window.copyInvite=copyInvite;
 window.shareInvite=shareInvite;
-window.toggleSound=toggleSound;
-window.toggleVibrate=toggleVibrate;
-window.toggleLanguage=toggleLanguage;
 window.notify=notify;
 window.renderShop=renderShop;
 
