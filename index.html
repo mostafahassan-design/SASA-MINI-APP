@@ -87,7 +87,7 @@ box-shadow:0 0 35px #168cff88,0 0 90px #168cff33;animation:logoPulse 2s ease-in-
 .action.full{width:100%;margin-top:10px}
 .list{display:grid;gap:10px}
 .item{display:flex;align-items:center;gap:11px;padding:13px;border-radius:17px;background:linear-gradient(145deg,#13243d,#0d192b);border:1px solid var(--line);min-width:0}
-.item-icon{width:44px;height:44px;flex:0 0 44px;border-radius:14px;background:linear-gradient(145deg,#17477b,#102c4c);display:grid;place-items:center;font-size:21px}
+.item-icon{width:44px;height:44px;flex:0 0 44px;border-radius:14px;background:linear-gradient(145deg,#17477b,#102c4c);display:grid;place-items:center;font-size:21px;overflow:hidden}
 .item-info{flex:1;min-width:0}
 .item-info b{display:block;font-size:14px}
 .item-info small{display:block;color:var(--muted);font-size:12px;margin-top:3px;line-height:1.5}
@@ -110,7 +110,9 @@ box-shadow:0 0 35px #168cff88,0 0 90px #168cff33;animation:logoPulse 2s ease-in-
 .toast{position:fixed;z-index:50;bottom:100px;left:50%;transform:translateX(-50%);background:#173553;border:1px solid #56caff66;border-radius:14px;padding:11px 16px;font-weight:700;font-size:13px;display:none;max-width:90%;text-align:center}
 .toast.show{display:block;animation:enter .2s ease}
 .ref-box{direction:ltr;text-align:left;word-break:break-all;padding:13px;background:#091525;border:1px dashed #3b91d6;border-radius:13px;color:#c9eaff;font-size:13px;margin:12px 0}
-.profile-avatar{width:72px;height:72px;border-radius:24px;display:grid;place-items:center;font-size:34px;background:linear-gradient(145deg,#1687ff,#15345b);border:1px solid #6ccfff55;margin:0 auto 10px}
+.profile-avatar{width:100px;height:100px;border-radius:30px;display:grid;place-items:center;font-size:42px;background:linear-gradient(145deg,#1687ff,#15345b);border:1px solid #6ccfff55;margin:0 auto 10px;overflow:hidden}
+.profile-avatar img{width:100%;height:100%;object-fit:cover}
+.avatar-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:12px 0}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .mini-balance{padding:14px;border-radius:16px;background:#0b1a2e;border:1px solid var(--line)}
 .mini-balance small{display:block;color:var(--muted);font-size:12px}
@@ -128,6 +130,7 @@ box-shadow:0 0 35px #168cff88,0 0 90px #168cff33;animation:logoPulse 2s ease-in-
 .task-details{display:flex;gap:7px;flex-wrap:wrap;margin-top:7px}
 .task-details span{font-size:11px;color:#c6d9ef;background:#10243d;padding:4px 7px;border-radius:8px}
 .special-task{border-color:#d7a84c66;background:linear-gradient(145deg,#352b19,#172238)}
+.inventory-image{width:100%;height:100%;object-fit:cover}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
@@ -187,13 +190,10 @@ box-shadow:0 0 35px #168cff88,0 0 90px #168cff33;animation:logoPulse 2s ease-in-
 <section class="page" id="tasks">
  <div class="section-head"><h3>🎯 مهام اليوم</h3><button class="action secondary" onclick="loadTasks(true)">تحديث</button></div>
  <div id="tasksStatus" class="status loading">جارٍ تحميل مهامك...</div>
-
  <div class="section-head"><h3>المهام اليومية</h3><span id="dailyCount">—</span></div>
  <div class="list" id="regularTasks"><div class="empty">جارٍ تحميل المهام...</div></div>
-
  <div class="section-head"><h3>⭐ المهمة الخاصة</h3><span>Special Task</span></div>
  <div class="list" id="specialTasks"><div class="empty">جارٍ تحميل المهمة الخاصة...</div></div>
-
  <div class="section-head"><h3>📺 مهام الإعلانات</h3><span>5 خانات</span></div>
  <div class="list" id="adTasks"></div>
  <p class="info">حالة المهمة والتقدم يتم جلبهما من الخادم. لا يتم صرف مكافأة بمجرد عرض المهمة.</p>
@@ -256,14 +256,70 @@ box-shadow:0 0 35px #168cff88,0 0 90px #168cff33;animation:logoPulse 2s ease-in-
 </section>
 
 <section class="page" id="settings">
- <div class="section-head"><h3>⚙️ حسابي والإعدادات</h3><span>ملفك</span></div>
+ <div class="section-head"><h3>⚙️ حسابي</h3><span>ملفك الشخصي</span></div>
+
  <div class="card">
-  <div class="profile-avatar">👤</div>
+  <div class="profile-avatar" id="profileAvatar">👤</div>
+
+  <div class="avatar-actions">
+   <button class="action" onclick="chooseAvatar()">تغيير الصورة</button>
+   <button class="action secondary" onclick="loadProfile()">تحديث البيانات</button>
+  </div>
+
+  <input
+   id="avatarInput"
+   type="file"
+   accept="image/jpeg,image/png,image/webp"
+   hidden
+   onchange="uploadAvatar(this)"
+  >
+
   <h3 style="text-align:center;margin:0 0 5px" id="profileName">عضو SASA</h3>
-  <p class="info" style="text-align:center">ملف الحساب الأساسي من تيليجرام</p>
-  <div class="item"><div class="item-info"><b>معرّف تيليجرام</b><small id="telegramId">—</small></div></div>
-  <div class="item"><div class="item-info"><b>اسم المستخدم</b><small id="profileUsername">—</small></div></div>
-  <button class="action secondary full" onclick="loadProfile()">تحديث بيانات الحساب</button>
+  <p class="info" style="text-align:center">ملفك الشخصي في SASA</p>
+
+  <label class="field-label" for="displayNameInput">الاسم الظاهر</label>
+  <input
+   class="field"
+   id="displayNameInput"
+   type="text"
+   maxlength="40"
+   placeholder="اكتب الاسم الذي تريد ظهوره"
+   autocomplete="name"
+  >
+  <button class="action full" id="saveProfileButton" onclick="saveProfile()">حفظ الاسم</button>
+
+  <div id="profileStatus" class="status loading" style="margin-top:12px">
+   يتم تحميل بيانات حسابك...
+  </div>
+ </div>
+
+ <div class="section-head"><h3>📊 إحصائيات الحساب</h3><span>بياناتك</span></div>
+ <div class="card">
+  <div class="two-col">
+   <div class="mini-balance"><small>المستوى</small><b id="profileLevel">—</b></div>
+   <div class="mini-balance"><small>نقاط الخبرة</small><b id="profileXP">—</b></div>
+  </div>
+  <div class="item" style="margin-top:10px">
+   <div class="item-icon">🗓️</div>
+   <div class="item-info"><b>تاريخ الانضمام</b><small id="profileCreated">—</small></div>
+  </div>
+  <div class="item" style="margin-top:10px">
+   <div class="item-icon">🆔</div>
+   <div class="item-info"><b>معرّف تيليجرام</b><small id="telegramId">—</small></div>
+  </div>
+  <div class="item" style="margin-top:10px">
+   <div class="item-icon">👤</div>
+   <div class="item-info"><b>اسم مستخدم تيليجرام</b><small id="profileUsername">—</small></div>
+  </div>
+ </div>
+
+ <div class="section-head">
+  <h3>🎒 مخزني</h3>
+  <button class="action secondary" onclick="loadInventory(true)">تحديث</button>
+ </div>
+ <div id="inventoryStatus" class="status loading">جارٍ تحميل المخزون...</div>
+ <div class="list" id="inventoryList">
+  <div class="empty">جارٍ تحميل العناصر...</div>
  </div>
 </section>
 </main>
@@ -285,8 +341,12 @@ box-shadow:0 0 35px #168cff88,0 0 90px #168cff33;animation:logoPulse 2s ease-in-
 const API_URL="https://spxxnptaeqjrfrxfgzjw.supabase.co/functions/v1/sasa-api";
 const BOT_URL="https://t.me/mostafa_sasa710bot";
 const tg=window.Telegram?.WebApp;
-let profile=null,wallet=null,loadingWallet=false,requestBusy=false;
+
+let profile=null,wallet=null;
+let loadingWallet=false,requestBusy=false;
 let tasksLoaded=false,loadingTasks=false;
+let loadingInventory=false,inventoryLoaded=false;
+let profileSaving=false,avatarUploading=false;
 
 const $=id=>document.getElementById(id);
 
@@ -352,48 +412,330 @@ function fmt(value){
 function showPage(id){
  const page=$(id);
  if(!page)return;
+
  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
  page.classList.add("active");
+
  document.querySelectorAll(".nav-btn").forEach(btn=>{
   btn.classList.toggle("active",btn.dataset.page===id);
  });
+
  window.scrollTo({top:0,behavior:"smooth"});
+
  if(id==="wallet")refreshWallet();
  if(id==="tasks")loadTasks();
+ if(id==="settings"){
+  loadInventory();
+ }
 }
 
 async function api(action,extra={}){
  if(!tg?.initData)throw new Error("افتح التطبيق من داخل بوت تيليجرام");
+
  const response=await fetch(API_URL,{
   method:"POST",
   headers:{"Content-Type":"application/json"},
   body:JSON.stringify({initData:tg.initData,action,...extra})
  });
+
  let result;
- try{result=await response.json()}
- catch{throw new Error("استجابة الخادم غير مفهومة")}
+
+ try{
+  result=await response.json();
+ }catch{
+  throw new Error("استجابة الخادم غير مفهومة");
+ }
+
  if(!response.ok||result.ok===false){
   throw new Error(result.error||result.message||"حدث خطأ في الخادم");
  }
+
  return result;
+}
+
+// -----------------------------------------
+// PROFILE DISPLAY
+// -----------------------------------------
+
+function displayAvatar(url){
+ const box=$("profileAvatar");
+
+ if(url){
+  const img=document.createElement("img");
+  img.src=url;
+  img.alt="صورة الملف الشخصي";
+  img.onerror=()=>{
+   box.textContent="👤";
+  };
+
+  box.replaceChildren(img);
+ }else{
+  box.textContent="👤";
+ }
 }
 
 function displayProfile(data){
  profile=data;
+
  const balance=Number(data.balance??0);
  const username=data.username?"@"+data.username:"عضو SASA";
+ const displayName=data.display_name||username;
 
  $("welcome").textContent="أهلاً بك 👋";
  $("username").textContent=username;
- $("profileName").textContent=data.display_name||username;
+ $("profileName").textContent=displayName;
  $("profileUsername").textContent=username;
  $("homePoints").textContent=fmt(balance);
  $("walletPoints").textContent=fmt(balance);
  $("shopPoints").textContent=fmt(balance);
  $("telegramId").textContent=data.telegram_id??"—";
+
+ $("displayNameInput").value=data.display_name||"";
+ $("profileLevel").textContent=fmt(data.level??1);
+ $("profileXP").textContent=fmt(data.experience_points??0);
+
+ $("profileCreated").textContent=data.created_at?
+  new Date(data.created_at).toLocaleDateString("ar-EG"):"—";
+
+ displayAvatar(data.avatar_url||null);
+
  $("onlineStatus").textContent="● متصل";
  setConnection("الحساب جاهز","success");
+
+ $("profileStatus").textContent="تم تحميل بيانات حسابك.";
+ $("profileStatus").className="status";
 }
+
+// -----------------------------------------
+// SAVE DISPLAY NAME
+// -----------------------------------------
+
+async function saveProfile(){
+ if(profileSaving)return;
+
+ const displayName=$("displayNameInput").value.trim();
+
+ if(displayName.length<2||displayName.length>40){
+  notify("الاسم لازم يكون من حرفين إلى 40 حرفًا");
+  return;
+ }
+
+ if(!profile){
+  notify("بيانات الحساب لم تكتمل بعد");
+  return;
+ }
+
+ profileSaving=true;
+ const button=$("saveProfileButton");
+ button.disabled=true;
+ button.textContent="جارٍ الحفظ...";
+
+ $("profileStatus").textContent="جارٍ حفظ الاسم...";
+ $("profileStatus").className="status loading";
+
+ try{
+  const result=await api("profile_update",{
+   display_name:displayName
+  });
+
+  if(!result.profile){
+   throw new Error("الخادم لم يرجع بيانات الملف الشخصي");
+  }
+
+  displayProfile(result.profile);
+
+  $("profileStatus").textContent="تم حفظ الاسم بنجاح.";
+  $("profileStatus").className="status";
+
+  notify("تم تحديث اسمك بنجاح");
+ }catch(error){
+  console.error("PROFILE_UPDATE:",error);
+
+  $("profileStatus").textContent="تعذّر حفظ الاسم: "+error.message;
+  $("profileStatus").className="status error";
+
+  notify("لم يتم حفظ الاسم");
+ }finally{
+  profileSaving=false;
+  button.disabled=false;
+  button.textContent="حفظ الاسم";
+ }
+}
+
+// -----------------------------------------
+// AVATAR UPLOAD
+// -----------------------------------------
+
+function chooseAvatar(){
+ if(avatarUploading)return;
+ $("avatarInput").click();
+}
+
+async function uploadAvatar(input){
+ const file=input.files?.[0];
+
+ if(!file)return;
+
+ const allowedTypes=[
+  "image/jpeg",
+  "image/png",
+  "image/webp"
+ ];
+
+ if(!allowedTypes.includes(file.type)){
+  notify("اختار صورة JPG أو PNG أو WEBP");
+  input.value="";
+  return;
+ }
+
+ if(file.size>3*1024*1024){
+  notify("حجم الصورة أكبر من 3 ميجابايت");
+  input.value="";
+  return;
+ }
+
+ if(avatarUploading)return;
+
+ avatarUploading=true;
+
+ $("profileStatus").textContent="جارٍ تجهيز الصورة ورفعها...";
+ $("profileStatus").className="status loading";
+
+ const avatarButton=document.querySelector(".avatar-actions button");
+ if(avatarButton)avatarButton.disabled=true;
+
+ try{
+  const base64=await new Promise((resolve,reject)=>{
+   const reader=new FileReader();
+
+   reader.onload=()=>{
+    const result=reader.result;
+
+    if(typeof result!=="string"){
+     reject(new Error("تعذّرت قراءة الصورة"));
+     return;
+    }
+
+    resolve(result);
+   };
+
+   reader.onerror=()=>reject(new Error("تعذّرت قراءة ملف الصورة"));
+   reader.readAsDataURL(file);
+  });
+
+  const result=await api("avatar_upload",{
+   image_base64:base64
+  });
+
+  if(!result.profile){
+   throw new Error("الخادم لم يرجع بيانات الصورة");
+  }
+
+  displayProfile(result.profile);
+
+  $("profileStatus").textContent="تم رفع الصورة وحفظها بنجاح.";
+  $("profileStatus").className="status";
+
+  notify("تم تحديث صورتك الشخصية");
+ }catch(error){
+  console.error("AVATAR_UPLOAD:",error);
+
+  $("profileStatus").textContent="تعذّر رفع الصورة: "+error.message;
+  $("profileStatus").className="status error";
+
+  notify("لم يتم رفع الصورة");
+ }finally{
+  avatarUploading=false;
+  input.value="";
+
+  if(avatarButton)avatarButton.disabled=false;
+ }
+}
+
+// -----------------------------------------
+// INVENTORY
+// -----------------------------------------
+
+async function loadInventory(force=false){
+ if(loadingInventory)return;
+ if(inventoryLoaded&&!force)return;
+
+ if(!tg?.initData){
+  $("inventoryStatus").textContent="افتح التطبيق من تيليجرام لعرض المخزون.";
+  $("inventoryStatus").className="status error";
+  return;
+ }
+
+ loadingInventory=true;
+
+ $("inventoryStatus").textContent="جارٍ تحميل مخزونك...";
+ $("inventoryStatus").className="status loading";
+
+ try{
+  const result=await api("inventory_get");
+
+  const items=Array.isArray(result.inventory)?result.inventory:
+   Array.isArray(result.items)?result.items:[];
+
+  renderInventory(items);
+
+  inventoryLoaded=true;
+
+  $("inventoryStatus").textContent=
+   "تم تحميل المخزون. عدد السجلات: "+items.length;
+  $("inventoryStatus").className="status";
+ }catch(error){
+  console.error("INVENTORY_GET:",error);
+
+  $("inventoryStatus").textContent=
+   "تعذّر تحميل المخزون: "+error.message;
+  $("inventoryStatus").className="status error";
+
+  $("inventoryList").innerHTML=
+   '<div class="empty">لم نتمكن من تحميل العناصر. اضغط تحديث للمحاولة مرة أخرى.</div>';
+ }finally{
+  loadingInventory=false;
+ }
+}
+
+function renderInventory(items){
+ const el=$("inventoryList");
+
+ if(!items.length){
+  el.innerHTML='<div class="empty">مخزونك فارغ حاليًا. العناصر التي تمتلكها ستظهر هنا.</div>';
+  return;
+ }
+
+ el.innerHTML=items.map(item=>{
+  const product=item.product||{};
+  const title=product.title_ar||product.title_en||item.product_id||"عنصر SASA";
+  const description=product.description_ar||product.description_en||"عنصر في مخزونك";
+  const quantity=Math.max(0,Number(item.quantity??0));
+  const imageUrl=product.image_url||"";
+
+  const icon=imageUrl?
+   `<img class="inventory-image" src="${safe(imageUrl)}" alt="">`:
+   "🎁";
+
+  const acquired=item.acquired_at?
+   new Date(item.acquired_at).toLocaleDateString("ar-EG"):"";
+
+  return `
+   <div class="item">
+    <div class="item-icon">${icon}</div>
+    <div class="item-info">
+     <b>${safe(title)}</b>
+     <small>${safe(description)}</small>
+     <small>الكمية: ${fmt(quantity)} ${acquired?" · تاريخ الإضافة: "+safe(acquired):""}</small>
+    </div>
+    <span class="tag green">مملوك</span>
+   </div>`;
+ }).join("");
+}
+
+// -----------------------------------------
+// TASKS
+// -----------------------------------------
 
 function taskStatusLabel(status){
  return({
@@ -406,6 +748,7 @@ function taskStatusLabel(status){
 
 function taskDifficultyLabel(level){
  const n=Number(level||1);
+
  return({
   1:"سهلة",
   2:"عادية",
@@ -449,6 +792,7 @@ function renderTasks(tasks){
  const special=all.filter(t=>(t.task_type||t.type)==="special");
 
  $("dailyCount").textContent=daily.length+" مهام";
+
  $("regularTasks").innerHTML=daily.length?
   daily.map(t=>renderTaskCard(t,false)).join(""):
   '<div class="empty">لا توجد مهام يومية متاحة حاليًا</div>';
@@ -470,6 +814,7 @@ function renderAdTasks(){
 async function loadTasks(force=false){
  if(loadingTasks)return;
  if(tasksLoaded&&!force)return;
+
  if(!tg?.initData){
   $("tasksStatus").textContent="افتح التطبيق من داخل بوت تيليجرام لتحميل المهام.";
   $("tasksStatus").className="status error";
@@ -482,24 +827,35 @@ async function loadTasks(force=false){
 
  try{
   const result=await api("tasks_get");
+
   const tasks=Array.isArray(result.tasks)?result.tasks:
    Array.isArray(result.data)?result.data:
    Array.isArray(result)?result:[];
 
   renderTasks(tasks);
   tasksLoaded=true;
+
   $("tasksStatus").textContent="تم تحميل المهام من الخادم بنجاح.";
   $("tasksStatus").className="status";
  }catch(error){
   console.error("tasks_get:",error);
+
   $("tasksStatus").textContent="تعذّر تحميل المهام: "+error.message;
   $("tasksStatus").className="status error";
-  $("regularTasks").innerHTML='<div class="empty">تعذّر جلب المهام. اضغط تحديث للمحاولة مرة أخرى.</div>';
-  $("specialTasks").innerHTML='<div class="empty">تعذّر جلب المهمة الخاصة.</div>';
+
+  $("regularTasks").innerHTML=
+   '<div class="empty">تعذّر جلب المهام. اضغط تحديث للمحاولة مرة أخرى.</div>';
+
+  $("specialTasks").innerHTML=
+   '<div class="empty">تعذّر جلب المهمة الخاصة.</div>';
  }finally{
   loadingTasks=false;
  }
 }
+
+// -----------------------------------------
+// LOGIN
+// -----------------------------------------
 
 async function loadProfile(){
  if(!tg||!tg.initData){
@@ -521,21 +877,31 @@ async function loadProfile(){
   }
 
   displayProfile(data);
+
   $("loadingMessage").textContent="جارٍ تحميل المهام والمحفظة...";
+
   await loadTasks(true);
   await refreshWallet(true);
+
   finishLoading("أهلاً بك في SASA");
  }catch(error){
   console.error("SASA API:",error);
+
   setConnection("تعذّر تحميل الحساب: "+error.message,"error");
   finishLoading("تعذّر الاتصال، يمكنك إعادة المحاولة");
   notify("لم يتم الاتصال بالخادم");
  }
 }
 
+// -----------------------------------------
+// WALLET
+// -----------------------------------------
+
 async function refreshWallet(fromLogin=false){
  if(loadingWallet||!tg?.initData)return;
+
  loadingWallet=true;
+
  $("walletStatus").textContent="جارٍ تحديث المحفظة...";
  $("walletStatus").className="status loading";
 
@@ -550,8 +916,10 @@ async function refreshWallet(fromLogin=false){
   $("walletPoints").textContent=fmt(points);
   $("homePoints").textContent=fmt(points);
   $("shopPoints").textContent=fmt(points);
+
   $("walletDollars").textContent=money(dollars);
   $("walletReserved").textContent=money(reserved);
+
   $("homeDollars").textContent=money(dollars);
   $("homeReserved").textContent=money(reserved);
 
@@ -562,8 +930,10 @@ async function refreshWallet(fromLogin=false){
   $("walletStatus").className="status";
  }catch(error){
   console.error("wallet_get:",error);
+
   $("walletStatus").textContent="تعذّر تحميل المحفظة: "+error.message;
   $("walletStatus").className="status error";
+
   $("ledgerList").innerHTML='<div class="empty">تعذّر تحميل سجل العمليات</div>';
   $("withdrawalsList").innerHTML='<div class="empty">تعذّر تحميل طلبات السحب</div>';
  }finally{
@@ -582,6 +952,7 @@ function entryLabel(type){
 
 function renderLedger(rows){
  const el=$("ledgerList");
+
  if(!Array.isArray(rows)||!rows.length){
   el.innerHTML='<div class="empty">لا توجد عمليات دولار مسجلة حتى الآن</div>';
   return;
@@ -591,6 +962,7 @@ function renderLedger(rows){
   const type=x.entry_type||"";
   const sign=type==="credit"||type==="release"?"+":"−";
   const date=x.created_at?new Date(x.created_at).toLocaleString("ar-EG"):"";
+
   return `
    <div class="item">
     <div class="item-icon">💵</div>
@@ -615,6 +987,7 @@ function statusLabel(status){
 
 function renderWithdrawals(rows){
  const el=$("withdrawalsList");
+
  if(!Array.isArray(rows)||!rows.length){
   el.innerHTML='<div class="empty">لا توجد طلبات سحب حتى الآن</div>';
   return;
@@ -623,6 +996,7 @@ function renderWithdrawals(rows){
  el.innerHTML=rows.map(x=>{
   const method=x.payment_method==="usdt_trc20"?"USDT TRC20":
    x.payment_method==="vodafone_cash"?"فودافون كاش":"Visa";
+
   const date=x.created_at?new Date(x.created_at).toLocaleString("ar-EG"):"";
   const cancel=x.status==="pending";
 
@@ -649,10 +1023,16 @@ function safeAttr(value){
  return String(value??"").replace(/[^a-zA-Z0-9-]/g,"");
 }
 
+// -----------------------------------------
+// WITHDRAWAL
+// -----------------------------------------
+
 $("withdrawMethod").addEventListener("change",()=>{
  const usdt=$("withdrawMethod").value==="usdt_trc20";
+
  $("destinationLabel").textContent=usdt?
   "عنوان محفظة USDT على شبكة TRC20":"رقم فودافون كاش";
+
  $("withdrawDestination").placeholder=usdt?
   "عنوان يبدأ بحرف T":"01xxxxxxxxx";
 });
@@ -677,6 +1057,7 @@ async function createWithdrawal(){
  if(!confirm("تأكيد إرسال طلب السحب؟ سيتم حجز المبلغ حتى مراجعة الطلب، ولن يتم تحويله تلقائيًا."))return;
 
  requestBusy=true;
+
  $("withdrawButton").disabled=true;
  $("withdrawButton").textContent="جارٍ إرسال الطلب...";
 
@@ -689,6 +1070,7 @@ async function createWithdrawal(){
 
   $("withdrawAmount").value="";
   $("withdrawDestination").value="";
+
   notify("تم تسجيل طلب السحب بنجاح، وهو قيد المراجعة");
   await refreshWallet();
  }catch(error){
@@ -706,6 +1088,7 @@ async function cancelWithdrawal(id){
 
  try{
   await api("withdrawal_cancel",{withdrawal_id:id});
+
   notify("تم إلغاء الطلب وإرجاع المبلغ إن كان قابلًا للإلغاء");
   await refreshWallet();
  }catch(error){
@@ -713,9 +1096,16 @@ async function cancelWithdrawal(id){
  }
 }
 
+// -----------------------------------------
+// SHOP
+// -----------------------------------------
+
 function renderShop(search=""){
  const term=String(search).trim().toLowerCase();
- const filtered=productData.filter(p=>p[1].toLowerCase().includes(term));
+
+ const filtered=productData.filter(p=>
+  p[1].toLowerCase().includes(term)
+ );
 
  $("products").innerHTML=filtered.map(p=>`
   <div class="product">
@@ -725,6 +1115,10 @@ function renderShop(search=""){
    <button disabled class="action secondary full">الشراء غير مفعّل</button>
   </div>`).join("")||'<div class="empty">لا توجد نتائج بحث</div>';
 }
+
+// -----------------------------------------
+// INVITATIONS
+// -----------------------------------------
 
 async function copyInvite(){
  try{
@@ -737,9 +1131,14 @@ async function copyInvite(){
 
 function shareInvite(){
  const url="https://t.me/share/url?url="+encodeURIComponent(BOT_URL);
+
  if(tg?.openTelegramLink)tg.openTelegramLink(url);
  else location.href=url;
 }
+
+// -----------------------------------------
+// GLOBAL FUNCTIONS
+// -----------------------------------------
 
 window.showPage=showPage;
 window.loadProfile=loadProfile;
@@ -751,6 +1150,14 @@ window.copyInvite=copyInvite;
 window.shareInvite=shareInvite;
 window.notify=notify;
 window.renderShop=renderShop;
+window.saveProfile=saveProfile;
+window.chooseAvatar=chooseAvatar;
+window.uploadAvatar=uploadAvatar;
+window.loadInventory=loadInventory;
+
+// -----------------------------------------
+// TELEGRAM INITIALIZATION
+// -----------------------------------------
 
 try{
  tg?.ready();
@@ -758,7 +1165,9 @@ try{
  tg?.setHeaderColor?.("#070b14");
  tg?.setBackgroundColor?.("#070b14");
  tg?.disableVerticalSwipes?.();
-}catch(e){}
+}catch(e){
+ console.error("TELEGRAM_INIT_ERROR:",e);
+}
 
 renderAdTasks();
 renderShop();
