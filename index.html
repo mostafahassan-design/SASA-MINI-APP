@@ -1,4 +1,190 @@
+```html
+ <div><h2>أهلاً بيك في SASA ✦</h2><p id="welcome">جاهز تبدأ رحلتك؟</p></div>
+ <span class="online">● متصل</span>
+ </div>
+ <div class="card balance">
+  <div class="balance-label">رصيد نقاط SASA</div>
+  <div class="points" id="homePoints">0</div>
+  <div class="points-sub">SASA POINTS</div>
+  <div class="balance-note">اجمع النقاط من المهام والأنشطة داخل التطبيق</div>
+  <div class="gem">✦</div>
+ </div>
+ <div class="two-col">
+  <div class="mini-balance"><small>دولارات SASA</small><b id="homeDollars">$0.00</b></div>
+  <div class="mini-balance"><small>دولارات محجوزة</small><b id="homeReserved">$0.00</b></div>
+ </div>
+ <div class="section-head"><h3>استكشف التطبيق</h3><span>اختار وجهتك</span></div>
+ <div class="grid">
+  <button class="tile" onclick="showPage('tasks')"><span class="emoji">🎯</span><b>المهام</b><small>أنجز واجمع النقاط</small></button>
+  <button class="tile" onclick="showPage('shop')"><span class="emoji">🛍️</span><b>المتجر</b><small>منتجات رقمية مميزة</small></button>
+  <button class="tile" onclick="showPage('wallet')"><span class="emoji">💎</span><b>المحفظة</b><small>تابع أرصدتك</small></button>
+  <button class="tile" onclick="showPage('friends')"><span class="emoji">👥</span><b>الأصدقاء</b><small>شارك رابط الدعوة</small></button>
+ </div>
+ <div class="section-head"><h3>رصيدك الحالي</h3><span>تحديث من الخادم</span></div>
+ <div class="card">
+  <div class="wallet-stat-line"><span>نقاط SASA</span><b id="walletSummaryPoints">0</b></div>
+  <div class="wallet-stat-line"><span>دولارات SASA المتاحة</span><b id="walletSummaryAvailable">$0.00</b></div>
+  <div class="wallet-stat-line"><span>دولارات SASA المحجوزة</span><b id="walletSummaryReserved">$0.00</b></div>
+ </div>
+</section>
 
+<section class="page" id="tasks">
+ <div class="section-head"><h3>المهام اليومية</h3><span id="dailyCount">0 / 10</span></div>
+ <div id="tasksStatus" class="status loading">جارٍ تحميل المهام...</div>
+ <div class="list" id="regularTasks"></div>
+ <div class="section-head"><h3>المهمة الخاصة</h3><span>مهمة واحدة</span></div>
+ <div class="list" id="specialTasks"></div>
+ <div class="section-head"><h3>مهام الإعلانات</h3><span>مساحات إعلانية</span></div>
+ <div class="list" id="adTasks"></div>
+ <p class="info">تنفيذ المهام واستلام المكافآت يحتاج إلى تحقق من الخادم. لن يتم إضافة نقاط بشكل محلي غير موثّق.</p>
+</section>
+
+<section class="page" id="shop">
+ <div class="section-head"><h3>متجر SASA</h3><span>منتجات رقمية</span></div>
+ <div class="shop-intro">
+  <b>اختار اللي يناسب عالمك ✨</b>
+  <p>مجموعة من المنتجات الرقمية لتخصيص تجربتك داخل SASA. الشراء غير متاح حاليًا لحين ربط عملية شراء آمنة بالخادم.</p>
+  <div class="shop-currencies">
+   <div class="currency-chip"><small>رصيد نقاط SASA</small><b id="shopPoints">0 ✦</b></div>
+   <div class="currency-chip"><small>رصيد دولارات SASA</small><b id="shopDollars">$0.00</b></div>
+  </div>
+ </div>
+ <div class="shop-filters">
+  <div class="filter-label">التصنيفات</div>
+  <div class="category-chips" id="shopCategories"></div>
+  <div class="filter-label">طريقة عرض الأسعار</div>
+  <div class="currency-filters">
+   <button class="filter-chip active" data-currency="all" onclick="setShopCurrency('all')">الكل</button>
+   <button class="filter-chip" data-currency="points" onclick="setShopCurrency('points')">نقاط SASA</button>
+   <button class="filter-chip" data-currency="dollars" onclick="setShopCurrency('dollars')">دولارات SASA</button>
+  </div>
+  <input id="shopSearch" class="search" placeholder="ابحث عن منتج..." oninput="renderShop(this.value)">
+ </div>
+ <div class="section-head"><h3>المنتجات</h3><span id="shopResultCount">0 عنصر</span></div>
+ <div class="product-grid" id="products"></div>
+</section>
+
+<section class="page" id="wallet">
+ <div class="section-head"><h3>محفظة SASA</h3><span>ملخص أرصدتك</span></div>
+ <div id="walletStatus" class="status loading">جارٍ تحميل المحفظة...</div>
+ <div class="wallet-hero">
+  <div class="balance-label">إجمالي نقاط SASA</div>
+  <div class="points" id="walletPoints">0</div>
+  <div class="points-sub">SASA POINTS</div>
+  <div class="balance-note">رصيد النقاط داخل التطبيق</div>
+  <div class="wallet-hero-icon">✦</div>
+ </div>
+ <div class="wallet-mini-grid">
+  <div class="wallet-box available"><small>دولارات SASA المتاحة</small><b id="walletDollars">$0.00</b><span class="wallet-box-icon">💵</span></div>
+  <div class="wallet-box reserved"><small>دولارات SASA المحجوزة</small><b id="walletReserved">$0.00</b><span class="wallet-box-icon">🔒</span></div>
+ </div>
+ <div class="wallet-section">
+  <div class="wallet-section-title"><b>تفاصيل الأرصدة</b><span>من الخادم</span></div>
+  <div class="wallet-stat-line"><span>نقاط SASA</span><b id="walletSummaryPoints">0</b></div>
+  <div class="wallet-stat-line"><span>الدولارات المتاحة</span><b id="walletSummaryAvailable">$0.00</b></div>
+  <div class="wallet-stat-line"><span>الدولارات المحجوزة</span><b id="walletSummaryReserved">$0.00</b></div>
+ </div>
+ <div class="wallet-section">
+  <div class="wallet-section-title"><b>سجل عمليات المحفظة</b><span>آخر العمليات</span></div>
+  <div class="list" id="ledgerList"><div class="empty">لا توجد عمليات مسجلة</div></div>
+ </div>
+ <div class="wallet-section">
+  <div class="wallet-section-title"><b>سجل طلبات السحب السابقة</b><span>للعرض فقط</span></div>
+  <p class="wallet-note">هذا السجل يعرض الطلبات السابقة التي أرسلها الخادم فقط. لا يمكن إنشاء طلب سحب جديد من هذه الصفحة.</p>
+  <div class="list" id="withdrawalsList"><div class="empty">لا توجد طلبات سابقة</div></div>
+ </div>
+</section>
+
+<section class="page" id="friends">
+ <div class="section-head"><h3>الأصدقاء والدعوات</h3><span>شارك SASA</span></div>
+ <div class="card">
+  <div style="font-size:42px;text-align:center">👥</div>
+  <h3 style="text-align:center">ادعُ أصدقاءك</h3>
+  <p class="info">شارك رابط البوت مع أصدقائك. احتساب أي مكافأة دعوة يجب أن يتم من الخادم بعد التحقق من الدعوة.</p>
+  <div class="ref-box" id="inviteLink">https://t.me/mostafa_sasa710bot</div>
+  <button class="action full" onclick="copyInvite()">نسخ رابط الدعوة</button>
+  <button class="action secondary full" onclick="shareInvite()">مشاركة الرابط</button>
+ </div>
+</section>
+
+<section class="page" id="profile">
+ <div class="section-head"><h3>الملف الشخصي</h3><span>حساب SASA</span></div>
+ <div class="card" style="text-align:center">
+  <div class="profile-avatar" id="profileAvatar"><div class="avatar-fallback">👤</div></div>
+  <div class="avatar-actions">
+   <button class="action secondary" onclick="document.getElementById('avatarInput').click()">تغيير الصورة</button>
+   <button class="action secondary" onclick="removeAvatar()">إزالة الصورة</button>
+  </div>
+  <input id="avatarInput" type="file" accept="image/*" hidden onchange="uploadAvatar(event)">
+  <h2 id="profileName">مستخدم SASA</h2>
+  <p class="info" id="profileUsername">@username</p>
+  <div class="two-col">
+   <div class="mini-balance"><small>معرّف تيليجرام</small><b id="profileTelegramId">—</b></div>
+   <div class="mini-balance"><small>تاريخ الانضمام</small><b id="profileJoined">—</b></div>
+  </div>
+ </div>
+ <div class="card">
+  <label class="field-label" for="editName">الاسم الظاهر</label>
+  <input class="field" id="editName" maxlength="40" placeholder="اكتب اسمك">
+  <button class="action full" onclick="saveProfile()">حفظ الاسم</button>
+ </div>
+</section>
+
+<section class="page" id="inventory">
+ <div class="section-head"><h3>مخزني</h3><span>منتجاتك الرقمية</span></div>
+ <div id="inventoryStatus" class="status loading">جارٍ تحميل المخزون...</div>
+ <div class="list" id="inventoryList"><div class="empty">لا توجد عناصر في المخزون</div></div>
+</section>
+
+<section class="page" id="settings">
+ <div class="section-head"><h3>الإعدادات</h3><span>تخصيص تجربتك</span></div>
+ <div class="card">
+  <div class="section-head"><h3>إعدادات الصوت</h3><span>المؤثرات</span></div>
+  <div class="sound-row"><div><b>تفعيل الأصوات</b><small>أصوات التفاعل داخل التطبيق</small></div><input type="checkbox" id="soundEnabled" checked onchange="saveSoundSettings()"></div>
+  <div class="sound-row"><div><b>صوت الخلفية</b><small>أجواء فضائية هادئة</small></div><input type="checkbox" id="ambientEnabled" checked onchange="saveSoundSettings()"></div>
+  <div class="sound-row"><div><b>مستوى الصوت</b><small>تحكم في مستوى المؤثرات</small></div><span class="volume-value" id="volumeValue">35%</span></div>
+  <input type="range" id="soundVolume" min="0" max="100" value="35" oninput="updateVolumeLabel(this.value)" onchange="saveSoundSettings()">
+  <div class="two-col">
+   <button class="action secondary" onclick="testSound('success')">تجربة صوت النجاح</button>
+   <button class="action secondary" onclick="testSound('button')">تجربة صوت الزر</button>
+  </div>
+ </div>
+ <div class="card">
+  <div class="section-head"><h3>معلومات التطبيق</h3><span>SASA</span></div>
+  <div class="wallet-stat-line"><span>الإصدار</span><b>1.0</b></div>
+  <div class="wallet-stat-line"><span>الواجهة</span><b>Telegram Mini App</b></div>
+  <div class="wallet-stat-line"><span>الاتصال</span><b>Supabase</b></div>
+ </div>
+</section>
+</main>
+</div>
+
+<nav class="nav">
+ <button class="nav-btn active" data-page="home" onclick="showPage('home')"><span class="nav-icon">🏠</span>الرئيسية</button>
+ <button class="nav-btn" data-page="tasks" onclick="showPage('tasks')"><span class="nav-icon">🎯</span>المهام</button>
+ <button class="nav-btn" data-page="shop" onclick="showPage('shop')"><span class="nav-icon">🛍️</span>المتجر</button>
+ <button class="nav-btn" data-page="wallet" onclick="showPage('wallet')"><span class="nav-icon">💎</span>المحفظة</button>
+ <button class="nav-btn" data-page="friends" onclick="showPage('friends')"><span class="nav-icon">👥</span>الأصدقاء</button>
+ <button class="nav-btn" data-page="profile" onclick="showPage('profile')"><span class="nav-icon">👤</span>حسابي</button>
+</nav>
+<div class="toast" id="toast"></div>
+
+<script>
+(async()=>{
+"use strict";
+
+const API_URL="https://spxxnptaeqjrfrxfgzjw.supabase.co/functions/v1/sasa-api";
+const BOT_URL="https://t.me/mostafa_sasa710bot";
+const tg=window.Telegram?.WebApp;
+const $=id=>document.getElementById(id);
+let profile=null,wallet=null,loadingTasks=false,tasksLoaded=false,loadingWallet=false;
+let shopCategory="الكل",shopCurrency="all";
+let soundContext=null,ambientNodes=null,ambientTimer=null;
+
+الكود طويل، فهقسّمه على أجزاء متتابعة عشان مايتقصّش. **انسخ الأجزاء بالترتيب**، من غير ما تكرر علامات بداية ونهاية الكود.
+
+```html
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -158,7 +344,6 @@ border:1px solid #65caff55;box-shadow:0 15px 38px #0879ff24;margin-bottom:13px
 .wallet-note{font-size:12px;line-height:1.7;color:#a9bfd9;margin:0}
 .wallet-stat-line{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #ffffff0c;font-size:13px}
 .wallet-stat-line:last-child{border-bottom:0}
-.wallet-stat-line span{color:var(--muted)}
 /* SHOP REDESIGN */
 .shop-intro{padding:17px;border-radius:20px;background:linear-gradient(130deg,#172e4e,#0b1b30);border:1px solid var(--line);margin-bottom:13px}
 .shop-intro b{font-size:17px}
@@ -175,6 +360,13 @@ border:1px solid #65caff55;box-shadow:0 15px 38px #0879ff24;margin-bottom:13px
 .product-price{display:inline-flex;align-items:center;justify-content:center;gap:5px;margin:10px 0 2px;padding:7px 10px;border-radius:12px;background:#09182a;color:#ffe09a;font-weight:900;font-size:13px}
 .product .action{font-size:12px;padding:10px 8px}
 .product-category{position:absolute;top:9px;right:9px;font-size:9px;color:#9fdfff;background:#123b5b;padding:4px 7px;border-radius:20px}
+.shop-filters{padding:13px;border-radius:17px;background:#0d1b2e;border:1px solid var(--line);margin:10px 0 14px}
+.filter-label{font-size:12px;color:#b8cce4;font-weight:800;margin:2px 0 9px}
+.category-chips,.currency-filters{display:flex;gap:7px;overflow-x:auto;padding:2px 1px 9px;scrollbar-width:thin}
+.filter-chip{flex:0 0 auto;padding:8px 12px;border-radius:20px;background:#132640;border:1px solid var(--line);color:#b9cbe0;font-size:11px;font-weight:800}
+.filter-chip.active{background:linear-gradient(110deg,#126fc8,#164b8e);border-color:#55d9ff88;color:#fff}
+.product-price.dollar{color:#9ce7ff}
+.product .action{margin-top:5px}
 .task-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
 .task-actions button{font-size:11px;padding:8px 10px;border-radius:10px}
 .task-slot{border-style:dashed;opacity:.7}
@@ -191,685 +383,3 @@ border:1px solid #65caff55;box-shadow:0 15px 38px #0879ff24;margin-bottom:13px
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
-
-<body>
-<div id="loadingScreen">
- <div class="loader-stars"></div><div class="loader-logo">S</div>
- <div class="loader-title">SASA <span>MINI APP</span></div>
- <div class="loader-subtitle">رحلتك تبدأ من هنا ✦</div>
- <div class="loader-track"><div class="loader-progress" id="loaderProgress"></div></div>
- <div id="loadingMessage">جارٍ تجهيز عالم SASA...</div>
- <div class="loader-version">SASA MINI APP · SPACE EXPERIENCE</div>
-</div>
-
-<div class="app">
-<header class="topbar">
- <div class="brand"><div class="logo">S</div><div><h1>SASA <span>MINI APP</span></h1><small>رحلتك تبدأ من هنا</small></div></div>
- <button class="icon-btn" onclick="showPage('profile')"><span>👤</span> حسابي</button>
-</header>
-
-<main>
-<section class="page active" id="home">
- <div class="greeting">
-  <div><h2 id="welcome">أهلاً بك 👋</h2><p id="username">جارٍ تحميل الحساب...</p></div>
-  <span class="online" id="onlineStatus">● اتصال</span>
- </div>
- <div class="card balance">
-  <div class="balance-label">رصيد نقاطك</div><div class="points" id="homePoints">—</div>
-  <div class="points-sub">SASA POINTS</div>
-  <div class="balance-note">رصيد النقاط المسجل في قاعدة البيانات</div><div class="gem">💎</div>
- </div>
- <div class="card"><div class="two-col">
-  <div class="mini-balance"><small>رصيد الدولار</small><b id="homeDollars">$—</b></div>
-  <div class="mini-balance"><small>محجوز للسحب</small><b id="homeReserved">$—</b></div>
- </div><button class="action full" onclick="showPage('wallet')">فتح المحفظة</button></div>
- <div class="section-head"><h3>استكشف التطبيق</h3><span>اختر وجهتك ✦</span></div>
- <div class="grid">
-  <button class="tile" onclick="showPage('tasks')"><span class="emoji">🎯</span><b>المهام اليومية</b><small>المهام المتاحة لك</small></button>
-  <button class="tile" onclick="showPage('friends')"><span class="emoji">👥</span><b>الأصدقاء</b><small>مشاركة رابط البوت</small></button>
-  <button class="tile" onclick="showPage('shop')"><span class="emoji">🎁</span><b>المتجر</b><small>عناصر SASA</small></button>
-  <button class="tile" onclick="showPage('wallet')"><span class="emoji">💠</span><b>المحفظة</b><small>النقاط والأرصدة</small></button>
-  <button class="tile" onclick="showPage('inventory')"><span class="emoji">🎒</span><b>مخزني</b><small>العناصر التي تمتلكها</small></button>
-  <button class="tile" onclick="showPage('profile')"><span class="emoji">👤</span><b>حسابي</b><small>بياناتك الشخصية</small></button>
- </div>
- <p class="footer-note">SASA MINI APP · الأرصدة حسب سجل الخادم</p>
-</section>
-
-<section class="page" id="tasks">
- <div class="section-head"><h3>🎯 مهام اليوم</h3><button class="action secondary" onclick="loadTasks(true)">تحديث</button></div>
- <div id="tasksStatus" class="status loading">جارٍ تحميل مهامك...</div>
- <div class="section-head"><h3>المهام اليومية</h3><span id="dailyCount">0 / 10</span></div>
- <div class="list" id="regularTasks"><div class="empty">جارٍ تحميل المهام...</div></div>
- <div class="section-head"><h3>⭐ المهمة الخاصة</h3><span>1 مهمة</span></div>
- <div class="list" id="specialTasks"><div class="empty">جارٍ تحميل المهمة الخاصة...</div></div>
- <div class="section-head"><h3>📺 مهام الإعلانات</h3><span>5 خانات</span></div>
- <div class="list" id="adTasks"></div>
- <p class="info">أزرار البدء والتحقق واستلام المكافأة معروضة كمعاينة فقط. تفعيلها وصرف المكافآت يحتاج ربطًا خادميًا للتحقق ومنع تكرار الصرف.</p>
-</section>
-
-<section class="page" id="shop">
- <div class="section-head"><h3>🎁 متجر SASA</h3><span>متجر العناصر</span></div>
- <div class="shop-intro">
-  <b>اختَر العنصر اللي يناسبك ✦</b>
-  <p>متجر SASA الجديد يضم الشارات والخلفيات والإطارات والتأثيرات. الأسعار موضحة بعملة كل عنصر.</p>
-  <div class="shop-currencies">
-   <div class="currency-chip"><small>رصيد النقاط</small><b id="shopPoints">— ✦</b></div>
-   <div class="currency-chip"><small>رصيد العملات</small><b id="shopCoins">غير متاح بعد</b></div>
-  </div>
- </div>
- <div class="status">معاينة المتجر: الشراء وتحديث المخزون هيتفعّلوا بعد ربط دالة الشراء بالخادم.</div>
- <input id="shopSearch" class="search" placeholder="ابحث عن عنصر..." oninput="renderShop(this.value)">
- <div class="product-grid" id="products"></div>
-</section>
-
-<section class="page" id="wallet">
- <div class="section-head"><h3>💠 محفظة SASA</h3><button class="action secondary" onclick="refreshWallet()">تحديث</button></div>
- <div id="walletStatus" class="status loading">جارٍ تحميل بيانات المحفظة...</div>
- <div class="wallet-hero">
-  <div class="balance-label">إجمالي نقاط SASA</div>
-  <div class="points" id="walletPoints">—</div>
-  <div class="points-sub">SASA POINTS</div>
-  <div class="balance-note">نقاطك داخل التطبيق منفصلة عن رصيد الدولار.</div>
-  <div class="wallet-hero-icon">💎</div>
- </div>
- <div class="wallet-mini-grid">
-  <div class="wallet-box available"><span class="wallet-box-icon">💵</span><small>الدولار المتاح</small><b id="walletDollars">$—</b></div>
-  <div class="wallet-box reserved"><span class="wallet-box-icon">🔒</span><small>الدولار المحجوز</small><b id="walletReserved">$—</b></div>
- </div>
- <div class="wallet-section">
-  <div class="wallet-section-title"><b>📊 ملخص المحفظة</b><span>LIVE BALANCE</span></div>
-  <div class="wallet-stat-line"><span>رصيد النقاط</span><b id="walletSummaryPoints">—</b></div>
-  <div class="wallet-stat-line"><span>الرصيد المتاح</span><b id="walletSummaryAvailable">$—</b></div>
-  <div class="wallet-stat-line"><span>الرصيد المحجوز</span><b id="walletSummaryReserved">$—</b></div>
-  <p class="wallet-note">الأرقام دي للعرض حسب البيانات اللي بيرجعها الخادم. أي حركة مالية أو طلب سحب تحتاج مراجعة وإشراف شخص بالغ ومزود خدمة معتمد.</p>
- </div>
- <div class="section-head"><h3>طلبات السحب السابقة</h3><span>سجل الطلبات</span></div>
- <div class="list" id="withdrawalsList"><div class="empty">جارٍ التحميل...</div></div>
- <div class="section-head"><h3>سجل حركة الدولار</h3><span>آخر العمليات</span></div>
- <div class="list" id="ledgerList"><div class="empty">جارٍ التحميل...</div></div>
-</section>
-
-<section class="page" id="friends">
- <div class="section-head"><h3>👥 دعوة الأصدقاء</h3><span>مشاركة</span></div>
- <div class="card">
-  <div style="font-size:42px;text-align:center">🚀</div>
-  <h3 style="text-align:center">شارك SASA مع أصحابك</h3>
-  <p class="info" style="text-align:center">يمكنك مشاركة رابط البوت. مكافآت الإحالة لا تُضاف قبل تفعيل التحقق.</p>
-  <div class="ref-box" id="inviteLink">https://t.me/mostafa_sasa710bot</div>
-  <button class="action full" onclick="copyInvite()">نسخ رابط البوت</button>
-  <button class="action secondary full" onclick="shareInvite()">مشاركة الرابط</button>
- </div>
-</section>
-
-<section class="page" id="profile">
- <div class="section-head"><h3>👤 حسابي</h3><span>ملفك الشخصي</span></div>
- <div class="card">
-  <div class="profile-avatar" id="profileAvatar"><span class="avatar-fallback" id="profileAvatarFallback">👤</span><img id="profileAvatarImage" alt="صورة البروفايل" style="display:none"></div>
-  <div class="avatar-actions">
-   <label class="action" for="avatarFile" style="cursor:pointer">📷 تغيير صورة البروفايل</label>
-   <button class="action secondary" onclick="loadProfile()">تحديث البيانات</button>
-  </div>
-  <input id="avatarFile" type="file" accept="image/jpeg,image/png,image/webp" hidden onchange="uploadAvatar(this)">
-  <h3 style="text-align:center;margin:0 0 5px" id="profileName">عضو SASA</h3>
-  <p class="info" style="text-align:center">ملفك الشخصي في SASA</p>
-  <label class="field-label" for="displayNameInput">الاسم الظاهر</label>
-  <input class="field" id="displayNameInput" type="text" maxlength="40" placeholder="اكتب الاسم الذي تريد ظهوره" autocomplete="name">
-  <button class="action full" id="saveProfileButton" onclick="saveProfile()">حفظ الاسم</button>
-  <div id="profileStatus" class="status loading" style="margin-top:12px">يتم تحميل بيانات حسابك...</div>
- </div>
- <div class="section-head"><h3>📊 إحصائيات الحساب</h3><span>بياناتك</span></div>
- <div class="card">
-  <div class="two-col">
-   <div class="mini-balance"><small>المستوى</small><b id="profileLevel">—</b></div>
-   <div class="mini-balance"><small>نقاط الخبرة</small><b id="profileXP">—</b></div>
-  </div>
-  <div class="item" style="margin-top:10px"><div class="item-icon">🗓️</div><div class="item-info"><b>تاريخ الانضمام</b><small id="profileCreated">—</small></div></div>
-  <div class="item" style="margin-top:10px"><div class="item-icon">🆔</div><div class="item-info"><b>معرّف تيليجرام</b><small id="telegramId">—</small></div></div>
-  <div class="item" style="margin-top:10px"><div class="item-icon">👤</div><div class="item-info"><b>اسم مستخدم تيليجرام</b><small id="profileUsername">—</small></div></div>
- </div>
-</section>
-
-<section class="page" id="inventory">
- <div class="section-head"><h3>🎒 مخزني</h3><button class="action secondary" onclick="loadInventory(true)">تحديث</button></div>
- <div class="card">
-  <p class="info">هنا هتظهر العناصر اللي امتلكتها بالفعل في SASA.</p>
-  <div id="inventoryStatus" class="status loading">جارٍ تحميل مخزونك...</div>
-  <div class="list" id="inventoryList"><div class="empty">جارٍ تحميل العناصر...</div></div>
- </div>
-</section>
-
-<section class="page" id="settings">
- <div class="section-head"><h3>⚙️ الإعدادات</h3><span>تخصيص التطبيق</span></div>
- <div class="card">
-  <div class="section-head" style="margin-top:0"><h3>🔊 إعدادات الصوت</h3><span>تحكم في الأصوات</span></div>
-  <label class="sound-row"><span><b>صوت الأزرار</b><small>نقرة إلكترونية قصيرة عند الضغط</small></span><input type="checkbox" id="soundButtons" checked onchange="saveSoundSettings()"></label>
-  <label class="sound-row"><span><b>صوت إنجاز المهام</b><small>نغمة نجاح عند إتمام المهمة</small></span><input type="checkbox" id="soundTasks" checked onchange="saveSoundSettings()"></label>
-  <label class="sound-row"><span><b>صوت الإشعارات</b><small>تنبيه صوتي بسيط للإشعارات</small></span><input type="checkbox" id="soundNotifications" checked onchange="saveSoundSettings()"></label>
-  <div class="sound-row" style="display:block">
-   <div style="display:flex;justify-content:space-between;align-items:center"><b>مستوى الصوت</b><span class="volume-value" id="soundVolumeValue">65%</span></div>
-   <input type="range" id="soundVolume" min="0" max="100" value="65" oninput="saveSoundSettings()">
-  </div>
-  <button class="action secondary full" onclick="testSound()">🔔 تجربة الصوت</button>
-  <p class="info" id="soundStatus">يتم حفظ إعدادات الصوت على جهازك تلقائيًا.</p>
- </div>
- <div class="card">
-  <div class="section-head" style="margin-top:0"><h3>ℹ️ معلومات التطبيق</h3></div>
-  <div class="item"><div class="item-icon">🚀</div><div class="item-info"><b>SASA MINI APP</b><small>رحلتك تبدأ من هنا</small></div></div>
-  <div class="item" style="margin-top:10px"><div class="item-icon">🔒</div><div class="item-info"><b>حماية الحساب</b><small>اتصال التطبيق يتم من خلال تيليجرام</small></div></div>
- </div>
-</section>
-</main>
-</div>
-
-<nav class="nav">
- <button class="nav-btn active" data-page="home" onclick="showPage('home')"><span class="nav-icon">⌂</span><span>الرئيسية</span></button>
- <button class="nav-btn" data-page="tasks" onclick="showPage('tasks')"><span class="nav-icon">◈</span><span>المهام</span></button>
- <button class="nav-btn" data-page="shop" onclick="showPage('shop')"><span class="nav-icon">🎁</span><span>المتجر</span></button>
- <button class="nav-btn" data-page="wallet" onclick="showPage('wallet')"><span class="nav-icon">💠</span><span>المحفظة</span></button>
- <button class="nav-btn" data-page="inventory" onclick="showPage('inventory')"><span class="nav-icon">🎒</span><span>مخزني</span></button>
- <button class="nav-btn" data-page="settings" onclick="showPage('settings')"><span class="nav-icon">⚙️</span><span>إعدادات</span></button>
-</nav>
-<div class="toast" id="toast"></div>
-
-<script>
-(()=>{
-"use strict";
-
-const API_URL="https://spxxnptaeqjrfrxfgzjw.supabase.co/functions/v1/sasa-api";
-const BOT_URL="https://t.me/mostafa_sasa710bot";
-const tg=window.Telegram?.WebApp;
-
-let profile=null,wallet=null;
-let loadingWallet=false,requestBusy=false;
-let tasksLoaded=false,loadingTasks=false;
-let loadingInventory=false,inventoryLoaded=false;
-let profileSaving=false,avatarUploading=false;
-
-const $=id=>document.getElementById(id);
-
-const adTaskData=[
-"مشاهدة الإعلان الأول","مشاهدة الإعلان الثاني",
-"مشاهدة الإعلان الثالث","مشاهدة الإعلان الرابع",
-"مشاهدة الإعلان الخامس"
-];
-
-/* المنتجات الستة المتفق عليها */
-const productData=[
- {icon:"🏅",name:"الشارة الخاصة",description:"شارة مميزة تظهر ضمن إنجازاتك",price:120,currency:"points",category:"شارات"},
- {icon:"🌌",name:"خلفية الفضاء",description:"خلفية فضائية لحسابك",price:35,currency:"coins",category:"خلفيات"},
- {icon:"🖼️",name:"الإطار الخاص",description:"إطار مميز لصورتك الشخصية",price:180,currency:"points",category:"إطارات"},
- {icon:"⚡",name:"مضاعف العملات",description:"عنصر تعزيز العملات داخل التطبيق",price:80,currency:"points",category:"تعزيزات"},
- {icon:"👑",name:"شارة النخبة",description:"شارة النخبة المميزة",price:60,currency:"coins",category:"شارات"},
- {icon:"💠",name:"الثيم النيون",description:"مظهر نيون مميز للتطبيق",price:150,currency:"points",category:"ثيمات"}
-];
-
-let loadProgress=0;
-const loadTimer=setInterval(()=>{
- loadProgress=Math.min(loadProgress+7,90);
- $("loaderProgress").style.width=loadProgress+"%";
-},180);
-
-function finishLoading(message="تم تجهيز التطبيق"){
- clearInterval(loadTimer);
- $("loaderProgress").style.width="100%";
- $("loadingMessage").textContent=message;
- setTimeout(()=>$("loadingScreen").classList.add("hide"),450);
-}
-
-// SOUND SETTINGS
-const SOUND_KEY="sasa_sound_settings_v1";
-let soundSettings={buttons:true,tasks:true,notifications:true,volume:65};
-let audioContext=null;
-
-function loadSoundSettings(){
- try{
-  const saved=localStorage.getItem(SOUND_KEY);
-  if(saved){
-   const parsed=JSON.parse(saved);
-   soundSettings={
-    buttons:parsed.buttons!==false,
-    tasks:parsed.tasks!==false,
-    notifications:parsed.notifications!==false,
-    volume:Math.max(0,Math.min(100,Number(parsed.volume??65)))
-   };
-  }
- }catch(error){console.warn("SOUND_SETTINGS_READ:",error)}
- $("soundButtons").checked=soundSettings.buttons;
- $("soundTasks").checked=soundSettings.tasks;
- $("soundNotifications").checked=soundSettings.notifications;
- $("soundVolume").value=soundSettings.volume;
- $("soundVolumeValue").textContent=soundSettings.volume+"%";
-}
-
-function saveSoundSettings(){
- soundSettings.buttons=$("soundButtons").checked;
- soundSettings.tasks=$("soundTasks").checked;
- soundSettings.notifications=$("soundNotifications").checked;
- soundSettings.volume=Math.max(0,Math.min(100,Number($("soundVolume").value)));
- $("soundVolumeValue").textContent=soundSettings.volume+"%";
- try{
-  localStorage.setItem(SOUND_KEY,JSON.stringify(soundSettings));
-  $("soundStatus").textContent="تم حفظ إعدادات الصوت على جهازك.";
- }catch(error){$("soundStatus").textContent="تعذّر حفظ الإعدادات على هذا الجهاز."}
-}
-
-function getAudioContext(){
- const AudioContextClass=window.AudioContext||window.webkitAudioContext;
- if(!AudioContextClass)return null;
- if(!audioContext)audioContext=new AudioContextClass();
- if(audioContext.state==="suspended")audioContext.resume().catch(()=>{});
- return audioContext;
-}
-
-function playTone(type="button"){
- const enabled=type==="button"?soundSettings.buttons:
-  type==="task"?soundSettings.tasks:soundSettings.notifications;
- if(!enabled||soundSettings.volume<=0)return;
- try{
-  const ctx=getAudioContext();if(!ctx)return;
-  const now=ctx.currentTime,master=ctx.createGain();
-  master.gain.setValueAtTime(soundSettings.volume/100*0.12,now);
-  master.connect(ctx.destination);
-  const notes=type==="task"?[660,880]:type==="notification"?[740]:[520];
-  notes.forEach((frequency,index)=>{
-   const oscillator=ctx.createOscillator(),gain=ctx.createGain();
-   const start=now+index*(type==="task"?0.12:0);
-   const duration=type==="button"?0.055:0.16;
-   oscillator.type="sine";
-   oscillator.frequency.setValueAtTime(frequency,start);
-   gain.gain.setValueAtTime(0.001,start);
-   gain.gain.exponentialRampToValueAtTime(0.8,start+0.015);
-   gain.gain.exponentialRampToValueAtTime(0.001,start+duration);
-   oscillator.connect(gain);gain.connect(master);
-   oscillator.start(start);oscillator.stop(start+duration+0.02);
-  });
- }catch(error){console.warn("AUDIO_ERROR:",error)}
-}
-
-function testSound(){playTone("notification");notify("دي تجربة لصوت الإشعارات")}
-
-function notify(message){
- const el=$("toast");el.textContent=message;el.classList.add("show");
- clearTimeout(notify.timer);
- notify.timer=setTimeout(()=>el.classList.remove("show"),2800);
- playTone("notification");
-}
-
-function money(value){
- const n=Number(value??0);
- return "$"+(Number.isFinite(n)?n.toFixed(2):"0.00");
-}
-function fmt(value){return Number(value??0).toLocaleString("en-US")}
-
-function showPage(id){
- const page=$(id);if(!page)return;
- document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
- page.classList.add("active");
- document.querySelectorAll(".nav-btn").forEach(btn=>btn.classList.toggle("active",btn.dataset.page===id));
- window.scrollTo({top:0,behavior:"smooth"});
- if(id==="wallet")refreshWallet();
- if(id==="tasks")loadTasks();
- if(id==="inventory")loadInventory();
- if(id==="settings")loadSoundSettings();
-}
-
-async function api(action,extra={}){
- if(!tg?.initData)throw new Error("افتح التطبيق من داخل بوت تيليجرام");
- const response=await fetch(API_URL,{
-  method:"POST",headers:{"Content-Type":"application/json"},
-  body:JSON.stringify({initData:tg.initData,action,...extra})
- });
- let result;
- try{result=await response.json()}catch{throw new Error("استجابة الخادم غير مفهومة")}
- if(!response.ok||result.ok===false)throw new Error(result.error||result.message||"حدث خطأ في الخادم");
- return result;
-}
-
-// PROFILE
-function displayAvatar(url){
- const image=$("profileAvatarImage"),fallback=$("profileAvatarFallback");
- if(url){
-  image.src=url;image.style.display="block";fallback.style.display="none";
-  image.onerror=()=>{image.style.display="none";fallback.style.display="grid"};
- }else{
-  image.removeAttribute("src");image.style.display="none";fallback.style.display="grid";
- }
-}
-
-function displayProfile(data){
- profile=data||{};
- const balance=Number(data.balance??0);
- const username=data.username?"@"+data.username:"عضو SASA";
- const displayName=data.display_name||data.first_name||username;
- $("welcome").textContent="أهلاً بك 👋";
- $("username").textContent=username;
- $("profileName").textContent=displayName;
- $("profileUsername").textContent=username;
- $("homePoints").textContent=fmt(balance);
- $("walletPoints").textContent=fmt(balance);
- $("walletSummaryPoints").textContent=fmt(balance);
- $("shopPoints").textContent=fmt(balance)+" ✦";
- $("telegramId").textContent=data.telegram_id??"—";
- $("displayNameInput").value=data.display_name||"";
- $("profileLevel").textContent=fmt(data.level??1);
- $("profileXP").textContent=fmt(data.experience_points??0);
- $("profileCreated").textContent=data.created_at?new Date(data.created_at).toLocaleDateString("ar-EG"):"—";
- displayAvatar(data.avatar_url||null);
- $("onlineStatus").textContent="● متصل";
- $("profileStatus").textContent="تم تحميل بيانات حسابك.";
- $("profileStatus").className="status";
-}
-
-async function saveProfile(){
- if(profileSaving)return;
- const displayName=$("displayNameInput").value.trim();
- if(displayName.length<2||displayName.length>40){notify("الاسم لازم يكون من حرفين إلى 40 حرفًا");return}
- if(!profile){notify("بيانات الحساب لم تكتمل بعد");return}
- profileSaving=true;
- const button=$("saveProfileButton");button.disabled=true;button.textContent="جارٍ الحفظ...";
- $("profileStatus").textContent="جارٍ حفظ الاسم...";$("profileStatus").className="status loading";
- try{
-  const result=await api("profile_update",{display_name:displayName});
-  const updated=result.profile||result.data?.profile||result.data||result;
-  if(!updated||typeof updated!=="object")throw new Error("الخادم لم يرجع بيانات الملف الشخصي");
-  displayProfile({...profile,...updated,display_name:updated.display_name||displayName});
-  $("profileStatus").textContent="تم حفظ الاسم بنجاح.";$("profileStatus").className="status";
-  notify("تم تحديث اسمك بنجاح");
- }catch(error){
-  console.error("PROFILE_UPDATE:",error);
-  $("profileStatus").textContent="تعذّر حفظ الاسم: "+error.message;
-  $("profileStatus").className="status error";notify("لم يتم حفظ الاسم");
- }finally{profileSaving=false;button.disabled=false;button.textContent="حفظ الاسم"}
-}
-
-async function uploadAvatar(input){
- const file=input.files?.[0];if(!file)return;
- if(!["image/jpeg","image/png","image/webp"].includes(file.type)){notify("اختار صورة JPG أو PNG أو WEBP");input.value="";return}
- if(file.size>3*1024*1024){notify("حجم الصورة أكبر من 3 ميجابايت");input.value="";return}
- if(avatarUploading)return;avatarUploading=true;
- $("profileStatus").textContent="جارٍ تجهيز الصورة ورفعها...";$("profileStatus").className="status loading";
- try{
-  const base64=await new Promise((resolve,reject)=>{
-   const reader=new FileReader();
-   reader.onload=()=>typeof reader.result==="string"?resolve(reader.result):reject(new Error("تعذّرت قراءة الصورة"));
-   reader.onerror=()=>reject(new Error("تعذّرت قراءة ملف الصورة"));
-   reader.readAsDataURL(file);
-  });
-  const result=await api("avatar_upload",{image_base64:base64});
-  const updated=result.profile||result.data?.profile||result.data||{};
-  const avatarUrl=updated.avatar_url||result.avatar_url;
-  if(!avatarUrl)throw new Error("الخادم لم يرجع رابط الصورة");
-  displayProfile({...profile,...updated,avatar_url:avatarUrl});
-  $("profileStatus").textContent="تم رفع الصورة وحفظها بنجاح.";$("profileStatus").className="status";
-  notify("تم تحديث صورتك الشخصية");
- }catch(error){
-  console.error("AVATAR_UPLOAD:",error);
-  $("profileStatus").textContent="تعذّر رفع الصورة: "+error.message;
-  $("profileStatus").className="status error";notify("لم يتم رفع الصورة");
- }finally{avatarUploading=false;input.value=""}
-}
-
-// INVENTORY
-async function loadInventory(force=false){
- if(loadingInventory)return;if(inventoryLoaded&&!force)return;
- if(!tg?.initData){$("inventoryStatus").textContent="افتح التطبيق من تيليجرام لعرض المخزون.";$("inventoryStatus").className="status error";return}
- loadingInventory=true;$("inventoryStatus").textContent="جارٍ تحميل مخزونك...";$("inventoryStatus").className="status loading";
- try{
-  const result=await api("inventory_get");
-  const items=Array.isArray(result.items)?result.items:
-   Array.isArray(result.inventory)?result.inventory:
-   Array.isArray(result.data?.items)?result.data.items:
-   Array.isArray(result.data?.inventory)?result.data.inventory:[];
-  renderInventory(items);inventoryLoaded=true;
-  $("inventoryStatus").textContent="تم تحميل المخزون. عدد السجلات: "+items.length;$("inventoryStatus").className="status";
- }catch(error){
-  console.error("INVENTORY_GET:",error);
-  $("inventoryStatus").textContent="تعذّر تحميل المخزون: "+error.message;
-  $("inventoryStatus").className="status error";
-  $("inventoryList").innerHTML='<div class="empty">لم نتمكن من تحميل العناصر. اضغط تحديث للمحاولة مرة أخرى.</div>';
- }finally{loadingInventory=false}
-}
-
-function safe(value){
- return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
-function safeAttr(value){return String(value??"").replace(/[^a-zA-Z0-9-]/g,"")}
-
-function renderInventory(items){
- const el=$("inventoryList");
- if(!items.length){el.innerHTML='<div class="empty">مخزونك فارغ حاليًا. العناصر التي تمتلكها ستظهر هنا.</div>';return}
- el.innerHTML=items.map(item=>{
-  const product=item.product||{};
-  const title=product.title_ar||product.name_ar||product.title||product.name||item.product_id||"عنصر SASA";
-  const description=product.description_ar||product.description||"عنصر في مخزونك";
-  const quantity=Math.max(0,Number(item.quantity??0));
-  const imageUrl=product.image_url||"";
-  const icon=/^https?:\/\//i.test(imageUrl)?`<img class="inventory-image" src="${safe(imageUrl)}" alt="">`:"🎁";
-  const acquired=item.acquired_at?new Date(item.acquired_at).toLocaleDateString("ar-EG"):"";
-  return `<div class="item"><div class="item-icon">${icon}</div><div class="item-info"><b>${safe(title)}</b><small>${safe(description)}</small><small>الكمية: ${fmt(quantity)} ${acquired?" · تاريخ الإضافة: "+safe(acquired):""}</small></div><span class="tag green">مملوك</span></div>`;
- }).join("");
-}
-
-// TASKS
-function taskStatusLabel(status){
- return({assigned:"جديدة",in_progress:"جارية",completed:"مكتملة",claimed:"تم استلامها"})[status]||status||"غير محددة";
-}
-function taskDifficultyLabel(level){
- const n=Number(level||1);
- return({1:"سهلة",2:"عادية",3:"متوسطة",4:"صعبة",5:"صعبة جدًا"})[n]||("المستوى "+n);
-}
-
-function renderTaskCard(task,isSpecial=false){
- const title=task.title_ar||task.title||task.name||"مهمة SASA";
- const description=task.description_ar||task.description||"أكمل المهمة حسب شروطها";
- const reward=Number(task.reward_points??0);
- const target=Math.max(1,Number(task.target_count??1));
- const progress=Math.min(target,Math.max(0,Number(task.progress??0)));
- const status=task.status||"assigned";
- const percent=Math.min(100,Math.round(progress/target*100));
- const done=status==="completed"||status==="claimed";
- const icon=isSpecial?"⭐":"🎯";
- return `<div class="item ${isSpecial?"special-task":""}">
-  <div class="item-icon">${icon}</div>
-  <div class="item-info">
-   <b>${safe(title)}</b><small>${safe(description)}</small>
-   <div class="task-details">
-    <span>الصعوبة: ${safe(taskDifficultyLabel(task.difficulty))}</span>
-    <span>المكافأة: ${fmt(reward)} نقطة</span>
-    <span>التقدم: ${progress}/${target}</span>
-   </div>
-   <div class="task-progress"><span style="width:${percent}%"></span></div>
-   <div class="task-actions">
-    <button class="action secondary" disabled>بدء المهمة</button>
-    <button class="action secondary" disabled>التحقق</button>
-    <button class="action" disabled>${done?"تم الاستلام":"استلام المكافأة"}</button>
-   </div>
-  </div>
-  <span class="tag ${done?"green":isSpecial?"gold":""}">${safe(taskStatusLabel(status))}</span>
- </div>`;
-}
-
-function renderTaskPlaceholder(index){
- return `<div class="item task-slot"><div class="item-icon">🔒</div><div class="item-info"><b>المهمة اليومية ${index}</b><small>بانتظار بيانات المهمة من الخادم</small></div><span class="tag">قريبًا</span></div>`;
-}
-
-function renderTasks(tasks){
- const all=Array.isArray(tasks)?tasks:[];
- const daily=all.filter(t=>(t.task_type||t.type)==="daily").slice(0,10);
- const special=all.filter(t=>(t.task_type||t.type)==="special").slice(0,1);
-
- $("dailyCount").textContent=daily.length+" / 10";
- const dailyCards=daily.map(t=>renderTaskCard(t,false));
- for(let i=daily.length+1;i<=10;i++)dailyCards.push(renderTaskPlaceholder(i));
- $("regularTasks").innerHTML=dailyCards.join("");
-
- $("specialTasks").innerHTML=special.length?
-  renderTaskCard(special[0],true):
-  '<div class="item task-slot"><div class="item-icon">⭐</div><div class="item-info"><b>المهمة الخاصة</b><small>بانتظار بيانات المهمة الخاصة من الخادم</small></div><span class="tag gold">قريبًا</span></div>';
-}
-
-function renderAdTasks(){
- $("adTasks").innerHTML=adTaskData.map(n=>`<div class="item"><div class="item-icon">📺</div><div class="item-info"><b>${n}</b><small>بانتظار مزود إعلانات وتحقق خادمي</small></div><span class="tag gold">غير مفعّل</span></div>`).join("");
-}
-
-async function loadTasks(force=false){
- if(loadingTasks)return;if(tasksLoaded&&!force)return;
- if(!tg?.initData){$("tasksStatus").textContent="افتح التطبيق من داخل بوت تيليجرام لتحميل المهام.";$("tasksStatus").className="status error";return}
- loadingTasks=true;$("tasksStatus").textContent="جارٍ جلب مهامك من الخادم...";$("tasksStatus").className="status loading";
- try{
-  const result=await api("tasks_get");
-  const tasks=Array.isArray(result.tasks)?result.tasks:
-   Array.isArray(result.data?.tasks)?result.data.tasks:
-   Array.isArray(result.data)?result.data:
-   Array.isArray(result)?result:[];
-  renderTasks(tasks);tasksLoaded=true;
-  $("tasksStatus").textContent="تم تحميل المهام من الخادم. المعروض 10 خانات يومية ومهمة خاصة واحدة.";
-  $("tasksStatus").className="status";
- }catch(error){
-  console.error("tasks_get:",error);
-  $("tasksStatus").textContent="تعذّر تحميل المهام: "+error.message;$("tasksStatus").className="status error";
-  $("regularTasks").innerHTML=Array.from({length:10},(_,i)=>renderTaskPlaceholder(i+1)).join("");
-  $("specialTasks").innerHTML='<div class="empty">تعذّر جلب المهمة الخاصة.</div>';
- }finally{loadingTasks=false}
-}
-
-// LOGIN
-async function loadProfile(){
- if(!tg||!tg.initData){$("welcome").textContent="افتح التطبيق من تيليجرام";finishLoading("تعذّر التحقق من الحساب");return}
- $("loadingMessage").textContent="جارٍ تأمين اتصال حسابك...";
- try{
-  const result=await api("login");
-  const data=result.profile||result.data||result;
-  if(data.telegram_id==null||data.balance==null)throw new Error("بيانات الحساب غير مكتملة");
-  displayProfile(data);
-  $("loadingMessage").textContent="جارٍ تحميل المهام والمحفظة...";
-  await loadTasks(true);await refreshWallet(true);
-  finishLoading("أهلاً بك في SASA");
- }catch(error){
-  console.error("SASA API:",error);finishLoading("تعذّر الاتصال، يمكنك إعادة المحاولة");
-  notify("لم يتم الاتصال بالخادم: "+error.message);
- }
-}
-
-// WALLET DISPLAY
-async function refreshWallet(fromLogin=false){
- if(loadingWallet||!tg?.initData)return;loadingWallet=true;
- $("walletStatus").textContent="جارٍ تحديث المحفظة...";$("walletStatus").className="status loading";
- try{
-  const result=await api("wallet_get");
-  wallet=result.wallet||result.data||result;
-  const points=wallet.points_balance??profile?.balance??0;
-  const dollars=wallet.dollar_balance??0;
-  const reserved=wallet.dollar_reserved_balance??0;
-  $("walletPoints").textContent=fmt(points);
-  $("walletSummaryPoints").textContent=fmt(points);
-  $("homePoints").textContent=fmt(points);
-  $("shopPoints").textContent=fmt(points)+" ✦";
-  $("walletDollars").textContent=money(dollars);
-  $("walletReserved").textContent=money(reserved);
-  $("walletSummaryAvailable").textContent=money(dollars);
-  $("walletSummaryReserved").textContent=money(reserved);
-  $("homeDollars").textContent=money(dollars);
-  $("homeReserved").textContent=money(reserved);
-  renderLedger(wallet.ledger||wallet.transactions||wallet.dollar_ledger||[]);
-  renderWithdrawals(wallet.withdrawals||[]);
-  $("walletStatus").textContent="تم تحديث بيانات المحفظة ✓";$("walletStatus").className="status";
- }catch(error){
-  console.error("wallet_get:",error);
-  $("walletStatus").textContent="تعذّر تحميل المحفظة: "+error.message;$("walletStatus").className="status error";
-  $("ledgerList").innerHTML='<div class="empty">تعذّر تحميل سجل العمليات</div>';
-  $("withdrawalsList").innerHTML='<div class="empty">تعذّر تحميل طلبات السحب</div>';
- }finally{loadingWallet=false}
-}
-
-function entryLabel(type){
- return({credit:"إضافة رصيد",debit:"خصم",hold:"حجز",release:"إرجاع رصيد"})[type]||type||"عملية";
-}
-function renderLedger(rows){
- const el=$("ledgerList");
- if(!Array.isArray(rows)||!rows.length){el.innerHTML='<div class="empty">لا توجد عمليات دولار مسجلة حتى الآن</div>';return}
- el.innerHTML=rows.map(x=>{
-  const type=x.entry_type||"",sign=type==="credit"||type==="release"?"+":"−";
-  const date=x.created_at?new Date(x.created_at).toLocaleString("ar-EG"):"";
-  return `<div class="item"><div class="item-icon">💵</div><div class="item-info"><b>${entryLabel(type)}</b><small>${safe(x.reason||"حركة محفظة")} · ${safe(date)}</small></div><span class="tx-amount ${safe(type)}">${sign}${money(x.amount)}</span></div>`;
- }).join("");
-}
-function statusLabel(status){
- return({pending:"قيد المراجعة",approved:"تمت الموافقة",paid:"تم الدفع",rejected:"مرفوض",cancelled:"ملغي"})[status]||status||"غير معروف";
-}
-function renderWithdrawals(rows){
- const el=$("withdrawalsList");
- if(!Array.isArray(rows)||!rows.length){el.innerHTML='<div class="empty">لا توجد طلبات سابقة</div>';return}
- el.innerHTML=rows.map(x=>{
-  const method=x.payment_method==="usdt_trc20"?"USDT TRC20":x.payment_method==="vodafone_cash"?"فودافون كاش":"وسيلة أخرى";
-  const date=x.created_at?new Date(x.created_at).toLocaleString("ar-EG"):"";
-  return `<div class="item"><div class="item-icon">📄</div><div class="item-info"><b>${money(x.amount)} · ${method}</b><small>${statusLabel(x.status)} · ${safe(date)}</small><small>صافي المبلغ: ${money(x.net_amount??x.amount)}</small></div><span class="tag">${statusLabel(x.status)}</span></div>`;
- }).join("");
-}
-
-// SHOP
-function renderShop(search=""){
- const term=String(search).trim().toLowerCase();
- const filtered=productData.filter(p=>(p.name+" "+p.category+" "+p.description).toLowerCase().includes(term));
- $("products").innerHTML=filtered.map(p=>{
-  const currency=p.currency==="coins"?"🪙 عملة":"✦ نقطة";
-  return `<div class="product">
-   <span class="product-category">${p.category}</span>
-   <div class="art">${p.icon}</div>
-   <b>${p.name}</b>
-   <span class="product-desc">${p.description}</span>
-   <div class="product-price">${p.price} ${currency}</div>
-   <button disabled class="action secondary full">الشراء قريبًا</button>
-  </div>`;
- }).join("")||'<div class="empty">لا توجد نتائج بحث</div>';
-}
-
-// INVITATIONS
-async function copyInvite(){
- try{await navigator.clipboard.writeText(BOT_URL);notify("تم نسخ رابط البوت")}
- catch(e){notify("تعذّر النسخ على هذا الجهاز")}
-}
-function shareInvite(){
- const url="https://t.me/share/url?url="+encodeURIComponent(BOT_URL);
- if(tg?.openTelegramLink)tg.openTelegramLink(url);else location.href=url;
-}
-
-// BUTTON SOUNDS
-document.addEventListener("click",event=>{
- const target=event.target.closest("button,label.action");
- if(!target||target.disabled)return;
- playTone("button");
-});
-
-// GLOBAL FUNCTIONS
-window.showPage=showPage;
-window.loadProfile=loadProfile;
-window.loadTasks=loadTasks;
-window.refreshWallet=refreshWallet;
-window.copyInvite=copyInvite;
-window.shareInvite=shareInvite;
-window.notify=notify;
-window.renderShop=renderShop;
-window.saveProfile=saveProfile;
-window.uploadAvatar=uploadAvatar;
-window.loadInventory=loadInventory;
-window.saveSoundSettings=saveSoundSettings;
-window.testSound=testSound;
-
-// TELEGRAM INITIALIZATION
-try{
- tg?.ready();tg?.expand();
- tg?.setHeaderColor?.("#070b14");
- tg?.setBackgroundColor?.("#070b14");
- tg?.disableVerticalSwipes?.();
-}catch(e){console.error("TELEGRAM_INIT_ERROR:",e)}
-
-loadSoundSettings();
-renderAdTasks();
-renderShop();
-loadProfile();
-
-})();
-</script>
-</body>
-</html>
