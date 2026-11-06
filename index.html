@@ -51,14 +51,19 @@ box-shadow:0 0 35px #168cff88,0 0 90px #168cff33;animation:logoPulse 2s ease-in-
 .loader-progress{height:100%;width:0%;border-radius:30px;background:linear-gradient(90deg,#258cff,#55d9ff);box-shadow:0 0 15px #55d9ff;transition:width .35s ease}
 #loadingMessage{font-size:12px;color:#8daaca;margin-top:14px}
 .loader-version{position:absolute;bottom:35px;color:#617c9f;font-size:11px}
-.app{width:min(100%,560px);margin:auto;min-height:100vh;padding:20px 16px 110px}
+.app{width:min(100%,560px);margin:auto;min-height:100vh;padding:20px 16px 115px}
 .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
 .brand{display:flex;align-items:center;gap:11px}
 .logo{width:46px;height:46px;border-radius:16px;display:grid;place-items:center;font-size:23px;font-weight:900;background:linear-gradient(145deg,#43cfff,#1266dc);box-shadow:0 7px 20px #0879ff44}
 .brand h1{font-size:22px;margin:0;font-weight:900}
 .brand h1 span{color:var(--cyan)}
 .brand small{display:block;color:var(--muted);font-size:13px;margin-top:4px}
-.icon-btn{width:44px;height:44px;border-radius:15px;background:#12213a;border:1px solid var(--line);font-size:20px}
+.icon-btn{
+min-height:43px;padding:0 13px;border-radius:15px;
+background:#12213a;border:1px solid var(--line);
+font-size:13px;font-weight:800;display:flex;align-items:center;gap:7px
+}
+.icon-btn span{font-size:19px}
 .page{display:none}
 .page.active{display:block;animation:enter .25s ease}
 @keyframes enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -103,14 +108,24 @@ box-shadow:0 0 35px #168cff88,0 0 90px #168cff33;animation:logoPulse 2s ease-in-
 .search,.field{width:100%;padding:12px 13px;border-radius:13px;background:#0c192b;border:1px solid var(--line);color:white;font:inherit;outline:none;margin:5px 0 10px}
 .field-label{display:block;font-size:13px;color:#c9d9ed;margin:8px 2px 3px}
 .field option{background:#0c192b}
-.nav{position:fixed;z-index:20;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,560px);padding:9px 10px calc(9px + env(safe-area-inset-bottom));background:rgba(7,14,26,.96);backdrop-filter:blur(18px);border-top:1px solid #5daeff24;display:grid;grid-template-columns:repeat(5,1fr);gap:3px}
-.nav-btn{background:transparent;color:#8398b5;border-radius:14px;padding:7px 2px 5px;font-size:11px;font-weight:700;display:grid;justify-items:center;gap:3px}
-.nav-btn .nav-icon{font-size:21px}
+.nav{
+position:fixed;z-index:20;bottom:0;left:50%;transform:translateX(-50%);
+width:min(100%,560px);padding:8px 5px calc(8px + env(safe-area-inset-bottom));
+background:rgba(7,14,26,.97);backdrop-filter:blur(18px);
+border-top:1px solid #5daeff24;
+display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:2px
+}
+.nav-btn{
+min-width:0;background:transparent;color:#8398b5;border-radius:12px;
+padding:7px 1px 5px;font-size:10px;font-weight:700;
+display:grid;justify-items:center;gap:3px
+}
+.nav-btn .nav-icon{font-size:19px;line-height:1.2}
 .nav-btn.active{color:#7edfff;background:#153d673d}
-.toast{position:fixed;z-index:50;bottom:100px;left:50%;transform:translateX(-50%);background:#173553;border:1px solid #56caff66;border-radius:14px;padding:11px 16px;font-weight:700;font-size:13px;display:none;max-width:90%;text-align:center}
+.toast{position:fixed;z-index:50;bottom:105px;left:50%;transform:translateX(-50%);background:#173553;border:1px solid #56caff66;border-radius:14px;padding:11px 16px;font-weight:700;font-size:13px;display:none;max-width:90%;text-align:center}
 .toast.show{display:block;animation:enter .2s ease}
 .ref-box{direction:ltr;text-align:left;word-break:break-all;padding:13px;background:#091525;border:1px dashed #3b91d6;border-radius:13px;color:#c9eaff;font-size:13px;margin:12px 0}
-.profile-avatar{width:100px;height:100px;border-radius:30px;display:grid;place-items:center;font-size:42px;background:linear-gradient(145deg,#1687ff,#15345b);border:1px solid #6ccfff55;margin:0 auto 10px;overflow:hidden}
+.profile-avatar{width:105px;height:105px;border-radius:32px;display:grid;place-items:center;font-size:42px;background:linear-gradient(145deg,#1687ff,#15345b);border:1px solid #6ccfff55;margin:0 auto 10px;overflow:hidden}
 .profile-avatar img{width:100%;height:100%;object-fit:cover}
 .avatar-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:12px 0}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -131,6 +146,25 @@ box-shadow:0 0 35px #168cff88,0 0 90px #168cff33;animation:logoPulse 2s ease-in-
 .task-details span{font-size:11px;color:#c6d9ef;background:#10243d;padding:4px 7px;border-radius:8px}
 .special-task{border-color:#d7a84c66;background:linear-gradient(145deg,#352b19,#172238)}
 .inventory-image{width:100%;height:100%;object-fit:cover}
+.sound-row{
+display:flex;align-items:center;justify-content:space-between;gap:12px;
+padding:14px 12px;margin:9px 0;border-radius:15px;
+background:#0b1a2e;border:1px solid var(--line)
+}
+.sound-row b{font-size:14px}
+.sound-row small{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+.sound-row input[type=checkbox]{width:21px;height:21px;accent-color:#258cff;flex:0 0 auto}
+.volume-value{color:var(--cyan);font-weight:900}
+input[type=range]{width:100%;accent-color:#55d9ff;margin:15px 0}
+.avatar-fallback{display:grid;place-items:center;width:100%;height:100%}
+@media(max-width:370px){
+ .app{padding-left:11px;padding-right:11px}
+ .nav{padding-left:3px;padding-right:3px}
+ .nav-btn{font-size:9px}
+ .nav-btn .nav-icon{font-size:17px}
+ .icon-btn{padding:0 10px;font-size:12px}
+ .brand h1{font-size:19px}
+}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
@@ -152,10 +186,10 @@ box-shadow:0 0 35px #168cff88,0 0 90px #168cff33;animation:logoPulse 2s ease-in-
   <div class="logo">S</div>
   <div><h1>SASA <span>MINI APP</span></h1><small>رحلتك تبدأ من هنا</small></div>
  </div>
- <button class="icon-btn" onclick="notify('أهلاً بك في SASA MINI APP ✨')">♢</button>
+ <button class="icon-btn" onclick="showPage('profile')">
+  <span>👤</span> حسابي
+ </button>
 </header>
-
-<div id="connection" class="status loading">جارٍ الاتصال بحسابك...</div>
 
 <main>
 <section class="page active" id="home">
@@ -183,6 +217,8 @@ box-shadow:0 0 35px #168cff88,0 0 90px #168cff33;animation:logoPulse 2s ease-in-
   <button class="tile" onclick="showPage('friends')"><span class="emoji">👥</span><b>الأصدقاء</b><small>مشاركة رابط البوت</small></button>
   <button class="tile" onclick="showPage('shop')"><span class="emoji">🎁</span><b>المتجر</b><small>عناصر SASA</small></button>
   <button class="tile" onclick="showPage('wallet')"><span class="emoji">💠</span><b>المحفظة</b><small>النقاط والدولار والسحب</small></button>
+  <button class="tile" onclick="showPage('inventory')"><span class="emoji">🎒</span><b>مخزني</b><small>العناصر التي تمتلكها</small></button>
+  <button class="tile" onclick="showPage('profile')"><span class="emoji">👤</span><b>حسابي</b><small>بياناتك الشخصية</small></button>
  </div>
  <p class="footer-note">SASA MINI APP · الأرصدة حسب سجل الخادم</p>
 </section>
@@ -255,42 +291,30 @@ box-shadow:0 0 35px #168cff88,0 0 90px #168cff33;animation:logoPulse 2s ease-in-
  </div>
 </section>
 
-<section class="page" id="settings">
- <div class="section-head"><h3>⚙️ حسابي</h3><span>ملفك الشخصي</span></div>
-
+<!-- PROFILE -->
+<section class="page" id="profile">
+ <div class="section-head"><h3>👤 حسابي</h3><span>ملفك الشخصي</span></div>
  <div class="card">
-  <div class="profile-avatar" id="profileAvatar">👤</div>
+  <div class="profile-avatar" id="profileAvatar">
+   <span class="avatar-fallback" id="profileAvatarFallback">👤</span>
+   <img id="profileAvatarImage" alt="صورة البروفايل" style="display:none">
+  </div>
 
   <div class="avatar-actions">
-   <button class="action" onclick="chooseAvatar()">تغيير الصورة</button>
+   <label class="action" for="avatarFile" style="cursor:pointer">📷 تغيير صورة البروفايل</label>
    <button class="action secondary" onclick="loadProfile()">تحديث البيانات</button>
   </div>
 
-  <input
-   id="avatarInput"
-   type="file"
-   accept="image/jpeg,image/png,image/webp"
-   hidden
-   onchange="uploadAvatar(this)"
-  >
+  <input id="avatarFile" type="file" accept="image/jpeg,image/png,image/webp" hidden onchange="uploadAvatar(this)">
 
   <h3 style="text-align:center;margin:0 0 5px" id="profileName">عضو SASA</h3>
   <p class="info" style="text-align:center">ملفك الشخصي في SASA</p>
 
   <label class="field-label" for="displayNameInput">الاسم الظاهر</label>
-  <input
-   class="field"
-   id="displayNameInput"
-   type="text"
-   maxlength="40"
-   placeholder="اكتب الاسم الذي تريد ظهوره"
-   autocomplete="name"
-  >
+  <input class="field" id="displayNameInput" type="text" maxlength="40" placeholder="اكتب الاسم الذي تريد ظهوره" autocomplete="name">
   <button class="action full" id="saveProfileButton" onclick="saveProfile()">حفظ الاسم</button>
 
-  <div id="profileStatus" class="status loading" style="margin-top:12px">
-   يتم تحميل بيانات حسابك...
-  </div>
+  <div id="profileStatus" class="status loading" style="margin-top:12px">يتم تحميل بيانات حسابك...</div>
  </div>
 
  <div class="section-head"><h3>📊 إحصائيات الحساب</h3><span>بياناتك</span></div>
@@ -312,14 +336,70 @@ box-shadow:0 0 35px #168cff88,0 0 90px #168cff33;animation:logoPulse 2s ease-in-
    <div class="item-info"><b>اسم مستخدم تيليجرام</b><small id="profileUsername">—</small></div>
   </div>
  </div>
+</section>
 
+<!-- INVENTORY -->
+<section class="page" id="inventory">
  <div class="section-head">
   <h3>🎒 مخزني</h3>
   <button class="action secondary" onclick="loadInventory(true)">تحديث</button>
  </div>
- <div id="inventoryStatus" class="status loading">جارٍ تحميل المخزون...</div>
- <div class="list" id="inventoryList">
-  <div class="empty">جارٍ تحميل العناصر...</div>
+ <div class="card">
+  <p class="info">هنا هتظهر العناصر اللي امتلكتها بالفعل في SASA.</p>
+  <div id="inventoryStatus" class="status loading">جارٍ تحميل مخزونك...</div>
+  <div class="list" id="inventoryList">
+   <div class="empty">جارٍ تحميل العناصر...</div>
+  </div>
+ </div>
+</section>
+
+<!-- SETTINGS -->
+<section class="page" id="settings">
+ <div class="section-head"><h3>⚙️ الإعدادات</h3><span>تخصيص التطبيق</span></div>
+
+ <div class="card">
+  <div class="section-head" style="margin-top:0">
+   <h3>🔊 إعدادات الصوت</h3>
+   <span>تحكم في الأصوات</span>
+  </div>
+
+  <label class="sound-row">
+   <span><b>صوت الأزرار</b><small>نقرة إلكترونية قصيرة عند الضغط</small></span>
+   <input type="checkbox" id="soundButtons" checked onchange="saveSoundSettings()">
+  </label>
+
+  <label class="sound-row">
+   <span><b>صوت إنجاز المهام</b><small>نغمة نجاح عند إتمام المهمة</small></span>
+   <input type="checkbox" id="soundTasks" checked onchange="saveSoundSettings()">
+  </label>
+
+  <label class="sound-row">
+   <span><b>صوت الإشعارات</b><small>تنبيه صوتي بسيط للإشعارات</small></span>
+   <input type="checkbox" id="soundNotifications" checked onchange="saveSoundSettings()">
+  </label>
+
+  <div class="sound-row" style="display:block">
+   <div style="display:flex;justify-content:space-between;align-items:center">
+    <b>مستوى الصوت</b>
+    <span class="volume-value" id="soundVolumeValue">65%</span>
+   </div>
+   <input type="range" id="soundVolume" min="0" max="100" value="65" oninput="saveSoundSettings()">
+  </div>
+
+  <button class="action secondary full" onclick="testSound()">🔔 تجربة الصوت</button>
+  <p class="info" id="soundStatus">يتم حفظ إعدادات الصوت على جهازك تلقائيًا.</p>
+ </div>
+
+ <div class="card">
+  <div class="section-head" style="margin-top:0"><h3>ℹ️ معلومات التطبيق</h3></div>
+  <div class="item">
+   <div class="item-icon">🚀</div>
+   <div class="item-info"><b>SASA MINI APP</b><small>رحلتك تبدأ من هنا</small></div>
+  </div>
+  <div class="item" style="margin-top:10px">
+   <div class="item-icon">🔒</div>
+   <div class="item-info"><b>حماية الحساب</b><small>اتصال التطبيق يتم من خلال تيليجرام</small></div>
+  </div>
  </div>
 </section>
 </main>
@@ -330,8 +410,10 @@ box-shadow:0 0 35px #168cff88,0 0 90px #168cff33;animation:logoPulse 2s ease-in-
  <button class="nav-btn" data-page="tasks" onclick="showPage('tasks')"><span class="nav-icon">◈</span><span>المهام</span></button>
  <button class="nav-btn" data-page="shop" onclick="showPage('shop')"><span class="nav-icon">🎁</span><span>المتجر</span></button>
  <button class="nav-btn" data-page="wallet" onclick="showPage('wallet')"><span class="nav-icon">💠</span><span>المحفظة</span></button>
- <button class="nav-btn" data-page="settings" onclick="showPage('settings')"><span class="nav-icon">⚙</span><span>حسابي</span></button>
+ <button class="nav-btn" data-page="inventory" onclick="showPage('inventory')"><span class="nav-icon">🎒</span><span>مخزني</span></button>
+ <button class="nav-btn" data-page="settings" onclick="showPage('settings')"><span class="nav-icon">⚙️</span><span>إعدادات</span></button>
 </nav>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -387,17 +469,126 @@ function finishLoading(message="تم تجهيز التطبيق"){
  setTimeout(()=>$("loadingScreen").classList.add("hide"),450);
 }
 
+// -----------------------------------------
+// SOUND SETTINGS
+// -----------------------------------------
+
+const SOUND_KEY="sasa_sound_settings_v1";
+let soundSettings={
+ buttons:true,
+ tasks:true,
+ notifications:true,
+ volume:65
+};
+let audioContext=null;
+
+function loadSoundSettings(){
+ try{
+  const saved=localStorage.getItem(SOUND_KEY);
+  if(saved){
+   const parsed=JSON.parse(saved);
+   soundSettings={
+    buttons:parsed.buttons!==false,
+    tasks:parsed.tasks!==false,
+    notifications:parsed.notifications!==false,
+    volume:Math.max(0,Math.min(100,Number(parsed.volume??65)))
+   };
+  }
+ }catch(error){
+  console.warn("SOUND_SETTINGS_READ:",error);
+ }
+
+ $("soundButtons").checked=soundSettings.buttons;
+ $("soundTasks").checked=soundSettings.tasks;
+ $("soundNotifications").checked=soundSettings.notifications;
+ $("soundVolume").value=soundSettings.volume;
+ $("soundVolumeValue").textContent=soundSettings.volume+"%";
+}
+
+function saveSoundSettings(){
+ soundSettings.buttons=$("soundButtons").checked;
+ soundSettings.tasks=$("soundTasks").checked;
+ soundSettings.notifications=$("soundNotifications").checked;
+ soundSettings.volume=Math.max(0,Math.min(100,Number($("soundVolume").value)));
+
+ $("soundVolumeValue").textContent=soundSettings.volume+"%";
+
+ try{
+  localStorage.setItem(SOUND_KEY,JSON.stringify(soundSettings));
+  $("soundStatus").textContent="تم حفظ إعدادات الصوت على جهازك.";
+ }catch(error){
+  $("soundStatus").textContent="تعذّر حفظ الإعدادات على هذا الجهاز.";
+ }
+}
+
+function getAudioContext(){
+ const AudioContextClass=window.AudioContext||window.webkitAudioContext;
+ if(!AudioContextClass)return null;
+
+ if(!audioContext)audioContext=new AudioContextClass();
+ if(audioContext.state==="suspended")audioContext.resume().catch(()=>{});
+ return audioContext;
+}
+
+function playTone(type="button"){
+ const enabled=
+  type==="button"?soundSettings.buttons:
+  type==="task"?soundSettings.tasks:
+  soundSettings.notifications;
+
+ if(!enabled||soundSettings.volume<=0)return;
+
+ try{
+  const ctx=getAudioContext();
+  if(!ctx)return;
+
+  const now=ctx.currentTime;
+  const master=ctx.createGain();
+  master.gain.setValueAtTime(soundSettings.volume/100*0.12,now);
+  master.connect(ctx.destination);
+
+  const notes=type==="task"?[660,880]:
+   type==="notification"?[740]:[520];
+
+  notes.forEach((frequency,index)=>{
+   const oscillator=ctx.createOscillator();
+   const gain=ctx.createGain();
+   const start=now+index*(type==="task"?0.12:0);
+   const duration=type==="button"?0.055:0.16;
+
+   oscillator.type="sine";
+   oscillator.frequency.setValueAtTime(frequency,start);
+
+   gain.gain.setValueAtTime(0.001,start);
+   gain.gain.exponentialRampToValueAtTime(0.8,start+0.015);
+   gain.gain.exponentialRampToValueAtTime(0.001,start+duration);
+
+   oscillator.connect(gain);
+   gain.connect(master);
+   oscillator.start(start);
+   oscillator.stop(start+duration+0.02);
+  });
+ }catch(error){
+  console.warn("AUDIO_ERROR:",error);
+ }
+}
+
+function testSound(){
+ playTone("notification");
+ notify("دي تجربة لصوت الإشعارات");
+}
+
 function notify(message){
  const el=$("toast");
  el.textContent=message;
  el.classList.add("show");
  clearTimeout(notify.timer);
  notify.timer=setTimeout(()=>el.classList.remove("show"),2800);
+ playTone("notification");
 }
 
-function setConnection(message,type="loading"){
- $("connection").textContent=message;
- $("connection").className="status "+type;
+function setConnection(){
+ // شريط حالة الاتصال أُلغي من التصميم.
 }
 
 function money(value){
@@ -424,9 +615,8 @@ function showPage(id){
 
  if(id==="wallet")refreshWallet();
  if(id==="tasks")loadTasks();
- if(id==="settings"){
-  loadInventory();
- }
+ if(id==="inventory")loadInventory();
+ if(id==="settings")loadSoundSettings();
 }
 
 async function api(action,extra={}){
@@ -439,7 +629,6 @@ async function api(action,extra={}){
  });
 
  let result;
-
  try{
   result=await response.json();
  }catch{
@@ -458,28 +647,30 @@ async function api(action,extra={}){
 // -----------------------------------------
 
 function displayAvatar(url){
- const box=$("profileAvatar");
+ const image=$("profileAvatarImage");
+ const fallback=$("profileAvatarFallback");
 
  if(url){
-  const img=document.createElement("img");
-  img.src=url;
-  img.alt="صورة الملف الشخصي";
-  img.onerror=()=>{
-   box.textContent="👤";
+  image.src=url;
+  image.style.display="block";
+  fallback.style.display="none";
+  image.onerror=()=>{
+   image.style.display="none";
+   fallback.style.display="grid";
   };
-
-  box.replaceChildren(img);
  }else{
-  box.textContent="👤";
+  image.removeAttribute("src");
+  image.style.display="none";
+  fallback.style.display="grid";
  }
 }
 
 function displayProfile(data){
- profile=data;
+ profile=data||{};
 
  const balance=Number(data.balance??0);
  const username=data.username?"@"+data.username:"عضو SASA";
- const displayName=data.display_name||username;
+ const displayName=data.display_name||data.first_name||username;
 
  $("welcome").textContent="أهلاً بك 👋";
  $("username").textContent=username;
@@ -500,8 +691,6 @@ function displayProfile(data){
  displayAvatar(data.avatar_url||null);
 
  $("onlineStatus").textContent="● متصل";
- setConnection("الحساب جاهز","success");
-
  $("profileStatus").textContent="تم تحميل بيانات حسابك.";
  $("profileStatus").className="status";
 }
@@ -534,26 +723,22 @@ async function saveProfile(){
  $("profileStatus").className="status loading";
 
  try{
-  const result=await api("profile_update",{
-   display_name:displayName
-  });
+  const result=await api("profile_update",{display_name:displayName});
+  const updated=result.profile||result.data?.profile||result.data||result;
 
-  if(!result.profile){
+  if(!updated||typeof updated!=="object"){
    throw new Error("الخادم لم يرجع بيانات الملف الشخصي");
   }
 
-  displayProfile(result.profile);
+  displayProfile({...profile,...updated,display_name:updated.display_name||displayName});
 
   $("profileStatus").textContent="تم حفظ الاسم بنجاح.";
   $("profileStatus").className="status";
-
   notify("تم تحديث اسمك بنجاح");
  }catch(error){
   console.error("PROFILE_UPDATE:",error);
-
   $("profileStatus").textContent="تعذّر حفظ الاسم: "+error.message;
   $("profileStatus").className="status error";
-
   notify("لم يتم حفظ الاسم");
  }finally{
   profileSaving=false;
@@ -566,21 +751,11 @@ async function saveProfile(){
 // AVATAR UPLOAD
 // -----------------------------------------
 
-function chooseAvatar(){
- if(avatarUploading)return;
- $("avatarInput").click();
-}
-
 async function uploadAvatar(input){
  const file=input.files?.[0];
-
  if(!file)return;
 
- const allowedTypes=[
-  "image/jpeg",
-  "image/png",
-  "image/webp"
- ];
+ const allowedTypes=["image/jpeg","image/png","image/webp"];
 
  if(!allowedTypes.includes(file.type)){
   notify("اختار صورة JPG أو PNG أو WEBP");
@@ -595,60 +770,47 @@ async function uploadAvatar(input){
  }
 
  if(avatarUploading)return;
-
  avatarUploading=true;
 
  $("profileStatus").textContent="جارٍ تجهيز الصورة ورفعها...";
  $("profileStatus").className="status loading";
 
- const avatarButton=document.querySelector(".avatar-actions button");
- if(avatarButton)avatarButton.disabled=true;
-
  try{
   const base64=await new Promise((resolve,reject)=>{
    const reader=new FileReader();
-
    reader.onload=()=>{
-    const result=reader.result;
-
-    if(typeof result!=="string"){
+    if(typeof reader.result!=="string"){
      reject(new Error("تعذّرت قراءة الصورة"));
      return;
     }
-
-    resolve(result);
+    resolve(reader.result);
    };
-
    reader.onerror=()=>reject(new Error("تعذّرت قراءة ملف الصورة"));
    reader.readAsDataURL(file);
   });
 
-  const result=await api("avatar_upload",{
-   image_base64:base64
-  });
+  const result=await api("avatar_upload",{image_base64:base64});
+  const updated=result.profile||result.data?.profile||result.data||{};
 
-  if(!result.profile){
-   throw new Error("الخادم لم يرجع بيانات الصورة");
+  const avatarUrl=updated.avatar_url||result.avatar_url;
+
+  if(!avatarUrl){
+   throw new Error("الخادم لم يرجع رابط الصورة");
   }
 
-  displayProfile(result.profile);
+  displayProfile({...profile,...updated,avatar_url:avatarUrl});
 
   $("profileStatus").textContent="تم رفع الصورة وحفظها بنجاح.";
   $("profileStatus").className="status";
-
   notify("تم تحديث صورتك الشخصية");
  }catch(error){
   console.error("AVATAR_UPLOAD:",error);
-
   $("profileStatus").textContent="تعذّر رفع الصورة: "+error.message;
   $("profileStatus").className="status error";
-
   notify("لم يتم رفع الصورة");
  }finally{
   avatarUploading=false;
   input.value="";
-
-  if(avatarButton)avatarButton.disabled=false;
  }
 }
 
@@ -667,32 +829,28 @@ async function loadInventory(force=false){
  }
 
  loadingInventory=true;
-
  $("inventoryStatus").textContent="جارٍ تحميل مخزونك...";
  $("inventoryStatus").className="status loading";
 
  try{
   const result=await api("inventory_get");
 
-  const items=Array.isArray(result.inventory)?result.inventory:
-   Array.isArray(result.items)?result.items:[];
+  const items=
+   Array.isArray(result.items)?result.items:
+   Array.isArray(result.inventory)?result.inventory:
+   Array.isArray(result.data?.items)?result.data.items:
+   Array.isArray(result.data?.inventory)?result.data.inventory:[];
 
   renderInventory(items);
-
   inventoryLoaded=true;
 
-  $("inventoryStatus").textContent=
-   "تم تحميل المخزون. عدد السجلات: "+items.length;
+  $("inventoryStatus").textContent="تم تحميل المخزون. عدد السجلات: "+items.length;
   $("inventoryStatus").className="status";
  }catch(error){
   console.error("INVENTORY_GET:",error);
-
-  $("inventoryStatus").textContent=
-   "تعذّر تحميل المخزون: "+error.message;
+  $("inventoryStatus").textContent="تعذّر تحميل المخزون: "+error.message;
   $("inventoryStatus").className="status error";
-
-  $("inventoryList").innerHTML=
-   '<div class="empty">لم نتمكن من تحميل العناصر. اضغط تحديث للمحاولة مرة أخرى.</div>';
+  $("inventoryList").innerHTML='<div class="empty">لم نتمكن من تحميل العناصر. اضغط تحديث للمحاولة مرة أخرى.</div>';
  }finally{
   loadingInventory=false;
  }
@@ -708,14 +866,14 @@ function renderInventory(items){
 
  el.innerHTML=items.map(item=>{
   const product=item.product||{};
-  const title=product.title_ar||product.title_en||item.product_id||"عنصر SASA";
-  const description=product.description_ar||product.description_en||"عنصر في مخزونك";
+  const title=product.title_ar||product.name_ar||product.title||product.name||item.product_id||"عنصر SASA";
+  const description=product.description_ar||product.description||"عنصر في مخزونك";
   const quantity=Math.max(0,Number(item.quantity??0));
   const imageUrl=product.image_url||"";
 
-  const icon=imageUrl?
-   `<img class="inventory-image" src="${safe(imageUrl)}" alt="">`:
-   "🎁";
+  const safeImage=/^https?:\/\//i.test(imageUrl);
+  const icon=safeImage?
+   `<img class="inventory-image" src="${safe(imageUrl)}" alt="">`:"🎁";
 
   const acquired=item.acquired_at?
    new Date(item.acquired_at).toLocaleDateString("ar-EG"):"";
@@ -748,13 +906,8 @@ function taskStatusLabel(status){
 
 function taskDifficultyLabel(level){
  const n=Number(level||1);
-
  return({
-  1:"سهلة",
-  2:"عادية",
-  3:"متوسطة",
-  4:"صعبة",
-  5:"صعبة جدًا"
+  1:"سهلة",2:"عادية",3:"متوسطة",4:"صعبة",5:"صعبة جدًا"
  })[n]||("المستوى "+n);
 }
 
@@ -792,7 +945,6 @@ function renderTasks(tasks){
  const special=all.filter(t=>(t.task_type||t.type)==="special");
 
  $("dailyCount").textContent=daily.length+" مهام";
-
  $("regularTasks").innerHTML=daily.length?
   daily.map(t=>renderTaskCard(t,false)).join(""):
   '<div class="empty">لا توجد مهام يومية متاحة حاليًا</div>';
@@ -827,27 +979,20 @@ async function loadTasks(force=false){
 
  try{
   const result=await api("tasks_get");
-
   const tasks=Array.isArray(result.tasks)?result.tasks:
    Array.isArray(result.data)?result.data:
    Array.isArray(result)?result:[];
 
   renderTasks(tasks);
   tasksLoaded=true;
-
   $("tasksStatus").textContent="تم تحميل المهام من الخادم بنجاح.";
   $("tasksStatus").className="status";
  }catch(error){
   console.error("tasks_get:",error);
-
   $("tasksStatus").textContent="تعذّر تحميل المهام: "+error.message;
   $("tasksStatus").className="status error";
-
-  $("regularTasks").innerHTML=
-   '<div class="empty">تعذّر جلب المهام. اضغط تحديث للمحاولة مرة أخرى.</div>';
-
-  $("specialTasks").innerHTML=
-   '<div class="empty">تعذّر جلب المهمة الخاصة.</div>';
+  $("regularTasks").innerHTML='<div class="empty">تعذّر جلب المهام. اضغط تحديث للمحاولة مرة أخرى.</div>';
+  $("specialTasks").innerHTML='<div class="empty">تعذّر جلب المهمة الخاصة.</div>';
  }finally{
   loadingTasks=false;
  }
@@ -859,13 +1004,11 @@ async function loadTasks(force=false){
 
 async function loadProfile(){
  if(!tg||!tg.initData){
-  setConnection("افتح التطبيق من داخل بوت تيليجرام لاختبار الاتصال.","error");
   $("welcome").textContent="افتح التطبيق من تيليجرام";
   finishLoading("تعذّر التحقق من الحساب");
   return;
  }
 
- setConnection("جارٍ التحقق من حساب تيليجرام...","loading");
  $("loadingMessage").textContent="جارٍ تأمين اتصال حسابك...";
 
  try{
@@ -877,7 +1020,6 @@ async function loadProfile(){
   }
 
   displayProfile(data);
-
   $("loadingMessage").textContent="جارٍ تحميل المهام والمحفظة...";
 
   await loadTasks(true);
@@ -886,10 +1028,8 @@ async function loadProfile(){
   finishLoading("أهلاً بك في SASA");
  }catch(error){
   console.error("SASA API:",error);
-
-  setConnection("تعذّر تحميل الحساب: "+error.message,"error");
   finishLoading("تعذّر الاتصال، يمكنك إعادة المحاولة");
-  notify("لم يتم الاتصال بالخادم");
+  notify("لم يتم الاتصال بالخادم: "+error.message);
  }
 }
 
@@ -899,7 +1039,6 @@ async function loadProfile(){
 
 async function refreshWallet(fromLogin=false){
  if(loadingWallet||!tg?.initData)return;
-
  loadingWallet=true;
 
  $("walletStatus").textContent="جارٍ تحديث المحفظة...";
@@ -916,10 +1055,8 @@ async function refreshWallet(fromLogin=false){
   $("walletPoints").textContent=fmt(points);
   $("homePoints").textContent=fmt(points);
   $("shopPoints").textContent=fmt(points);
-
   $("walletDollars").textContent=money(dollars);
   $("walletReserved").textContent=money(reserved);
-
   $("homeDollars").textContent=money(dollars);
   $("homeReserved").textContent=money(reserved);
 
@@ -930,10 +1067,8 @@ async function refreshWallet(fromLogin=false){
   $("walletStatus").className="status";
  }catch(error){
   console.error("wallet_get:",error);
-
   $("walletStatus").textContent="تعذّر تحميل المحفظة: "+error.message;
   $("walletStatus").className="status error";
-
   $("ledgerList").innerHTML='<div class="empty">تعذّر تحميل سجل العمليات</div>';
   $("withdrawalsList").innerHTML='<div class="empty">تعذّر تحميل طلبات السحب</div>';
  }finally{
@@ -943,10 +1078,7 @@ async function refreshWallet(fromLogin=false){
 
 function entryLabel(type){
  return({
-  credit:"إضافة رصيد",
-  debit:"خصم",
-  hold:"حجز للسحب",
-  release:"إرجاع رصيد"
+  credit:"إضافة رصيد",debit:"خصم",hold:"حجز للسحب",release:"إرجاع رصيد"
  })[type]||type||"عملية";
 }
 
@@ -977,11 +1109,8 @@ function renderLedger(rows){
 
 function statusLabel(status){
  return({
-  pending:"قيد المراجعة",
-  approved:"تمت الموافقة",
-  paid:"تم الدفع",
-  rejected:"مرفوض",
-  cancelled:"ملغي"
+  pending:"قيد المراجعة",approved:"تمت الموافقة",paid:"تم الدفع",
+  rejected:"مرفوض",cancelled:"ملغي"
  })[status]||status||"غير معروف";
 }
 
@@ -995,8 +1124,7 @@ function renderWithdrawals(rows){
 
  el.innerHTML=rows.map(x=>{
   const method=x.payment_method==="usdt_trc20"?"USDT TRC20":
-   x.payment_method==="vodafone_cash"?"فودافون كاش":"Visa";
-
+   x.payment_method==="vodafone_cash"?"فودافون كاش":"وسيلة أخرى";
   const date=x.created_at?new Date(x.created_at).toLocaleString("ar-EG"):"";
   const cancel=x.status==="pending";
 
@@ -1029,10 +1157,8 @@ function safeAttr(value){
 
 $("withdrawMethod").addEventListener("change",()=>{
  const usdt=$("withdrawMethod").value==="usdt_trc20";
-
  $("destinationLabel").textContent=usdt?
   "عنوان محفظة USDT على شبكة TRC20":"رقم فودافون كاش";
-
  $("withdrawDestination").placeholder=usdt?
   "عنوان يبدأ بحرف T":"01xxxxxxxxx";
 });
@@ -1057,7 +1183,6 @@ async function createWithdrawal(){
  if(!confirm("تأكيد إرسال طلب السحب؟ سيتم حجز المبلغ حتى مراجعة الطلب، ولن يتم تحويله تلقائيًا."))return;
 
  requestBusy=true;
-
  $("withdrawButton").disabled=true;
  $("withdrawButton").textContent="جارٍ إرسال الطلب...";
 
@@ -1070,7 +1195,6 @@ async function createWithdrawal(){
 
   $("withdrawAmount").value="";
   $("withdrawDestination").value="";
-
   notify("تم تسجيل طلب السحب بنجاح، وهو قيد المراجعة");
   await refreshWallet();
  }catch(error){
@@ -1088,7 +1212,6 @@ async function cancelWithdrawal(id){
 
  try{
   await api("withdrawal_cancel",{withdrawal_id:id});
-
   notify("تم إلغاء الطلب وإرجاع المبلغ إن كان قابلًا للإلغاء");
   await refreshWallet();
  }catch(error){
@@ -1102,10 +1225,7 @@ async function cancelWithdrawal(id){
 
 function renderShop(search=""){
  const term=String(search).trim().toLowerCase();
-
- const filtered=productData.filter(p=>
-  p[1].toLowerCase().includes(term)
- );
+ const filtered=productData.filter(p=>p[1].toLowerCase().includes(term));
 
  $("products").innerHTML=filtered.map(p=>`
   <div class="product">
@@ -1131,10 +1251,20 @@ async function copyInvite(){
 
 function shareInvite(){
  const url="https://t.me/share/url?url="+encodeURIComponent(BOT_URL);
-
  if(tg?.openTelegramLink)tg.openTelegramLink(url);
  else location.href=url;
 }
+
+// -----------------------------------------
+// BUTTON SOUNDS
+// -----------------------------------------
+
+document.addEventListener("click",event=>{
+ const target=event.target.closest("button,label.action");
+ if(!target||target.disabled)return;
+ if(target.id==="testSoundButton")return;
+ playTone("button");
+});
 
 // -----------------------------------------
 // GLOBAL FUNCTIONS
@@ -1151,9 +1281,10 @@ window.shareInvite=shareInvite;
 window.notify=notify;
 window.renderShop=renderShop;
 window.saveProfile=saveProfile;
-window.chooseAvatar=chooseAvatar;
 window.uploadAvatar=uploadAvatar;
 window.loadInventory=loadInventory;
+window.saveSoundSettings=saveSoundSettings;
+window.testSound=testSound;
 
 // -----------------------------------------
 // TELEGRAM INITIALIZATION
@@ -1169,6 +1300,7 @@ try{
  console.error("TELEGRAM_INIT_ERROR:",e);
 }
 
+loadSoundSettings();
 renderAdTasks();
 renderShop();
 loadProfile();
