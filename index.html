@@ -25,66 +25,36 @@ radial-gradient(ellipse at 85% 65%,#075b8850,transparent 38%),#070b14;
 button,input,select{font:inherit}
 button{color:inherit;border:0;cursor:pointer}
 button:disabled{opacity:.45;cursor:not-allowed}
-
-/* LOADING SCREEN */
 #loadingScreen{
 position:fixed;inset:0;z-index:9999;
 display:flex;align-items:center;justify-content:center;
 flex-direction:column;text-align:center;
-background:
-radial-gradient(circle at 50% 45%,#123d70 0%,#091629 38%,#050914 78%);
+background:radial-gradient(circle at 50% 45%,#123d70 0%,#091629 38%,#050914 78%);
 transition:opacity .65s ease,visibility .65s ease;
 }
 #loadingScreen.hide{opacity:0;visibility:hidden;pointer-events:none}
-.loader-stars{
-position:absolute;inset:0;overflow:hidden;pointer-events:none;
-background-image:
-radial-gradient(2px 2px at 15% 20%,#fff 98%,transparent),
+.loader-stars{position:absolute;inset:0;overflow:hidden;pointer-events:none;
+background-image:radial-gradient(2px 2px at 15% 20%,#fff 98%,transparent),
 radial-gradient(2px 2px at 80% 25%,#55d9ff 98%,transparent),
 radial-gradient(1px 1px at 45% 70%,#fff 98%,transparent),
 radial-gradient(2px 2px at 75% 85%,#55d9ff 98%,transparent);
-background-size:190px 190px;
-animation:starMove 22s linear infinite;
-}
+background-size:190px 190px;animation:starMove 22s linear infinite}
 @keyframes starMove{to{transform:translateY(-190px)}}
-.loader-logo{
-width:112px;height:112px;border-radius:35px;
-display:grid;place-items:center;
-font-size:58px;font-weight:900;color:white;
-background:linear-gradient(145deg,#55d9ff,#1266dc);
-box-shadow:0 0 35px #168cff88,0 0 90px #168cff33;
-animation:logoPulse 2s ease-in-out infinite alternate;
-position:relative;
-}
-@keyframes logoPulse{
-to{transform:scale(1.06);box-shadow:0 0 55px #55d9ffbb,0 0 110px #168cff66}
-}
+.loader-logo{width:112px;height:112px;border-radius:35px;display:grid;place-items:center;
+font-size:58px;font-weight:900;color:white;background:linear-gradient(145deg,#55d9ff,#1266dc);
+box-shadow:0 0 35px #168cff88,0 0 90px #168cff33;animation:logoPulse 2s ease-in-out infinite alternate;position:relative}
+@keyframes logoPulse{to{transform:scale(1.06);box-shadow:0 0 55px #55d9ffbb,0 0 110px #168cff66}}
 .loader-title{font-size:29px;font-weight:900;letter-spacing:1px;margin-top:25px}
 .loader-title span{color:var(--cyan)}
 .loader-subtitle{color:#a9c7e8;font-size:14px;margin-top:8px}
-.loader-track{
-width:210px;height:6px;background:#263c5b;
-border-radius:30px;overflow:hidden;margin-top:35px;
-}
-.loader-progress{
-height:100%;width:0%;
-border-radius:30px;
-background:linear-gradient(90deg,#258cff,#55d9ff);
-box-shadow:0 0 15px #55d9ff;
-transition:width .35s ease;
-}
+.loader-track{width:210px;height:6px;background:#263c5b;border-radius:30px;overflow:hidden;margin-top:35px}
+.loader-progress{height:100%;width:0%;border-radius:30px;background:linear-gradient(90deg,#258cff,#55d9ff);box-shadow:0 0 15px #55d9ff;transition:width .35s ease}
 #loadingMessage{font-size:12px;color:#8daaca;margin-top:14px}
 .loader-version{position:absolute;bottom:35px;color:#617c9f;font-size:11px}
-
-/* APP */
 .app{width:min(100%,560px);margin:auto;min-height:100vh;padding:20px 16px 110px}
 .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
 .brand{display:flex;align-items:center;gap:11px}
-.logo{
-width:46px;height:46px;border-radius:16px;display:grid;place-items:center;
-font-size:23px;font-weight:900;background:linear-gradient(145deg,#43cfff,#1266dc);
-box-shadow:0 7px 20px #0879ff44
-}
+.logo{width:46px;height:46px;border-radius:16px;display:grid;place-items:center;font-size:23px;font-weight:900;background:linear-gradient(145deg,#43cfff,#1266dc);box-shadow:0 7px 20px #0879ff44}
 .brand h1{font-size:22px;margin:0;font-weight:900}
 .brand h1 span{color:var(--cyan)}
 .brand small{display:block;color:var(--muted);font-size:13px;margin-top:4px}
@@ -123,6 +93,7 @@ box-shadow:0 7px 20px #0879ff44
 .item-info small{display:block;color:var(--muted);font-size:12px;margin-top:3px;line-height:1.5}
 .tag{font-size:11px;color:#9fdfff;background:#123b5b;padding:5px 8px;border-radius:20px;white-space:nowrap}
 .tag.gold{color:#ffe09a;background:#493819}
+.tag.green{color:#a9f4d8;background:#123c35}
 .info{font-size:13px;line-height:1.7;color:var(--muted);margin:12px 3px}
 .status{padding:12px;border-radius:14px;background:#102b36;border:1px solid #48d6a055;color:#a9f4d8;margin-bottom:13px;font-size:13px;line-height:1.6}
 .status.error{background:#351b25;border-color:#ff777755;color:#ffc0c0}
@@ -152,13 +123,16 @@ box-shadow:0 7px 20px #0879ff44
 .product .art{font-size:35px;margin-bottom:8px}
 .product b{display:block;font-size:14px}
 .product small{display:block;color:var(--gold);margin:6px 0;font-weight:800}
+.task-progress{height:7px;background:#091525;border-radius:20px;overflow:hidden;margin-top:9px}
+.task-progress span{display:block;height:100%;background:linear-gradient(90deg,#258cff,#55d9ff);border-radius:20px}
+.task-details{display:flex;gap:7px;flex-wrap:wrap;margin-top:7px}
+.task-details span{font-size:11px;color:#c6d9ef;background:#10243d;padding:4px 7px;border-radius:8px}
+.special-task{border-color:#d7a84c66;background:linear-gradient(145deg,#352b19,#172238)}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
 
 <body>
-
-<!-- LOADING -->
 <div id="loadingScreen">
  <div class="loader-stars"></div>
  <div class="loader-logo">S</div>
@@ -202,7 +176,7 @@ box-shadow:0 7px 20px #0879ff44
  </div>
  <div class="section-head"><h3>استكشف التطبيق</h3><span>اختر وجهتك ✦</span></div>
  <div class="grid">
-  <button class="tile" onclick="showPage('tasks')"><span class="emoji">🎯</span><b>المهام اليومية</b><small>10 مهام + 5 إعلانات</small></button>
+  <button class="tile" onclick="showPage('tasks')"><span class="emoji">🎯</span><b>المهام اليومية</b><small>المهام المتاحة لك</small></button>
   <button class="tile" onclick="showPage('friends')"><span class="emoji">👥</span><b>الأصدقاء</b><small>مشاركة رابط البوت</small></button>
   <button class="tile" onclick="showPage('shop')"><span class="emoji">🎁</span><b>المتجر</b><small>عناصر SASA</small></button>
   <button class="tile" onclick="showPage('wallet')"><span class="emoji">💠</span><b>المحفظة</b><small>النقاط والدولار والسحب</small></button>
@@ -211,12 +185,18 @@ box-shadow:0 7px 20px #0879ff44
 </section>
 
 <section class="page" id="tasks">
- <div class="section-head"><h3>🎯 المهام اليومية</h3><span>10 + 5 إعلانات</span></div>
- <div class="status">المهام والإعلانات غير مفعّلة حتى الآن. لن تُضاف مكافآت إلا بعد التحقق الآمن من الخادم.</div>
- <div class="section-head"><h3>المهام اليومية</h3><span>10 خانات</span></div>
- <div class="list" id="regularTasks"></div>
+ <div class="section-head"><h3>🎯 مهام اليوم</h3><button class="action secondary" onclick="loadTasks(true)">تحديث</button></div>
+ <div id="tasksStatus" class="status loading">جارٍ تحميل مهامك...</div>
+
+ <div class="section-head"><h3>المهام اليومية</h3><span id="dailyCount">—</span></div>
+ <div class="list" id="regularTasks"><div class="empty">جارٍ تحميل المهام...</div></div>
+
+ <div class="section-head"><h3>⭐ المهمة الخاصة</h3><span>Special Task</span></div>
+ <div class="list" id="specialTasks"><div class="empty">جارٍ تحميل المهمة الخاصة...</div></div>
+
  <div class="section-head"><h3>📺 مهام الإعلانات</h3><span>5 خانات</span></div>
  <div class="list" id="adTasks"></div>
+ <p class="info">حالة المهمة والتقدم يتم جلبهما من الخادم. لا يتم صرف مكافأة بمجرد عرض المهمة.</p>
 </section>
 
 <section class="page" id="shop">
@@ -306,16 +286,9 @@ const API_URL="https://spxxnptaeqjrfrxfgzjw.supabase.co/functions/v1/sasa-api";
 const BOT_URL="https://t.me/mostafa_sasa710bot";
 const tg=window.Telegram?.WebApp;
 let profile=null,wallet=null,loadingWallet=false,requestBusy=false;
+let tasksLoaded=false,loadingTasks=false;
 
 const $=id=>document.getElementById(id);
-
-const regularTaskData=[
-["👤","إكمال الملف الشخصي"],["🧭","استكشاف التطبيق"],
-["🌐","تجربة اللغة"],["📨","مشاركة التطبيق"],
-["🎯","زيارة المهام"],["🎁","زيارة المتجر"],
-["💠","زيارة المحفظة"],["⚙️","زيارة الإعدادات"],
-["🚀","دعوة صديق"],["🏅","اكتشاف الشارات"]
-];
 
 const adTaskData=[
 "مشاهدة الإعلان الأول","مشاهدة الإعلان الثاني",
@@ -341,7 +314,6 @@ const productData=[
 ["🐯","نمر",60],["🦅","نسر",70]
 ];
 
-/* LOADING */
 let loadProgress=0;
 const loadTimer=setInterval(()=>{
  loadProgress=Math.min(loadProgress+7,90);
@@ -387,6 +359,7 @@ function showPage(id){
  });
  window.scrollTo({top:0,behavior:"smooth"});
  if(id==="wallet")refreshWallet();
+ if(id==="tasks")loadTasks();
 }
 
 async function api(action,extra={}){
@@ -419,7 +392,113 @@ function displayProfile(data){
  $("shopPoints").textContent=fmt(balance);
  $("telegramId").textContent=data.telegram_id??"—";
  $("onlineStatus").textContent="● متصل";
- setConnection("تم الاتصال بالحساب بنجاح ✓","success");
+ setConnection("الحساب جاهز","success");
+}
+
+function taskStatusLabel(status){
+ return({
+  assigned:"جديدة",
+  in_progress:"جارية",
+  completed:"مكتملة",
+  claimed:"تم استلامها"
+ })[status]||status||"غير محددة";
+}
+
+function taskDifficultyLabel(level){
+ const n=Number(level||1);
+ return({
+  1:"سهلة",
+  2:"عادية",
+  3:"متوسطة",
+  4:"صعبة",
+  5:"صعبة جدًا"
+ })[n]||("المستوى "+n);
+}
+
+function renderTaskCard(task,isSpecial=false){
+ const title=task.title_ar||task.title||task.name||"مهمة SASA";
+ const description=task.description_ar||task.description||"أكمل المهمة حسب شروطها";
+ const reward=Number(task.reward_points??0);
+ const target=Math.max(1,Number(task.target_count??1));
+ const progress=Math.min(target,Math.max(0,Number(task.progress??0)));
+ const status=task.status||"assigned";
+ const percent=Math.min(100,Math.round(progress/target*100));
+ const done=status==="completed"||status==="claimed";
+ const icon=isSpecial?"⭐":"🎯";
+
+ return `
+ <div class="item ${isSpecial?"special-task":""}">
+  <div class="item-icon">${icon}</div>
+  <div class="item-info">
+   <b>${safe(title)}</b>
+   <small>${safe(description)}</small>
+   <div class="task-details">
+    <span>الصعوبة: ${safe(taskDifficultyLabel(task.difficulty))}</span>
+    <span>المكافأة: ${fmt(reward)} نقطة</span>
+    <span>التقدم: ${progress}/${target}</span>
+   </div>
+   <div class="task-progress"><span style="width:${percent}%"></span></div>
+  </div>
+  <span class="tag ${done?"green":isSpecial?"gold":""}">${safe(taskStatusLabel(status))}</span>
+ </div>`;
+}
+
+function renderTasks(tasks){
+ const all=Array.isArray(tasks)?tasks:[];
+ const daily=all.filter(t=>(t.task_type||t.type)==="daily");
+ const special=all.filter(t=>(t.task_type||t.type)==="special");
+
+ $("dailyCount").textContent=daily.length+" مهام";
+ $("regularTasks").innerHTML=daily.length?
+  daily.map(t=>renderTaskCard(t,false)).join(""):
+  '<div class="empty">لا توجد مهام يومية متاحة حاليًا</div>';
+
+ $("specialTasks").innerHTML=special.length?
+  special.map(t=>renderTaskCard(t,true)).join(""):
+  '<div class="empty">لا توجد مهمة خاصة متاحة حاليًا</div>';
+}
+
+function renderAdTasks(){
+ $("adTasks").innerHTML=adTaskData.map(n=>`
+  <div class="item">
+   <div class="item-icon">📺</div>
+   <div class="item-info"><b>${n}</b><small>بانتظار مزود إعلانات وتحقق خادمي</small></div>
+   <span class="tag gold">غير مفعّل</span>
+  </div>`).join("");
+}
+
+async function loadTasks(force=false){
+ if(loadingTasks)return;
+ if(tasksLoaded&&!force)return;
+ if(!tg?.initData){
+  $("tasksStatus").textContent="افتح التطبيق من داخل بوت تيليجرام لتحميل المهام.";
+  $("tasksStatus").className="status error";
+  return;
+ }
+
+ loadingTasks=true;
+ $("tasksStatus").textContent="جارٍ جلب مهامك من الخادم...";
+ $("tasksStatus").className="status loading";
+
+ try{
+  const result=await api("tasks_get");
+  const tasks=Array.isArray(result.tasks)?result.tasks:
+   Array.isArray(result.data)?result.data:
+   Array.isArray(result)?result:[];
+
+  renderTasks(tasks);
+  tasksLoaded=true;
+  $("tasksStatus").textContent="تم تحميل المهام من الخادم بنجاح.";
+  $("tasksStatus").className="status";
+ }catch(error){
+  console.error("tasks_get:",error);
+  $("tasksStatus").textContent="تعذّر تحميل المهام: "+error.message;
+  $("tasksStatus").className="status error";
+  $("regularTasks").innerHTML='<div class="empty">تعذّر جلب المهام. اضغط تحديث للمحاولة مرة أخرى.</div>';
+  $("specialTasks").innerHTML='<div class="empty">تعذّر جلب المهمة الخاصة.</div>';
+ }finally{
+  loadingTasks=false;
+ }
 }
 
 async function loadProfile(){
@@ -442,7 +521,8 @@ async function loadProfile(){
   }
 
   displayProfile(data);
-  $("loadingMessage").textContent="جارٍ تحميل محفظتك...";
+  $("loadingMessage").textContent="جارٍ تحميل المهام والمحفظة...";
+  await loadTasks(true);
   await refreshWallet(true);
   finishLoading("أهلاً بك في SASA");
  }catch(error){
@@ -535,7 +615,6 @@ function statusLabel(status){
 
 function renderWithdrawals(rows){
  const el=$("withdrawalsList");
-
  if(!Array.isArray(rows)||!rows.length){
   el.innerHTML='<div class="empty">لا توجد طلبات سحب حتى الآن</div>';
   return;
@@ -634,22 +713,6 @@ async function cancelWithdrawal(id){
  }
 }
 
-function renderTasks(){
- $("regularTasks").innerHTML=regularTaskData.map(t=>`
-  <div class="item">
-   <div class="item-icon">${t[0]}</div>
-   <div class="item-info"><b>${t[1]}</b><small>بانتظار تفعيل المهمة والتحقق منها</small></div>
-   <span class="tag">قريبًا</span>
-  </div>`).join("");
-
- $("adTasks").innerHTML=adTaskData.map(n=>`
-  <div class="item">
-   <div class="item-icon">📺</div>
-   <div class="item-info"><b>${n}</b><small>بانتظار مزود إعلانات وتحقق خادمي</small></div>
-   <span class="tag gold">غير مفعّل</span>
-  </div>`).join("");
-}
-
 function renderShop(search=""){
  const term=String(search).trim().toLowerCase();
  const filtered=productData.filter(p=>p[1].toLowerCase().includes(term));
@@ -680,6 +743,7 @@ function shareInvite(){
 
 window.showPage=showPage;
 window.loadProfile=loadProfile;
+window.loadTasks=loadTasks;
 window.refreshWallet=refreshWallet;
 window.createWithdrawal=createWithdrawal;
 window.cancelWithdrawal=cancelWithdrawal;
@@ -696,7 +760,7 @@ try{
  tg?.disableVerticalSwipes?.();
 }catch(e){}
 
-renderTasks();
+renderAdTasks();
 renderShop();
 loadProfile();
 
