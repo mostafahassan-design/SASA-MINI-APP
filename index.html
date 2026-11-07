@@ -73,6 +73,8 @@ button,input,select{font:inherit}button{color:inherit;border:0;cursor:pointer}bu
 .setting-select{width:100%;padding:12px;border-radius:13px;background:#0c192b;color:white;border:1px solid var(--line);margin-top:8px}
 .equip-preview{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:10px 0}.equip-chip{background:#102c49;border:1px solid #55d9ff55;padding:7px 11px;border-radius:20px;font-size:12px;color:#bdeaff}
 .withdraw-method{padding:14px;border-radius:16px;border:1px solid var(--line);background:#0d1d32;margin:9px 0}.withdraw-method b{display:block;font-size:14px}.withdraw-method small{display:block;color:var(--muted);font-size:12px;line-height:1.6;margin-top:5px}.withdraw-method .tag{display:inline-block;margin-top:8px}
+.ad-task{border-color:#55d9ff35;background:linear-gradient(145deg,#112b43,#0c192b)}
+.estimate-value{font-size:25px;font-weight:900;color:var(--cyan);direction:ltr;text-align:right}
 @media(max-width:370px){.app{padding-left:11px;padding-right:11px}.nav{padding-left:3px;padding-right:3px}.nav-btn{font-size:9px}.nav-btn .nav-icon{font-size:17px}.icon-btn{padding:0 10px;font-size:12px}.brand h1{font-size:19px}.product{padding:13px 9px}.wallet-box b{font-size:21px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
 </style>
@@ -112,7 +114,10 @@ button,input,select{font:inherit}button{color:inherit;border:0;cursor:pointer}bu
  <div id="tasksStatus" class="status loading">جارٍ تجهيز المهام...</div>
  <div class="section-head"><h3>المهام اليومية</h3><span id="dailyCount">0 / 10</span></div><div class="list" id="regularTasks"></div>
  <div class="section-head"><h3>⭐ المهمة الخاصة</h3><span>مهمة واحدة</span></div><div class="list" id="specialTasks"></div>
- <p class="info">أزرار المهام للمعاينة فقط حاليًا. لا يتم اعتماد إنجاز أو صرف مكافأة دون تحقق خادمي.</p>
+ <div class="section-head"><h3>📺 مهام الإعلانات اليومية</h3><span>5 مهام</span></div>
+ <div class="list" id="adTasks"></div>
+ <p class="info">مهام الإعلانات للمعاينة فقط حاليًا. لا توجد مشاهدة إعلان أو مكافأة فعلية قبل ربط مزود إعلانات والتحقق من الخادم.</p>
+ <p class="info">أزرار المهام العادية للمعاينة فقط. لا يتم اعتماد إنجاز أو صرف مكافأة دون تحقق خادمي.</p>
 </section>
 
 <section class="page" id="shop">
@@ -131,6 +136,13 @@ button,input,select{font:inherit}button{color:inherit;border:0;cursor:pointer}bu
  <div id="walletStatus" class="status loading">جارٍ تحميل بيانات المحفظة...</div>
  <div class="wallet-hero"><div class="balance-label">إجمالي نقاط SASA</div><div class="points" id="walletPoints">—</div><div class="points-sub">SASA POINTS</div><div class="balance-note">نقاطك داخل التطبيق منفصلة عن رصيد الدولار.</div><div class="wallet-hero-icon">💎</div></div>
  <div class="wallet-mini-grid"><div class="wallet-box available"><span class="wallet-box-icon">💵</span><small>الدولار المتاح</small><b id="walletDollars">$—</b></div><div class="wallet-box reserved"><span class="wallet-box-icon">🔒</span><small>الدولار المحجوز</small><b id="walletReserved">$—</b></div></div>
+ <div class="wallet-section">
+  <div class="wallet-section-title"><b>🪙 القيمة التقديرية للنقاط</b><span>معاينة حسابية فقط</span></div>
+  <div class="wallet-stat-line"><span>معدل الحساب الافتراضي</span><b>1,000 نقطة = 1 دولار</b></div>
+  <div class="wallet-stat-line"><span>رصيد النقاط الحالي</span><b id="estimatePoints">—</b></div>
+  <div style="padding:12px 0 5px"><div class="wallet-note">القيمة التقديرية لرصيد النقاط</div><div class="estimate-value" id="pointsDollarEstimate">$0.00</div></div>
+  <p class="wallet-note">هذه حاسبة توضيحية فقط وليست رصيدًا نقديًا. لا تنفذ تحويلًا أو سحبًا ولا تضيف أي مبلغ إلى رصيد الدولار.</p>
+ </div>
  <div class="wallet-section"><div class="wallet-section-title"><b>📊 ملخص المحفظة</b><span>LIVE BALANCE</span></div>
   <div class="wallet-stat-line"><span>رصيد النقاط</span><b id="walletSummaryPoints">—</b></div><div class="wallet-stat-line"><span>الرصيد المتاح</span><b id="walletSummaryAvailable">$—</b></div><div class="wallet-stat-line"><span>الرصيد المحجوز</span><b id="walletSummaryReserved">$—</b></div>
   <p class="wallet-note">تعرض المحفظة الأرصدة وسجل الحركات التي يرجعها الخادم. أي إجراء مالي فعلي يحتاج مراجعة شخص بالغ ومزود خدمة معتمد.</p>
@@ -204,30 +216,27 @@ button,input,select{font:inherit}button{color:inherit;border:0;cursor:pointer}bu
  <button class="nav-btn" data-page="settings" onclick="showPage('settings')"><span class="nav-icon">⚙️</span><span>إعدادات</span></button>
 </nav>
 <div class="toast" id="toast"></div>
-
 <script>
 /* LANGUAGE SYSTEM */
 (() => {
 "use strict";
-
 const KEY="sasa_app_settings_v2";
-
 const translations={
 "الرئيسية":"Home","المهام":"Tasks","المتجر":"Shop","المحفظة":"Wallet","مخزني":"Inventory","إعدادات":"Settings","الإعدادات":"Settings","حسابي":"My Account",
 "أهلاً بك 👋":"Welcome 👋","رحلتك تبدأ من هنا":"Your journey starts here","جارٍ تحميل الحساب...":"Loading account...","جارٍ تجهيز عالم SASA...":"Preparing SASA world...",
-"تم تجهيز التطبيق":"App is ready","استكشف التطبيق":"Explore SASA","اختر وجهتك ✦":"Choose your destination ✦","المهام اليومية":"Daily Tasks","المهام المتاحة لك":"Your available tasks",
+"استكشف التطبيق":"Explore SASA","اختر وجهتك ✦":"Choose your destination ✦","المهام اليومية":"Daily Tasks","المهام المتاحة لك":"Your available tasks",
 "الأصدقاء":"Friends","مشاركة رابط البوت":"Share bot link","60 عنصرًا":"60 items","النقاط والأرصدة":"Points and balances","العناصر التي تمتلكها":"Your owned items","تخصيص التطبيق":"Customize the app",
 "رصيد نقاطك":"Your Points Balance","رصيد الدولار":"Dollar Balance","محجوز للسحب":"Reserved for Withdrawal","رصيد النقاط المسجل في قاعدة البيانات":"Points balance recorded in the database",
-"رصيد نقاط SASA":"SASA Points Balance","رصيد دولارات SASA":"SASA Dollar Balance","فتح المحفظة":"Open Wallet","استكشف التطبيق":"Explore the App","تحديث":"Refresh","مهام اليوم":"Today's Tasks",
-"المهمة الخاصة":"Special Task","مهمة واحدة":"One task","مهمة واحدة فقط":"One special task","تشغيل":"Start","تم التشغيل":"Started","طلب التحقق":"Request Verification","جديدة":"New","قيد التجربة":"In Progress",
-"المكافأة المقترحة: ":"Suggested reward: "," نقطة":" points","التقدم: ":"Progress: ","التحقق الحقيقي غير مفعّل بعد. لم يتم تسجيل إنجاز أو إضافة نقاط":"Real verification is not enabled yet. No completion or points have been recorded.",
-"بدأت معاينة المهمة":"Task preview started","أزرار المهام للمعاينة فقط حاليًا. لا يتم اعتماد إنجاز أو صرف مكافأة دون تحقق خادمي.":"Task buttons are currently for preview only. Completion and rewards require server verification.",
-"تم تحميل مهام الخادم. أزرار التحقق والاستلام غير مفعّلة حتى إضافة التحقق الخادمي.":"Server tasks loaded. Verification and claiming are unavailable until server verification is added.",
-"لا توجد مهام مرسلة من الخادم حاليًا؛ يتم عرض نموذج يومي.":"No tasks were returned by the server. A daily preview is being displayed.",
-"جارٍ تجهيز المهام...":"Preparing tasks...","جارٍ تحديث بيانات المهام من الخادم...":"Updating tasks from the server...",
-"تعذّر تحديث مهام الخادم؛ المعروض نموذج معاينة يومي.":"Could not update server tasks. Showing a daily preview.","لا توجد مهمة خاصة.":"No special task available.",
+"فتح المحفظة":"Open Wallet","تحديث":"Refresh","مهام اليوم":"Today's Tasks","المهمة الخاصة":"Special Task","مهمة واحدة":"One task",
+"تشغيل":"Start","تم التشغيل":"Started","طلب التحقق":"Request Verification","جديدة":"New","قيد التجربة":"In Progress",
+"المكافأة المقترحة: ":"Suggested reward: "," نقطة":" points","التقدم: ":"Progress: ",
+"بدأت معاينة المهمة":"Task preview started","أزرار المهام العادية للمعاينة فقط. لا يتم اعتماد إنجاز أو صرف مكافأة دون تحقق خادمي.":"Regular task buttons are preview only. Completion and rewards require server verification.",
+"📺 مهام الإعلانات اليومية":"📺 Daily Ad Tasks","5 مهام":"5 tasks","مهام الإعلانات للمعاينة فقط حاليًا. لا توجد مشاهدة إعلان أو مكافأة فعلية قبل ربط مزود إعلانات والتحقق من الخادم.":"Ad tasks are preview only. No ad view or reward is recorded until an ad provider and server verification are connected.",
+"غير مفعّلة":"Not enabled","لا توجد مشاهدة إعلان أو مكافأة مسجلة.":"No ad view or reward has been recorded.",
+"القيمة التقديرية للنقاط":"Estimated Points Value","معاينة حسابية فقط":"Calculation preview only","معدل الحساب الافتراضي":"Illustrative rate","رصيد النقاط الحالي":"Current points balance","القيمة التقديرية لرصيد النقاط":"Estimated value of your points",
+"هذه حاسبة توضيحية فقط وليست رصيدًا نقديًا. لا تنفذ تحويلًا أو سحبًا ولا تضيف أي مبلغ إلى رصيد الدولار.":"This is an illustrative calculator, not cash balance. It does not transfer, withdraw, or add money to your dollar balance.",
 "🚀 متجر SASA":"🚀 SASA Shop","طوّر تجربتك ✦":"Upgrade Your Experience ✦",
-"معززات وعناصر تجميلية للحساب. العناصر وأسعارها للعرض فقط حتى ربط الشراء بالخادم.":"Boosters and profile cosmetics. Items and prices are for display only until server purchasing is connected.",
+"معززات وعناصر تجميلية للحساب. العناصر وأسعارها للعرض فقط حتى ربط الشراء بالخادم.":"Boosters and profile cosmetics. Items and prices are display only until server purchasing is connected.",
 "معاينة المتجر: لن يتم خصم رصيد أو تفعيل عنصر حقيقي من هذه الواجهة.":"Shop preview: no balance will be deducted and no real item will be activated.",
 "ابحث عن عنصر...":"Search for an item...","تصنيف العناصر":"Item Categories","عناصر المتجر":"Store Items","عنصر":"item","عناصر":"items","الكل":"All",
 "معززات":"Boosters","صور شخصية":"Avatars","إطارات":"Frames","شارات":"Badges","زينة الحساب":"Profile Decorations","عرض التفاصيل":"View Details","لا توجد عناصر مطابقة":"No matching items found",
@@ -235,12 +244,9 @@ const translations={
 "إجمالي نقاط SASA":"Total SASA Points","نقاطك داخل التطبيق منفصلة عن رصيد الدولار.":"Your in-app points are separate from your dollar balance.",
 "الدولار المتاح":"Available Dollars","الدولار المحجوز":"Reserved Dollars","📊 ملخص المحفظة":"📊 Wallet Summary","رصيد النقاط":"Points Balance",
 "الرصيد المتاح":"Available Balance","الرصيد المحجوز":"Reserved Balance",
-"تعرض المحفظة الأرصدة وسجل الحركات التي يرجعها الخادم. أي إجراء مالي فعلي يحتاج مراجعة شخص بالغ ومزود خدمة معتمد.":"The wallet displays balances and transaction history returned by the server. Any real financial action requires adult supervision and an approved provider.",
-"سحب الرصيد":"Withdraw Balance","معاينة الطرق":"Methods Preview","طرق السحب التالية للعرض فقط. لا تدخل أرقام هواتف أو بيانات بطاقات أو عناوين محافظ هنا.":"The following withdrawal methods are for display only. Do not enter phone numbers, card details, or wallet addresses here.",
-"غير مفعّل في الواجهة":"Not enabled in the interface","غير متاح للتنفيذ":"Unavailable","📱 Vodafone Cash":"📱 Vodafone Cash","💳 Visa":"💳 Visa","💎 Telegram Wallet · USDT":"💎 Telegram Wallet · USDT",
-"السحب إلى محفظة هاتف. يتطلب اعتماد إعدادات الدفع والتحقق من الطلب على الخادم.":"Withdrawal to a mobile wallet. Requires approved payment settings and server-side verification.",
-"خيار تصميمي فقط؛ لا يوجد ربط دفع Visa مفعّل في الخادم الحالي.":"Design preview only. Visa payments are not enabled on the current server.",
-"يجب تحديد شبكة التحويل المدعومة ومطابقتها مع المحفظة قبل أي ربط. Telegram Wallet لا تعني تلقائيًا شبكة TRC20.":"The supported network must be confirmed before integration. Telegram Wallet does not automatically mean TRC20.",
+"تعرض المحفظة الأرصدة وسجل الحركات التي يرجعها الخادم. أي إجراء مالي فعلي يحتاج مراجعة شخص بالغ ومزود خدمة معتمد.":"The wallet displays balances and transaction history returned by the server.",
+"سحب الرصيد":"Withdraw Balance","معاينة الطرق":"Methods Preview","طرق السحب التالية للعرض فقط. لا تدخل أرقام هواتف أو بيانات بطاقات أو عناوين محافظ هنا.":"Withdrawal methods are display only. Do not enter payment details.",
+"غير مفعّل في الواجهة":"Not enabled","غير متاح للتنفيذ":"Unavailable","📱 Vodafone Cash":"📱 Vodafone Cash","💳 Visa":"💳 Visa","💎 Telegram Wallet · USDT":"💎 Telegram Wallet · USDT",
 "طلبات السحب السابقة":"Previous Withdrawal Requests","سجل الطلبات":"Request History","سجل حركة الدولار":"Dollar Transaction History","آخر العمليات":"Recent Transactions",
 "لا توجد طلبات سابقة":"No previous requests","لا توجد عمليات دولار مسجلة حتى الآن":"No dollar transactions recorded yet","جارٍ التحميل...":"Loading...",
 "إضافة رصيد":"Credit","خصم":"Debit","حجز":"Hold","إرجاع رصيد":"Refund","قيد المراجعة":"Pending Review","تمت الموافقة":"Approved","تم الدفع":"Paid","مرفوض":"Rejected","ملغي":"Cancelled","غير معروف":"Unknown","وسيلة أخرى":"Other Method",
@@ -252,17 +258,17 @@ const translations={
 "تم تحميل بيانات حسابك.":"Your account data has been loaded.","تم حفظ الاسم بنجاح.":"Name saved successfully.","جارٍ حفظ الاسم...":"Saving name...","جارٍ الحفظ...":"Saving...",
 "تم تحديث اسمك بنجاح":"Your name has been updated","لم يتم حفظ الاسم":"Name was not saved","تعذّر حفظ الاسم: ":"Could not save name: ",
 "تم رفع الصورة وحفظها بنجاح.":"Picture uploaded and saved successfully.","تم تحديث صورتك الشخصية":"Your profile picture has been updated","تعذّر رفع الصورة: ":"Could not upload picture: ","لم يتم رفع الصورة":"Picture was not uploaded",
-"🎒 مخزني":"🎒 My Inventory","جهّز الإطارات والصور والشارات التي تمتلكها لتظهر في حسابك. التجهيز هنا محلي للمعاينة فقط.":"Equip your frames, avatars, and badges to display them on your profile. Equipping here is local preview only.",
-"جارٍ تحميل مخزونك...":"Loading your inventory...","تم تحميل المخزون. عدد السجلات: ":"Inventory loaded. Number of records: ",
-"مخزونك فارغ حاليًا. العناصر التي تمتلكها ستظهر هنا.":"Your inventory is currently empty. Your owned items will appear here.",
+"🎒 مخزني":"🎒 My Inventory","جهّز الإطارات والصور والشارات التي تمتلكها لتظهر في حسابك. التجهيز هنا محلي للمعاينة فقط.":"Equip your frames, avatars, and badges for preview.",
+"جارٍ تحميل مخزونك...":"Loading your inventory...","تم تحميل المخزون. عدد السجلات: ":"Inventory loaded. Records: ",
+"مخزونك فارغ حاليًا. العناصر التي تمتلكها ستظهر هنا.":"Your inventory is currently empty.",
 "عنصر SASA":"SASA Item","عنصر في مخزونك":"An item in your inventory","الكمية: ":"Quantity: "," · تاريخ الإضافة: ":" · Added: ","مملوك":"Owned",
 "تجهيز للمعاينة":"Equip Preview","إلغاء التجهيز":"Unequip","تم التجهيز للمعاينة":"Equipped for preview","تم إلغاء التجهيز":"Preview equipment removed","هذا العنصر لا يدعم التجهيز":"This item cannot be equipped",
 "لا نتمكن من تحميل العناصر. اضغط تحديث للمحاولة.":"Could not load items. Tap Refresh to try again.",
 "⚙️ الإعدادات":"⚙️ Settings","🔊 إعدادات الصوت":"🔊 Sound Settings","تحكم في الأصوات":"Sound Controls","صوت الأزرار":"Button Sounds",
-"نقرة إلكترونية قصيرة عند الضغط":"Short electronic click when pressed","صوت إنجاز المهام":"Task Completion Sound","نغمة نجاح قصيرة":"Short success tone",
+"نقرة إلكترونية قصيرة عند الضغط":"Short electronic click","صوت إنجاز المهام":"Task Completion Sound","نغمة نجاح قصيرة":"Short success tone",
 "صوت الإشعارات":"Notification Sounds","جرس بسيط للإشعارات":"Simple notification bell","الموسيقى الخلفية":"Background Music","خلفية فضائية هادئة":"Calm space ambience",
 "الاهتزاز":"Vibration","إذا كان الجهاز يدعم ذلك":"If supported by your device","مستوى الصوت":"Volume","🔔 تجربة الصوت":"🔔 Test Sound",
-"يتم حفظ الإعدادات على جهازك تلقائيًا.":"Settings are saved automatically on your device.","تم حفظ الإعدادات على جهازك.":"Settings saved on your device.","تعذّر حفظ الإعدادات.":"Could not save settings.",
+"يتم حفظ الإعدادات على جهازك تلقائيًا.":"Settings are saved automatically.","تم حفظ الإعدادات على جهازك.":"Settings saved on your device.","تعذّر حفظ الإعدادات.":"Could not save settings.",
 "دي تجربة لصوت الإشعارات":"This is a notification sound test","🌐 اللغة":"🌐 Language","لغة التطبيق":"App Language","اختيار اللغة محفوظ على جهازك.":"Your language choice is saved on your device.",
 "ℹ️ معلومات التطبيق":"ℹ️ App Information","حماية الحساب":"Account Security","اتصال التطبيق يتم من خلال تيليجرام":"The app connects through Telegram",
 "جارٍ تأمين اتصال حسابك...":"Securing your account connection...","جارٍ تحميل المهام والمحفظة...":"Loading tasks and wallet...","تم تحديث بيانات المحفظة ✓":"Wallet data updated ✓",
@@ -277,631 +283,309 @@ const translations={
 "استجابة الخادم غير مفهومة":"Unexpected server response","حدث خطأ في الخادم":"A server error occurred",
 "🖼️ الإطار مجهز":"🖼️ Frame equipped","🏅 الشارة مجهزة":"🏅 Badge equipped","👤 الصورة مجهزة":"👤 Avatar equipped","✨ الزينة مجهزة":"✨ Decoration equipped"
 };
-
 const entries=Object.entries(translations).sort((a,b)=>b[0].length-a[0].length);
-
-function translateText(value){
- let result=String(value??"");
- for(const [ar,en] of entries)result=result.split(ar).join(en);
- return result;
-}
-
-function getLanguage(){
- try{
-  const saved=JSON.parse(localStorage.getItem(KEY)||"{}");
-  return saved.language==="en"?"en":"ar";
- }catch(e){return "ar"}
-}
-
-const textOriginals=new WeakMap();
-const attributeOriginals=new WeakMap();
-
+function translateText(value){let result=String(value??"");for(const [ar,en] of entries)result=result.split(ar).join(en);return result}
+function getLanguage(){try{return JSON.parse(localStorage.getItem(KEY)||"{}").language==="en"?"en":"ar"}catch(e){return"ar"}}
+const textOriginals=new WeakMap(),attributeOriginals=new WeakMap();
 function translateNode(node,language){
- if(node.nodeType!==Node.TEXT_NODE||!node.parentElement)return;
- if(["SCRIPT","STYLE"].includes(node.parentElement.tagName))return;
-
- if(!textOriginals.has(node)){
-  const navArabic=node.parentElement.dataset?.ar;
-  textOriginals.set(node,navArabic||node.nodeValue);
- }
- const original=textOriginals.get(node);
- node.nodeValue=language==="en"?translateText(original):original;
+ if(node.nodeType!==Node.TEXT_NODE||!node.parentElement||["SCRIPT","STYLE"].includes(node.parentElement.tagName))return;
+ if(!textOriginals.has(node))textOriginals.set(node,node.parentElement.dataset?.ar||node.nodeValue);
+ const original=textOriginals.get(node);node.nodeValue=language==="en"?translateText(original):original;
 }
-
-function translateAttributes(element,language){
- ["placeholder","title","aria-label"].forEach(attribute=>{
-  if(!element.hasAttribute(attribute))return;
-  let originals=attributeOriginals.get(element);
-  if(!originals){originals={};attributeOriginals.set(element,originals)}
-  if(!(attribute in originals))originals[attribute]=element.getAttribute(attribute);
-  const original=originals[attribute];
-  element.setAttribute(attribute,language==="en"?translateText(original):original);
- });
-}
-
 function translateElement(element,language){
  if(element.nodeType!==Node.ELEMENT_NODE)return;
- translateAttributes(element,language);
- const walker=document.createTreeWalker(element,NodeFilter.SHOW_TEXT);
- const nodes=[];
+ ["placeholder","title","aria-label"].forEach(attribute=>{
+  if(!element.hasAttribute(attribute))return;
+  let originals=attributeOriginals.get(element);if(!originals){originals={};attributeOriginals.set(element,originals)}
+  if(!(attribute in originals))originals[attribute]=element.getAttribute(attribute);
+  element.setAttribute(attribute,language==="en"?translateText(originals[attribute]):originals[attribute]);
+ });
+ const walker=document.createTreeWalker(element,NodeFilter.SHOW_TEXT),nodes=[];
  while(walker.nextNode())nodes.push(walker.currentNode);
  nodes.forEach(node=>translateNode(node,language));
 }
-
 function applyLanguage(language){
- language=language==="en"?"en":"ar";
- document.documentElement.lang=language;
- document.documentElement.dir=language==="ar"?"rtl":"ltr";
- document.body.style.direction=language==="ar"?"rtl":"ltr";
- const selector=document.getElementById("languageSelect");
- if(selector)selector.value=language;
- translateElement(document.body,language);
+ language=language==="en"?"en":"ar";document.documentElement.lang=language;document.documentElement.dir=language==="ar"?"rtl":"ltr";document.body.style.direction=language==="ar"?"rtl":"ltr";
+ const selector=document.getElementById("languageSelect");if(selector)selector.value=language;translateElement(document.body,language);
 }
-
 function changeLanguage(language){
  language=language==="en"?"en":"ar";
- try{
-  const saved=JSON.parse(localStorage.getItem(KEY)||"{}");
-  saved.language=language;
-  localStorage.setItem(KEY,JSON.stringify(saved));
-  if(window.settings&&typeof window.settings==="object")window.settings.language=language;
- }catch(error){console.warn("LANGUAGE_SAVE_ERROR",error)}
- applyLanguage(language);
- if(typeof window.notify==="function")window.notify(language==="en"?"Language changed":"تم تغيير اللغة");
+ try{const saved=JSON.parse(localStorage.getItem(KEY)||"{}");saved.language=language;localStorage.setItem(KEY,JSON.stringify(saved));if(window.settings)window.settings.language=language}catch(e){}
+ applyLanguage(language);if(typeof window.notify==="function")window.notify(language==="en"?"Language changed":"تم تغيير اللغة");
 }
-
-window.applyLanguage=applyLanguage;
-window.changeLanguage=changeLanguage;
-
-const observer=new MutationObserver(records=>{
- const language=getLanguage();
- records.forEach(record=>{
-  record.addedNodes.forEach(node=>{
-   if(node.nodeType===Node.TEXT_NODE)translateNode(node,language);
-   else if(node.nodeType===Node.ELEMENT_NODE)translateElement(node,language);
-  });
- });
-});
-observer.observe(document.body,{childList:true,subtree:true});
+window.applyLanguage=applyLanguage;window.changeLanguage=changeLanguage;
+new MutationObserver(records=>{const language=getLanguage();records.forEach(record=>record.addedNodes.forEach(node=>{if(node.nodeType===Node.TEXT_NODE)translateNode(node,language);else if(node.nodeType===Node.ELEMENT_NODE)translateElement(node,language)}))}).observe(document.body,{childList:true,subtree:true});
 applyLanguage(getLanguage());
-console.log("SASA LANGUAGE SYSTEM READY");
 })();
 </script>
 
 <script>
 (() => {
 "use strict";
-
-/* CORE CONFIGURATION */
 const API_URL="https://spxxnptaeqjrfrxfgzjw.supabase.co/functions/v1/sasa-api";
 const BOT_URL="https://t.me/mostafa_sasa710bot";
 const tg=window.Telegram?.WebApp;
 const $=id=>document.getElementById(id);
-
 let profile=null,profileSaving=false,avatarUploading=false;
 let loadingInventory=false,inventoryLoaded=false,inventoryItems=[];
-let loadingTasks=false,tasksLoaded=false;
-let loadingWallet=false,wallet={};
+let loadingTasks=false,tasksLoaded=false,loadingWallet=false,wallet={};
 
-/* LOADING */
 let loadProgress=0;
-const loadTimer=setInterval(()=>{
- loadProgress=Math.min(loadProgress+7,90);
- $("loaderProgress").style.width=loadProgress+"%";
-},180);
+const loadTimer=setInterval(()=>{loadProgress=Math.min(loadProgress+7,90);$("loaderProgress").style.width=loadProgress+"%"},180);
+function finishLoading(message="تم تجهيز التطبيق"){clearInterval(loadTimer);$("loaderProgress").style.width="100%";$("loadingMessage").textContent=message;setTimeout(()=>$("loadingScreen").classList.add("hide"),450)}
 
-function finishLoading(message="تم تجهيز التطبيق"){
- clearInterval(loadTimer);
- $("loaderProgress").style.width="100%";
- $("loadingMessage").textContent=message;
- setTimeout(()=>$("loadingScreen").classList.add("hide"),450);
-}
-
-/* SETTINGS + SOUND */
 const SETTINGS_KEY="sasa_app_settings_v2";
 let settings={buttons:true,tasks:true,notifications:true,vibration:false,ambient:false,volume:65,language:"ar"};
 window.settings=settings;
-
 let audioContext=null,ambientNodes=null;
 
 function readSettings(){
  try{settings={...settings,...JSON.parse(localStorage.getItem(SETTINGS_KEY)||"{}")}}catch(e){}
- window.settings=settings;
- settings.volume=Math.max(0,Math.min(100,Number(settings.volume)||0));
- settings.language=settings.language==="en"?"en":"ar";
- $("soundButtons").checked=settings.buttons!==false;
- $("soundTasks").checked=settings.tasks!==false;
- $("soundNotifications").checked=settings.notifications!==false;
- $("vibrationEnabled").checked=!!settings.vibration;
- $("ambientEnabled").checked=!!settings.ambient;
- $("soundVolume").value=settings.volume;
- $("soundVolumeValue").textContent=settings.volume+"%";
- $("languageSelect").value=settings.language;
- window.applyLanguage(settings.language);
+ window.settings=settings;settings.volume=Math.max(0,Math.min(100,Number(settings.volume)||0));settings.language=settings.language==="en"?"en":"ar";
+ $("soundButtons").checked=settings.buttons!==false;$("soundTasks").checked=settings.tasks!==false;$("soundNotifications").checked=settings.notifications!==false;
+ $("vibrationEnabled").checked=!!settings.vibration;$("ambientEnabled").checked=!!settings.ambient;$("soundVolume").value=settings.volume;
+ $("soundVolumeValue").textContent=settings.volume+"%";$("languageSelect").value=settings.language;window.applyLanguage(settings.language);
 }
-
 function saveSettings(){
- settings.buttons=$("soundButtons").checked;
- settings.tasks=$("soundTasks").checked;
- settings.notifications=$("soundNotifications").checked;
- settings.vibration=$("vibrationEnabled").checked;
- settings.volume=Number($("soundVolume").value);
- settings.ambient=$("ambientEnabled").checked;
- settings.language=$("languageSelect").value==="en"?"en":"ar";
- $("soundVolumeValue").textContent=settings.volume+"%";
- window.settings=settings;
- try{
-  localStorage.setItem(SETTINGS_KEY,JSON.stringify(settings));
-  $("soundStatus").textContent=settings.language==="en"?"Settings saved on your device.":"تم حفظ الإعدادات على جهازك.";
- }catch(e){
-  $("soundStatus").textContent=settings.language==="en"?"Could not save settings.":"تعذّر حفظ الإعدادات.";
- }
+ settings.buttons=$("soundButtons").checked;settings.tasks=$("soundTasks").checked;settings.notifications=$("soundNotifications").checked;
+ settings.vibration=$("vibrationEnabled").checked;settings.volume=Number($("soundVolume").value);settings.ambient=$("ambientEnabled").checked;
+ settings.language=$("languageSelect").value==="en"?"en":"ar";$("soundVolumeValue").textContent=settings.volume+"%";window.settings=settings;
+ try{localStorage.setItem(SETTINGS_KEY,JSON.stringify(settings));$("soundStatus").textContent=settings.language==="en"?"Settings saved on your device.":"تم حفظ الإعدادات على جهازك."}
+ catch(e){$("soundStatus").textContent="تعذّر حفظ الإعدادات."}
 }
-
-function getAudioContext(){
- const C=window.AudioContext||window.webkitAudioContext;
- if(!C)return null;
- if(!audioContext)audioContext=new C();
- if(audioContext.state==="suspended")audioContext.resume().catch(()=>{});
- return audioContext;
-}
-
+function getAudioContext(){const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;if(!audioContext)audioContext=new C();if(audioContext.state==="suspended")audioContext.resume().catch(()=>{});return audioContext}
 function playTone(type="button"){
- const enabled=type==="button"?settings.buttons:type==="task"?settings.tasks:settings.notifications;
- if(!enabled||settings.volume<=0)return;
- try{
-  const ctx=getAudioContext();if(!ctx)return;
-  const now=ctx.currentTime,master=ctx.createGain();
-  master.gain.setValueAtTime(settings.volume/100*.12,now);
-  master.connect(ctx.destination);
-  const notes=type==="task"?[660,880]:type==="notification"?[740,880]:[520];
-  notes.forEach((frequency,index)=>{
-   const oscillator=ctx.createOscillator(),gain=ctx.createGain();
-   const start=now+index*(type==="task"?.12:.09);
-   const duration=type==="button"?.055:.16;
-   oscillator.type="sine";
-   oscillator.frequency.setValueAtTime(frequency,start);
-   gain.gain.setValueAtTime(.001,start);
-   gain.gain.exponentialRampToValueAtTime(.8,start+.015);
-   gain.gain.exponentialRampToValueAtTime(.001,start+duration);
-   oscillator.connect(gain);gain.connect(master);
-   oscillator.start(start);oscillator.stop(start+duration+.02);
-  });
+ const enabled=type==="button"?settings.buttons:type==="task"?settings.tasks:settings.notifications;if(!enabled||settings.volume<=0)return;
+ try{const ctx=getAudioContext();if(!ctx)return;const now=ctx.currentTime,master=ctx.createGain();master.gain.setValueAtTime(settings.volume/100*.12,now);master.connect(ctx.destination);
+ const notes=type==="task"?[660,880]:type==="notification"?[740,880]:[520];
+ notes.forEach((frequency,index)=>{const oscillator=ctx.createOscillator(),gain=ctx.createGain(),start=now+index*(type==="task"?.12:.09),duration=type==="button"?.055:.16;
+ oscillator.type="sine";oscillator.frequency.setValueAtTime(frequency,start);gain.gain.setValueAtTime(.001,start);gain.gain.exponentialRampToValueAtTime(.8,start+.015);gain.gain.exponentialRampToValueAtTime(.001,start+duration);oscillator.connect(gain);gain.connect(master);oscillator.start(start);oscillator.stop(start+duration+.02)})
  }catch(e){console.warn("AUDIO_ERROR",e)}
 }
-
-function stopAmbient(){
- if(!ambientNodes)return;
- try{ambientNodes.oscillators.forEach(o=>o.stop());ambientNodes.master.disconnect()}catch(e){}
- ambientNodes=null;
-}
-
+function stopAmbient(){if(!ambientNodes)return;try{ambientNodes.oscillators.forEach(o=>o.stop());ambientNodes.master.disconnect()}catch(e){}ambientNodes=null}
 function startAmbient(){
- const ctx=getAudioContext();if(!ctx)return false;
- if(ambientNodes)return true;
- try{
-  const master=ctx.createGain();
-  master.gain.value=settings.volume/100*.018;
-  master.connect(ctx.destination);
-  const oscillators=[];
-  [55,82.4,110].forEach((frequency,index)=>{
-   const osc=ctx.createOscillator(),gain=ctx.createGain();
-   osc.type="sine";osc.frequency.value=frequency;
-   gain.gain.value=index===0?.7:.25;
-   osc.connect(gain);gain.connect(master);osc.start();
-   oscillators.push(osc);
-  });
-  ambientNodes={master,oscillators};return true;
- }catch(e){return false}
+ const ctx=getAudioContext();if(!ctx)return false;if(ambientNodes)return true;
+ try{const master=ctx.createGain();master.gain.value=settings.volume/100*.018;master.connect(ctx.destination);const oscillators=[];
+ [55,82.4,110].forEach((frequency,index)=>{const osc=ctx.createOscillator(),gain=ctx.createGain();osc.type="sine";osc.frequency.value=frequency;gain.gain.value=index===0?.7:.25;osc.connect(gain);gain.connect(master);osc.start();oscillators.push(osc)});
+ ambientNodes={master,oscillators};return true}catch(e){return false}
 }
-
 function toggleAmbient(enabled){
  settings.ambient=!!enabled;
- if(enabled){
-  if(!startAmbient()){
-   settings.ambient=false;$("ambientEnabled").checked=false;
-   notify("الموسيقى غير مدعومة على هذا الجهاز");
-  }else notify("تم تشغيل الخلفية الفضائية");
- }else{
-  stopAmbient();notify("تم إيقاف الموسيقى الخلفية");
- }
- saveSettings();
+ if(enabled){if(!startAmbient()){settings.ambient=false;$("ambientEnabled").checked=false;notify("الموسيقى غير مدعومة على هذا الجهاز")}else notify("تم تشغيل الخلفية الفضائية")}
+ else{stopAmbient();notify("تم إيقاف الموسيقى الخلفية")}saveSettings();
 }
-
-function saveSoundSettings(){
- saveSettings();
- if(ambientNodes)ambientNodes.master.gain.value=settings.volume/100*.018;
-}
-
-function vibrate(){
- if(settings.vibration&&navigator.vibrate){try{navigator.vibrate(25)}catch(e){}}
-}
-
+function saveSoundSettings(){saveSettings();if(ambientNodes)ambientNodes.master.gain.value=settings.volume/100*.018}
+function vibrate(){if(settings.vibration&&navigator.vibrate){try{navigator.vibrate(25)}catch(e){}}}
 function testSound(){playTone("notification");notify("دي تجربة لصوت الإشعارات")}
+function notify(message){const el=$("toast");el.textContent=message;el.classList.add("show");clearTimeout(notify.timer);notify.timer=setTimeout(()=>el.classList.remove("show"),2800);playTone("notification");vibrate()}
 
-function notify(message){
- const el=$("toast");
- el.textContent=message;
- el.classList.add("show");
- clearTimeout(notify.timer);
- notify.timer=setTimeout(()=>el.classList.remove("show"),2800);
- playTone("notification");vibrate();
-}
-
-/* HELPERS + API */
-function money(value){
- const n=Number(value??0);
- return "$"+(Number.isFinite(n)?n.toFixed(2):"0.00");
-}
+function money(value){const n=Number(value??0);return"$"+(Number.isFinite(n)?n.toFixed(2):"0.00")}
 function fmt(value){return Number(value??0).toLocaleString("en-US")}
-function safe(value){
- return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
-
+function safe(value){return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 async function api(action,extra={}){
  if(!tg?.initData)throw new Error("افتح التطبيق من داخل بوت تيليجرام");
- const response=await fetch(API_URL,{
-  method:"POST",
-  headers:{"Content-Type":"application/json"},
-  body:JSON.stringify({initData:tg.initData,action,...extra})
- });
- let result;
- try{result=await response.json()}catch(e){throw new Error("استجابة الخادم غير مفهومة")}
- if(!response.ok||result.ok===false)throw new Error(result.error||result.message||"حدث خطأ في الخادم");
- return result;
+ const response=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({initData:tg.initData,action,...extra})});
+ let result;try{result=await response.json()}catch(e){throw new Error("استجابة الخادم غير مفهومة")}
+ if(!response.ok||result.ok===false)throw new Error(result.error||result.message||"حدث خطأ في الخادم");return result;
 }
-
 function showPage(id){
- const page=$(id);if(!page)return;
- document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
- page.classList.add("active");
- document.querySelectorAll(".nav-btn").forEach(btn=>btn.classList.toggle("active",btn.dataset.page===id));
- window.scrollTo({top:0,behavior:"smooth"});
- if(id==="wallet")refreshWallet();
- if(id==="tasks")loadTasks();
- if(id==="inventory")loadInventory();
- if(id==="settings")readSettings();
+ const page=$(id);if(!page)return;document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));page.classList.add("active");
+ document.querySelectorAll(".nav-btn").forEach(btn=>btn.classList.toggle("active",btn.dataset.page===id));window.scrollTo({top:0,behavior:"smooth"});
+ if(id==="wallet")refreshWallet();if(id==="tasks")loadTasks();if(id==="inventory")loadInventory();if(id==="settings")readSettings();
 }
 
 /* PROFILE */
 function displayAvatar(url){
  const image=$("profileAvatarImage"),fallback=$("profileAvatarFallback");
- if(url){
-  image.src=url;image.style.display="block";fallback.style.display="none";
-  image.onerror=()=>{image.style.display="none";fallback.style.display="grid"};
- }else{
-  image.removeAttribute("src");image.style.display="none";fallback.style.display="grid";
- }
+ if(url){image.src=url;image.style.display="block";fallback.style.display="none";image.onerror=()=>{image.style.display="none";fallback.style.display="grid"}}
+ else{image.removeAttribute("src");image.style.display="none";fallback.style.display="grid"}
 }
-
+function updatePointsEstimate(points){
+ const value=Math.max(0,Number(points)||0)/1000;
+ $("estimatePoints").textContent=fmt(points);
+ $("pointsDollarEstimate").textContent=money(value);
+}
 function displayProfile(data){
- profile=data||{};
- const balance=Number(data.balance??0);
- const username=data.username?"@"+data.username:"عضو SASA";
- const displayName=data.display_name||data.first_name||username;
- $("welcome").textContent="أهلاً بك 👋";
- $("username").textContent=username;
- $("profileName").textContent=displayName;
- $("profileUsername").textContent=username;
- $("homePoints").textContent=fmt(balance);
- $("walletPoints").textContent=fmt(balance);
- $("walletSummaryPoints").textContent=fmt(balance);
- $("shopPoints").textContent=fmt(balance)+" ✦";
- $("telegramId").textContent=data.telegram_id??"—";
- $("displayNameInput").value=data.display_name||"";
- $("profileLevel").textContent=fmt(data.level??1);
- $("profileXP").textContent=fmt(data.experience_points??0);
- $("profileCreated").textContent=data.created_at?new Date(data.created_at).toLocaleDateString("ar-EG"):"—";
- displayAvatar(data.avatar_url||null);
- $("onlineStatus").textContent="● متصل";
- $("profileStatus").textContent="تم تحميل بيانات حسابك.";
- $("profileStatus").className="status";
- renderEquipped();
+ profile=data||{};const balance=Number(data.balance??0),username=data.username?"@"+data.username:"عضو SASA",displayName=data.display_name||data.first_name||username;
+ $("welcome").textContent="أهلاً بك 👋";$("username").textContent=username;$("profileName").textContent=displayName;$("profileUsername").textContent=username;
+ $("homePoints").textContent=fmt(balance);$("walletPoints").textContent=fmt(balance);$("walletSummaryPoints").textContent=fmt(balance);$("shopPoints").textContent=fmt(balance)+" ✦";
+ updatePointsEstimate(balance);
+ $("telegramId").textContent=data.telegram_id??"—";$("displayNameInput").value=data.display_name||"";$("profileLevel").textContent=fmt(data.level??1);
+ $("profileXP").textContent=fmt(data.experience_points??0);$("profileCreated").textContent=data.created_at?new Date(data.created_at).toLocaleDateString("ar-EG"):"—";
+ displayAvatar(data.avatar_url||null);$("onlineStatus").textContent="● متصل";$("profileStatus").textContent="تم تحميل بيانات حسابك.";$("profileStatus").className="status";renderEquipped();
 }
-
 async function saveProfile(){
- if(profileSaving)return;
- const displayName=$("displayNameInput").value.trim();
+ if(profileSaving)return;const displayName=$("displayNameInput").value.trim();
  if(displayName.length<2||displayName.length>40){notify("الاسم لازم يكون من حرفين إلى 40 حرفًا");return}
  if(!profile){notify("بيانات الحساب لم تكتمل بعد");return}
- profileSaving=true;
- const button=$("saveProfileButton");
- button.disabled=true;button.textContent="جارٍ الحفظ...";
- $("profileStatus").textContent="جارٍ حفظ الاسم...";
- $("profileStatus").className="status loading";
- try{
-  const result=await api("profile_update",{display_name:displayName});
-  const updated=result.profile||result.data?.profile||result.data||result;
-  if(!updated||typeof updated!=="object")throw new Error("الخادم لم يرجع بيانات الملف الشخصي");
-  displayProfile({...profile,...updated,display_name:updated.display_name||displayName});
-  $("profileStatus").textContent="تم حفظ الاسم بنجاح.";
-  $("profileStatus").className="status";
-  notify("تم تحديث اسمك بنجاح");
- }catch(error){
-  console.error("PROFILE_UPDATE:",error);
-  $("profileStatus").textContent="تعذّر حفظ الاسم: "+error.message;
-  $("profileStatus").className="status error";
-  notify("لم يتم حفظ الاسم");
- }finally{
-  profileSaving=false;button.disabled=false;button.textContent="حفظ الاسم";
- }
+ profileSaving=true;const button=$("saveProfileButton");button.disabled=true;button.textContent="جارٍ الحفظ...";
+ $("profileStatus").textContent="جارٍ حفظ الاسم...";$("profileStatus").className="status loading";
+ try{const result=await api("profile_update",{display_name:displayName}),updated=result.profile||result.data?.profile||result.data||result;
+ if(!updated||typeof updated!=="object")throw new Error("الخادم لم يرجع بيانات الملف الشخصي");
+ displayProfile({...profile,...updated,display_name:updated.display_name||displayName});$("profileStatus").textContent="تم حفظ الاسم بنجاح.";$("profileStatus").className="status";notify("تم تحديث اسمك بنجاح")
+ }catch(error){console.error("PROFILE_UPDATE:",error);$("profileStatus").textContent="تعذّر حفظ الاسم: "+error.message;$("profileStatus").className="status error";notify("لم يتم حفظ الاسم")}
+ finally{profileSaving=false;button.disabled=false;button.textContent="حفظ الاسم"}
 }
-
 async function uploadAvatar(input){
  const file=input.files?.[0];if(!file)return;
  if(!["image/jpeg","image/png","image/webp"].includes(file.type)){notify("اختار صورة JPG أو PNG أو WEBP");input.value="";return}
  if(file.size>3*1024*1024){notify("حجم الصورة أكبر من 3 ميجابايت");input.value="";return}
- if(avatarUploading)return;
- avatarUploading=true;
- $("profileStatus").textContent="جارٍ تجهيز الصورة ورفعها...";
- $("profileStatus").className="status loading";
+ if(avatarUploading)return;avatarUploading=true;$("profileStatus").textContent="جارٍ تجهيز الصورة ورفعها...";$("profileStatus").className="status loading";
  try{
-  const base64=await new Promise((resolve,reject)=>{
-   const reader=new FileReader();
-   reader.onload=()=>typeof reader.result==="string"?resolve(reader.result):reject(new Error("تعذّرت قراءة الصورة"));
-   reader.onerror=()=>reject(new Error("تعذّرت قراءة ملف الصورة"));
-   reader.readAsDataURL(file);
-  });
-  const result=await api("avatar_upload",{image_base64:base64});
-  const updated=result.profile||result.data?.profile||result.data||{};
-  const avatarUrl=updated.avatar_url||result.avatar_url;
+  const base64=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>typeof reader.result==="string"?resolve(reader.result):reject(new Error("تعذّرت قراءة الصورة"));reader.onerror=()=>reject(new Error("تعذّرت قراءة ملف الصورة"));reader.readAsDataURL(file)});
+  const result=await api("avatar_upload",{image_base64:base64}),updated=result.profile||result.data?.profile||result.data||{},avatarUrl=updated.avatar_url||result.avatar_url;
   if(!avatarUrl)throw new Error("الخادم لم يرجع رابط الصورة");
-  displayProfile({...profile,...updated,avatar_url:avatarUrl});
-  $("profileStatus").textContent="تم رفع الصورة وحفظها بنجاح.";
-  $("profileStatus").className="status";
-  notify("تم تحديث صورتك الشخصية");
- }catch(error){
-  console.error("AVATAR_UPLOAD:",error);
-  $("profileStatus").textContent="تعذّر رفع الصورة: "+error.message;
-  $("profileStatus").className="status error";
-  notify("لم يتم رفع الصورة");
- }finally{
-  avatarUploading=false;input.value="";
- }
+  displayProfile({...profile,...updated,avatar_url:avatarUrl});$("profileStatus").textContent="تم رفع الصورة وحفظها بنجاح.";$("profileStatus").className="status";notify("تم تحديث صورتك الشخصية")
+ }catch(error){console.error("AVATAR_UPLOAD:",error);$("profileStatus").textContent="تعذّر رفع الصورة: "+error.message;$("profileStatus").className="status error";notify("لم يتم رفع الصورة")}
+ finally{avatarUploading=false;input.value=""}
 }
 
 /* INVENTORY + LOCAL EQUIPPING */
-const EQUIP_KEY="sasa_equipped_items_v1";
-let equipped={};
-
-function readEquipped(){
- try{equipped=JSON.parse(localStorage.getItem(EQUIP_KEY)||"{}")}catch(e){equipped={}}
-}
-function saveEquipped(){
- try{localStorage.setItem(EQUIP_KEY,JSON.stringify(equipped))}catch(e){}
- renderEquipped();
-}
+const EQUIP_KEY="sasa_equipped_items_v1";let equipped={};
+function readEquipped(){try{equipped=JSON.parse(localStorage.getItem(EQUIP_KEY)||"{}")}catch(e){equipped={}}}
+function saveEquipped(){try{localStorage.setItem(EQUIP_KEY,JSON.stringify(equipped))}catch(e){}renderEquipped()}
 function itemKind(item){
  const p=item.product||{},raw=String(p.item_type||p.type||p.category||item.item_type||"").toLowerCase();
- if(/frame|إطار|اطار/.test(raw))return"frame";
- if(/badge|شارة/.test(raw))return"badge";
- if(/avatar|صورة/.test(raw))return"avatar";
- if(/decoration|زينة/.test(raw))return"decoration";
- return"other";
+ if(/frame|إطار|اطار/.test(raw))return"frame";if(/badge|شارة/.test(raw))return"badge";if(/avatar|صورة/.test(raw))return"avatar";if(/decoration|زينة/.test(raw))return"decoration";return"other";
 }
 function renderEquipped(){
- const el=$("equippedPreview");if(!el)return;
- const labels=[];
- if(equipped.frame)labels.push("🖼️ الإطار مجهز");
- if(equipped.badge)labels.push("🏅 الشارة مجهزة");
- if(equipped.avatar)labels.push("👤 الصورة مجهزة");
- if(equipped.decoration)labels.push("✨ الزينة مجهزة");
+ const el=$("equippedPreview");if(!el)return;const labels=[];
+ if(equipped.frame)labels.push("🖼️ الإطار مجهز");if(equipped.badge)labels.push("🏅 الشارة مجهزة");if(equipped.avatar)labels.push("👤 الصورة مجهزة");if(equipped.decoration)labels.push("✨ الزينة مجهزة");
  el.innerHTML=labels.length?labels.map(x=>`<span class="equip-chip">${x}</span>`).join(""):'<span class="equip-chip">لا توجد عناصر مجهزة</span>';
 }
 function equipItem(id,kind){
  if(!["frame","badge","avatar","decoration"].includes(kind)){notify("هذا العنصر لا يدعم التجهيز");return}
- equipped[kind]=equipped[kind]===id?"":id;
- saveEquipped();
- notify(equipped[kind]?"تم التجهيز للمعاينة":"تم إلغاء التجهيز");
+ equipped[kind]=equipped[kind]===id?"":id;saveEquipped();notify(equipped[kind]?"تم التجهيز للمعاينة":"تم إلغاء التجهيز");
 }
 async function loadInventory(force=false){
- if(loadingInventory)return;
- if(inventoryLoaded&&!force)return;
- if(!tg?.initData){
-  $("inventoryStatus").textContent="افتح التطبيق من تيليجرام لعرض المخزون.";
-  $("inventoryStatus").className="status error";return;
- }
- loadingInventory=true;
- $("inventoryStatus").textContent="جارٍ تحميل مخزونك...";
- $("inventoryStatus").className="status loading";
+ if(loadingInventory)return;if(inventoryLoaded&&!force)return;
+ if(!tg?.initData){$("inventoryStatus").textContent="افتح التطبيق من تيليجرام لعرض المخزون.";$("inventoryStatus").className="status error";return}
+ loadingInventory=true;$("inventoryStatus").textContent="جارٍ تحميل مخزونك...";$("inventoryStatus").className="status loading";
  try{
-  const result=await api("inventory_get");
-  const items=Array.isArray(result.items)?result.items:
-   Array.isArray(result.inventory)?result.inventory:
-   Array.isArray(result.data?.items)?result.data.items:
-   Array.isArray(result.data?.inventory)?result.data.inventory:[];
-  inventoryItems=items;
-  renderInventory(items);
-  inventoryLoaded=true;
-  $("inventoryStatus").textContent="تم تحميل المخزون. عدد السجلات: "+items.length;
-  $("inventoryStatus").className="status";
- }catch(error){
-  console.error("INVENTORY_GET:",error);
-  $("inventoryStatus").textContent="تعذّر تحميل المخزون: "+error.message;
-  $("inventoryStatus").className="status error";
-  $("inventoryList").innerHTML='<div class="empty">لم نتمكن من تحميل العناصر. اضغط تحديث للمحاولة.</div>';
- }finally{loadingInventory=false}
+  const result=await api("inventory_get"),items=Array.isArray(result.items)?result.items:Array.isArray(result.inventory)?result.inventory:Array.isArray(result.data?.items)?result.data.items:Array.isArray(result.data?.inventory)?result.data.inventory:[];
+  inventoryItems=items;renderInventory(items);inventoryLoaded=true;$("inventoryStatus").textContent="تم تحميل المخزون. عدد السجلات: "+items.length;$("inventoryStatus").className="status";
+ }catch(error){console.error("INVENTORY_GET:",error);$("inventoryStatus").textContent="تعذّر تحميل المخزون: "+error.message;$("inventoryStatus").className="status error";$("inventoryList").innerHTML='<div class="empty">لم نتمكن من تحميل العناصر. اضغط تحديث للمحاولة.</div>'}
+ finally{loadingInventory=false}
 }
 function renderInventory(items){
- const el=$("inventoryList");
- if(!items.length){el.innerHTML='<div class="empty">مخزونك فارغ حاليًا. العناصر التي تمتلكها ستظهر هنا.</div>';return}
+ const el=$("inventoryList");if(!items.length){el.innerHTML='<div class="empty">مخزونك فارغ حاليًا. العناصر التي تمتلكها ستظهر هنا.</div>';return}
  el.innerHTML=items.map((item,index)=>{
-  const product=item.product||{};
-  const title=product.title_ar||product.name_ar||product.title||product.name||item.product_id||"عنصر SASA";
-  const description=product.description_ar||product.description||"عنصر في مخزونك";
-  const quantity=Math.max(0,Number(item.quantity??0));
-  const imageUrl=product.image_url||"";
-  const kind=itemKind(item);
-  const id=String(item.product_id||product.id||index);
+  const product=item.product||{},title=product.title_ar||product.name_ar||product.title||product.name||item.product_id||"عنصر SASA",description=product.description_ar||product.description||"عنصر في مخزونك";
+  const quantity=Math.max(0,Number(item.quantity??0)),imageUrl=product.image_url||"",kind=itemKind(item),id=String(item.product_id||product.id||index);
   const icon=/^https?:\/\//i.test(imageUrl)?`<img class="inventory-image" src="${safe(imageUrl)}" alt="">`:(product.icon||"🎁");
-  const acquired=item.acquired_at?new Date(item.acquired_at).toLocaleDateString("ar-EG"):"";
-  const canEquip=["frame","badge","avatar","decoration"].includes(kind);
-  const isEquipped=canEquip&&equipped[kind]===id;
+  const acquired=item.acquired_at?new Date(item.acquired_at).toLocaleDateString("ar-EG"):"",canEquip=["frame","badge","avatar","decoration"].includes(kind),isEquipped=canEquip&&equipped[kind]===id;
   return `<div class="item"><div class="item-icon">${icon}</div><div class="item-info"><b>${safe(title)}</b><small>${safe(description)}</small><small>الكمية: ${fmt(quantity)} ${acquired?" · تاريخ الإضافة: "+safe(acquired):""}</small>${canEquip?`<button class="action ${isEquipped?"":"secondary"}" style="margin-top:7px;padding:7px 10px;font-size:11px" onclick="equipItem('${safe(id)}','${kind}')">${isEquipped?"إلغاء التجهيز":"تجهيز للمعاينة"}</button>`:""}</div><span class="tag green">مملوك</span></div>`;
  }).join("");
 }
 
-/* TASKS */
-const dailyTaskSets=[
- [["تسجيل الدخول اليومي","افتح التطبيق وتفقد حسابك",10],["زيارة المتجر","افتح متجر SASA وتصفح العناصر",8],["مراجعة المحفظة","افتح المحفظة وراجع بياناتها",8],["زيارة مخزني","تفقد العناصر الموجودة في مخزونك",8],["تحديث الملف الشخصي","راجع بيانات ملفك الشخصي",12],["زيارة صفحة الأصدقاء","افتح صفحة دعوة الأصدقاء",8],["استكشاف المهام","راجع قائمة المهام اليومية",10],["قراءة الإعدادات","افتح إعدادات التطبيق",8],["استكشاف الرئيسية","تفقد أقسام الصفحة الرئيسية",8],["العودة إلى SASA","أكمل جولة استكشاف التطبيق",15]],
- [["جولة المحفظة","راجع ملخص المحفظة وسجل الحركات",10],["جولة المتجر","تصفح قائمة عناصر المتجر",8],["مراجعة المخزون","افتح مخزنك وتفقد محتوياته",8],["زيارة حسابك","راجع معلومات حسابك",10],["استكشاف الأصدقاء","افتح قسم الأصدقاء",8],["جولة الإعدادات","راجع خيارات الصوت واللغة",10],["تفقد رصيدك","شاهد رصيد النقاط في الرئيسية",8],["مراجعة المهام","افتح صفحة المهام",8],["جولة SASA","انتقل بين أقسام التطبيق",12],["نشاط اليوم","عد إلى التطبيق وأكمل جولتك",15]],
- [["تسجيل حضورك","ابدأ يومك بزيارة SASA",10],["اكتشاف العناصر","تصفح عناصر المتجر",10],["مراجعة الرصيد","افتح ملخص المحفظة",8],["زيارة ملفك","راجع بيانات حسابك",8],["استكشاف المخزون","افتح قائمة العناصر",8],["مشاركة SASA","افتح صفحة مشاركة رابط البوت",10],["تفقد إعداداتك","راجع إعدادات التطبيق",8],["مراجعة تقدمك","افتح المهام اليومية",10],["زيارة الرئيسية","ارجع إلى الصفحة الرئيسية",8],["جولة الاستكشاف","استكشف صفحات التطبيق المختلفة",15]]
+/* TASKS: 10 DAILY + ONE SPECIAL + 5 AD PREVIEWS */
+const dailyTaskTemplates=[
+ ["العودة إلى SASA","افتح التطبيق وابدأ جولتك اليومية",5],
+ ["جولة المحفظة","افتح المحفظة وراجع ملخصها",5],
+ ["جولة المتجر","تصفح أقسام متجر SASA",5],
+ ["مراجعة المخزون","افتح مخزنك وتفقد العناصر",5],
+ ["زيارات حسابك","افتح صفحة حسابك وراجع بياناتك",5],
+ ["استكشاف الأصدقاء","افتح صفحة الأصدقاء",5],
+ ["جولة الإعدادات","افتح الإعدادات وتفقد خياراتها",5],
+ ["تفقد رصيدك","راجع رصيد النقاط في الصفحة الرئيسية",5],
+ ["مراجعة المهام","افتح قائمة المهام اليومية",5],
+ ["جولة SASA","تنقل بين أقسام التطبيق المختلفة",5]
 ];
-const specialTaskTemplates=[
- ["مستكشف SASA","افتح خمس صفحات مختلفة داخل التطبيق وتعرّف على أقسامها",50],
- ["جولة الفضاء","زر الرئيسية والمهام والمتجر والمحفظة والمخزون",50],
- ["تحدي الاستكشاف","راجع حسابك وإعداداتك وصفحة الأصدقاء والمتجر",50]
+const specialTaskTemplate=["تحدي البداية","ابدأ جولتك في SASA واستكشف أقسام التطبيق",15];
+const adTaskTemplates=[
+ ["إعلان البداية","مهمة إعلانية يومية تجريبية"],
+ ["إعلان الاستكشاف","مهمة إعلانية تجريبية لاستكشاف التطبيق"],
+ ["إعلان النشاط","مهمة إعلانية يومية غير مفعّلة"],
+ ["إعلان المكافأة","مهمة إعلانية بانتظار ربط مزود الإعلانات"],
+ ["إعلان SASA","مهمة إعلانية تجريبية غير متاحة حاليًا"]
 ];
 let taskPreviewState={},currentTasks=[];
-
 function cairoDayIndex(){
  const parts=new Intl.DateTimeFormat("en-CA",{timeZone:"Africa/Cairo",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date()).split("-");
  return Math.floor(Date.UTC(+parts[0],+parts[1]-1,+parts[2])/86400000);
 }
 function loadTaskPreviewState(){
- try{
-  const saved=JSON.parse(localStorage.getItem("sasa_task_preview_v1")||"{}");
-  taskPreviewState=saved.day===cairoDayIndex()?saved.states||{}:{};
- }catch(e){taskPreviewState={}}
+ try{const saved=JSON.parse(localStorage.getItem("sasa_task_preview_v1")||"{}");taskPreviewState=saved.day===cairoDayIndex()?saved.states||{}:{}}catch(e){taskPreviewState={}}
 }
-function saveTaskPreviewState(){
- try{localStorage.setItem("sasa_task_preview_v1",JSON.stringify({day:cairoDayIndex(),states:taskPreviewState}))}catch(e){}
-}
+function saveTaskPreviewState(){try{localStorage.setItem("sasa_task_preview_v1",JSON.stringify({day:cairoDayIndex(),states:taskPreviewState}))}catch(e){}}
 function taskState(id){return taskPreviewState[id]||"new"}
 function taskStateLabel(state){return({new:"جديدة",started:"قيد التجربة"})[state]||"جديدة"}
-
 function renderTaskCard(task,isSpecial=false,index=0){
- const id=String(task.id||((isSpecial?"special-":"daily-")+index));
- const state=taskState(id);
- const title=task.title_ar||task.title||task.name||"مهمة SASA";
- const description=task.description_ar||task.description||"أكمل المهمة حسب شروطها";
- const reward=Number(task.reward_points??task.reward??0);
- const target=Math.max(1,Number(task.target_count??1));
- const progress=state==="started"?Math.min(1,target):0;
- const percent=Math.min(100,Math.round(progress/target*100));
+ const id=String(task.id||((isSpecial?"special-":"daily-")+index)),state=taskState(id);
+ const title=task.title_ar||task.title||task.name||"مهمة SASA",description=task.description_ar||task.description||"أكمل المهمة حسب شروطها";
+ const reward=Number(task.reward_points??task.reward??0),target=Math.max(1,Number(task.target_count??1)),progress=state==="started"?Math.min(1,target):0,percent=Math.min(100,Math.round(progress/target*100));
  const start=state==="new"?`<button class="action secondary" onclick="taskAction('${safe(id)}','start')">تشغيل</button>`:`<button class="action secondary" disabled>تم التشغيل</button>`;
  const verify=`<button class="action secondary" ${state!=="started"?"disabled":""} onclick="taskAction('${safe(id)}','verify')">طلب التحقق</button>`;
  return `<div class="item ${isSpecial?"special-task":""}"><div class="item-icon">${isSpecial?"⭐":"🎯"}</div><div class="item-info"><b>${safe(title)}</b><small>${safe(description)}</small><div class="task-details"><span>المكافأة المقترحة: ${fmt(reward)} نقطة</span><span>التقدم: ${progress}/${target}</span></div><div class="task-progress"><span style="width:${percent}%"></span></div><div class="task-actions">${start}${verify}</div></div><span class="tag ${isSpecial?"gold":""}">${taskStateLabel(state)}</span></div>`;
 }
+function renderAdTasks(){
+ $("adTasks").innerHTML=adTaskTemplates.map((task,index)=>`<div class="item ad-task"><div class="item-icon">📺</div><div class="item-info"><b>${safe(task[0])}</b><small>${safe(task[1])}</small><div class="task-details"><span>لا توجد مكافأة مفعّلة</span><span>بانتظار الربط</span></div></div><button class="action secondary" disabled>غير مفعّلة</button></div>`).join("");
+}
 function taskAction(id,action){
  const state=taskState(id);
- if(action==="start"&&state==="new"){
-  taskPreviewState[id]="started";saveTaskPreviewState();
-  renderTasks(currentTasks,false);notify("بدأت معاينة المهمة");
- }else if(action==="verify"&&state==="started"){
-  notify("التحقق الحقيقي غير مفعّل بعد. لم يتم تسجيل إنجاز أو إضافة نقاط");
- }
+ if(action==="start"&&state==="new"){taskPreviewState[id]="started";saveTaskPreviewState();renderTasks(currentTasks,false);notify("بدأت معاينة المهمة")}
+ else if(action==="verify"&&state==="started")notify("التحقق الحقيقي غير مفعّل بعد. لم يتم تسجيل إنجاز أو إضافة نقاط");
 }
 function buildLocalTasks(){
- const day=cairoDayIndex();
- const set=dailyTaskSets[((day%dailyTaskSets.length)+dailyTaskSets.length)%dailyTaskSets.length];
- const daily=set.map((x,i)=>({id:"local-daily-"+i,title_ar:x[0],description_ar:x[1],reward_points:x[2],target_count:1,task_type:"daily"}));
- const special=specialTaskTemplates[((day%specialTaskTemplates.length)+specialTaskTemplates.length)%specialTaskTemplates.length];
- return [...daily,{id:"local-special",title_ar:special[0],description_ar:special[1],reward_points:special[2],target_count:1,task_type:"special"}];
+ const daily=dailyTaskTemplates.map((x,i)=>({id:"sasa-daily-"+i,title_ar:x[0],description_ar:x[1],reward_points:x[2],target_count:1,task_type:"daily"}));
+ const special={id:"sasa-special-start",title_ar:specialTaskTemplate[0],description_ar:specialTaskTemplate[1],reward_points:specialTaskTemplate[2],target_count:1,task_type:"special"};
+ return [...daily,special];
 }
 function renderTasks(tasks,fromServer=false){
  const all=Array.isArray(tasks)?tasks:[];
- const daily=all.filter(t=>(t.task_type||t.type)==="daily").slice(0,10);
- const special=all.filter(t=>(t.task_type||t.type)==="special").slice(0,1);
- let finalDaily=daily,finalSpecial=special;
- if(!fromServer||daily.length<10){
-  const local=buildLocalTasks().filter(t=>t.task_type==="daily");
-  const used=new Set(daily.map(t=>String(t.id||"")));
-  finalDaily=[...daily];
-  for(const t of local){if(finalDaily.length>=10)break;if(!used.has(String(t.id)))finalDaily.push(t)}
- }
- if(!finalSpecial.length)finalSpecial=buildLocalTasks().filter(t=>t.task_type==="special");
+ const serverDaily=all.filter(t=>(t.task_type||t.type)==="daily").slice(0,10);
+ const serverSpecial=all.filter(t=>(t.task_type||t.type)==="special").slice(0,1);
+ const local=buildLocalTasks(),localDaily=local.filter(t=>t.task_type==="daily"),localSpecial=local.find(t=>t.task_type==="special");
+ let finalDaily=serverDaily.slice();
+ const used=new Set(finalDaily.map(t=>String(t.id||"")));
+ for(const task of localDaily){if(finalDaily.length>=10)break;if(!used.has(String(task.id)))finalDaily.push(task)}
+ if(!fromServer||!serverDaily.length)finalDaily=localDaily.slice();
+ const finalSpecial=serverSpecial.length?serverSpecial:[localSpecial];
  currentTasks=[...finalDaily.slice(0,10),...finalSpecial.slice(0,1)];
  $("dailyCount").textContent=Math.min(10,finalDaily.length)+" / 10";
  $("regularTasks").innerHTML=finalDaily.slice(0,10).map((t,i)=>renderTaskCard(t,false,i)).join("");
  $("specialTasks").innerHTML=finalSpecial.length?renderTaskCard(finalSpecial[0],true,0):'<div class="empty">لا توجد مهمة خاصة.</div>';
+ renderAdTasks();
 }
 async function loadTasks(force=false){
- if(loadingTasks)return;
- if(tasksLoaded&&!force)return;
- loadTaskPreviewState();
- renderTasks(buildLocalTasks(),false);
- if(!tg?.initData){
-  $("tasksStatus").textContent="المهام المعروضة معاينة محلية. افتح التطبيق من تيليجرام لتحميل مهام الخادم.";
-  $("tasksStatus").className="status";return;
- }
- loadingTasks=true;
- $("tasksStatus").textContent="جارٍ تحديث بيانات المهام من الخادم...";
- $("tasksStatus").className="status loading";
+ if(loadingTasks)return;if(tasksLoaded&&!force)return;loadTaskPreviewState();renderTasks(buildLocalTasks(),false);
+ if(!tg?.initData){$("tasksStatus").textContent="المهام المعروضة معاينة محلية. افتح التطبيق من تيليجرام لتحميل مهام الخادم.";$("tasksStatus").className="status";return}
+ loadingTasks=true;$("tasksStatus").textContent="جارٍ تحديث بيانات المهام من الخادم...";$("tasksStatus").className="status loading";
  try{
-  const result=await api("tasks_get");
-  const tasks=Array.isArray(result.tasks)?result.tasks:Array.isArray(result.data?.tasks)?result.data.tasks:Array.isArray(result.data)?result.data:[];
-  if(tasks.length){
-   renderTasks(tasks,true);
-   $("tasksStatus").textContent="تم تحميل مهام الخادم. أزرار التحقق والاستلام غير مفعّلة حتى إضافة التحقق الخادمي.";
-  }else{
-   renderTasks(buildLocalTasks(),false);
-   $("tasksStatus").textContent="لا توجد مهام مرسلة من الخادم حاليًا؛ يتم عرض نموذج يومي.";
-  }
+  const result=await api("tasks_get"),tasks=Array.isArray(result.tasks)?result.tasks:Array.isArray(result.data?.tasks)?result.data.tasks:Array.isArray(result.data)?result.data:[];
+  if(tasks.length){renderTasks(tasks,true);$("tasksStatus").textContent="تم تحميل مهام الخادم. أزرار التحقق والاستلام غير مفعّلة حتى إضافة التحقق الخادمي."}
+  else{renderTasks(buildLocalTasks(),false);$("tasksStatus").textContent="لا توجد مهام مرسلة من الخادم حاليًا؛ يتم عرض نموذج يومي."}
   $("tasksStatus").className="status";tasksLoaded=true;
- }catch(error){
-  console.error("tasks_get:",error);
-  renderTasks(buildLocalTasks(),false);
-  $("tasksStatus").textContent="تعذّر تحديث مهام الخادم؛ المعروض نموذج معاينة يومي.";
-  $("tasksStatus").className="status error";
- }finally{loadingTasks=false}
+ }catch(error){console.error("tasks_get:",error);renderTasks(buildLocalTasks(),false);$("tasksStatus").textContent="تعذّر تحديث مهام الخادم؛ المعروض نموذج معاينة يومي.";$("tasksStatus").className="status error"}
+ finally{loadingTasks=false}
 }
 
 /* WALLET */
 async function refreshWallet(){
- if(loadingWallet||!tg?.initData)return;
- loadingWallet=true;
- $("walletStatus").textContent="جارٍ تحديث المحفظة...";
- $("walletStatus").className="status loading";
+ if(loadingWallet||!tg?.initData)return;loadingWallet=true;$("walletStatus").textContent="جارٍ تحديث المحفظة...";$("walletStatus").className="status loading";
  try{
-  const result=await api("wallet_get");
-  wallet=result.wallet||result.data||result;
-  const points=wallet.points_balance??profile?.balance??0;
-  const dollars=wallet.dollar_balance??0;
-  const reserved=wallet.dollar_reserved_balance??0;
-  $("walletPoints").textContent=fmt(points);
-  $("walletSummaryPoints").textContent=fmt(points);
-  $("homePoints").textContent=fmt(points);
-  $("shopPoints").textContent=fmt(points)+" ✦";
-  $("shopDollars").textContent=money(dollars);
-  $("walletDollars").textContent=money(dollars);
-  $("walletReserved").textContent=money(reserved);
-  $("walletSummaryAvailable").textContent=money(dollars);
-  $("walletSummaryReserved").textContent=money(reserved);
-  $("homeDollars").textContent=money(dollars);
-  $("homeReserved").textContent=money(reserved);
-  renderLedger(wallet.ledger||wallet.transactions||wallet.dollar_ledger||[]);
-  renderWithdrawals(wallet.withdrawals||[]);
-  $("walletStatus").textContent="تم تحديث بيانات المحفظة ✓";
-  $("walletStatus").className="status";
- }catch(error){
-  console.error("wallet_get:",error);
-  $("walletStatus").textContent="تعذّر تحميل المحفظة: "+error.message;
-  $("walletStatus").className="status error";
-  $("ledgerList").innerHTML='<div class="empty">تعذّر تحميل سجل العمليات</div>';
-  $("withdrawalsList").innerHTML='<div class="empty">تعذّر تحميل طلبات السحب</div>';
- }finally{loadingWallet=false}
+  const result=await api("wallet_get");wallet=result.wallet||result.data||result;
+  const points=wallet.points_balance??profile?.balance??0,dollars=wallet.dollar_balance??0,reserved=wallet.dollar_reserved_balance??0;
+  $("walletPoints").textContent=fmt(points);$("walletSummaryPoints").textContent=fmt(points);$("homePoints").textContent=fmt(points);$("shopPoints").textContent=fmt(points)+" ✦";
+  updatePointsEstimate(points);
+  $("shopDollars").textContent=money(dollars);$("walletDollars").textContent=money(dollars);$("walletReserved").textContent=money(reserved);
+  $("walletSummaryAvailable").textContent=money(dollars);$("walletSummaryReserved").textContent=money(reserved);$("homeDollars").textContent=money(dollars);$("homeReserved").textContent=money(reserved);
+  renderLedger(wallet.ledger||wallet.transactions||wallet.dollar_ledger||[]);renderWithdrawals(wallet.withdrawals||[]);
+  $("walletStatus").textContent="تم تحديث بيانات المحفظة ✓";$("walletStatus").className="status";
+ }catch(error){console.error("wallet_get:",error);$("walletStatus").textContent="تعذّر تحميل المحفظة: "+error.message;$("walletStatus").className="status error";$("ledgerList").innerHTML='<div class="empty">تعذّر تحميل سجل العمليات</div>';$("withdrawalsList").innerHTML='<div class="empty">تعذّر تحميل طلبات السحب</div>'}
+ finally{loadingWallet=false}
 }
 function entryLabel(type){return({credit:"إضافة رصيد",debit:"خصم",hold:"حجز",release:"إرجاع رصيد"})[type]||type||"عملية"}
 function renderLedger(rows){
- const el=$("ledgerList");
- if(!Array.isArray(rows)||!rows.length){el.innerHTML='<div class="empty">لا توجد عمليات دولار مسجلة حتى الآن</div>';return}
- el.innerHTML=rows.map(x=>{
-  const type=x.entry_type||"";
-  const sign=type==="credit"||type==="release"?"+":"−";
-  const date=x.created_at?new Date(x.created_at).toLocaleString("ar-EG"):"";
-  return `<div class="item"><div class="item-icon">💵</div><div class="item-info"><b>${entryLabel(type)}</b><small>${safe(x.reason||"حركة محفظة")} · ${safe(date)}</small></div><span class="tx-amount ${safe(type)}">${sign}${money(x.amount)}</span></div>`;
- }).join("");
+ const el=$("ledgerList");if(!Array.isArray(rows)||!rows.length){el.innerHTML='<div class="empty">لا توجد عمليات دولار مسجلة حتى الآن</div>';return}
+ el.innerHTML=rows.map(x=>{const type=x.entry_type||"",sign=type==="credit"||type==="release"?"+":"−",date=x.created_at?new Date(x.created_at).toLocaleString("ar-EG"):"";
+ return `<div class="item"><div class="item-icon">💵</div><div class="item-info"><b>${entryLabel(type)}</b><small>${safe(x.reason||"حركة محفظة")} · ${safe(date)}</small></div><span class="tx-amount ${safe(type)}">${sign}${money(x.amount)}</span></div>`}).join("");
 }
 function statusLabel(status){return({pending:"قيد المراجعة",approved:"تمت الموافقة",paid:"تم الدفع",rejected:"مرفوض",cancelled:"ملغي"})[status]||status||"غير معروف"}
 function renderWithdrawals(rows){
- const el=$("withdrawalsList");
- if(!Array.isArray(rows)||!rows.length){el.innerHTML='<div class="empty">لا توجد طلبات سابقة</div>';return}
- el.innerHTML=rows.map(x=>{
-  const method=x.payment_method==="usdt_trc20"?"USDT TRC20":x.payment_method==="vodafone_cash"?"فودافون كاش":x.payment_method||"وسيلة أخرى";
-  const date=x.created_at?new Date(x.created_at).toLocaleString("ar-EG"):"";
-  return `<div class="item"><div class="item-icon">📄</div><div class="item-info"><b>${money(x.amount)} · ${safe(method)}</b><small>${statusLabel(x.status)} · ${safe(date)}</small><small>صافي المبلغ: ${money(x.net_amount??x.amount)}</small></div><span class="tag">${statusLabel(x.status)}</span></div>`;
- }).join("");
+ const el=$("withdrawalsList");if(!Array.isArray(rows)||!rows.length){el.innerHTML='<div class="empty">لا توجد طلبات سابقة</div>';return}
+ el.innerHTML=rows.map(x=>{const method=x.payment_method==="usdt_trc20"?"USDT TRC20":x.payment_method==="vodafone_cash"?"فودافون كاش":x.payment_method||"وسيلة أخرى",date=x.created_at?new Date(x.created_at).toLocaleString("ar-EG"):"";
+ return `<div class="item"><div class="item-icon">📄</div><div class="item-info"><b>${money(x.amount)} · ${safe(method)}</b><small>${statusLabel(x.status)} · ${safe(date)}</small><small>صافي المبلغ: ${money(x.net_amount??x.amount)}</small></div><span class="tag">${statusLabel(x.status)}</span></div>`}).join("");
 }
 
 /* SHOP: EXACTLY 60 ITEMS */
@@ -913,33 +597,20 @@ const boosterData=[
  {id:"boost_x2_180",icon:"🌌",name:"معزز فضائي ×2",description:"مضاعفة النقاط لمدة 3 ساعات",multiplier:2,duration:180,price:450,category:"معززات"},
  {id:"boost_x3_120",icon:"👑",name:"معزز النخبة ×3",description:"ثلاثة أضعاف النقاط لمدة ساعتين",multiplier:3,duration:120,price:650,category:"معززات"}
 ];
-
 const avatarItems=[
  ["avatar_01","🧑‍🚀","رائد الفضاء","صورة شخصية بطابع الفضاء"],["avatar_02","👑","الملك الأزرق","صورة شخصية ملكية"],["avatar_03","🦊","الثعلب الذكي","صورة شخصية مرحة"],["avatar_04","🐺","الذئب الليلي","صورة شخصية ليلية"],["avatar_05","🦁","الأسد الذهبي","صورة شخصية مميزة"],["avatar_06","🐉","التنين","صورة شخصية أسطورية"],["avatar_07","🤖","الروبوت","صورة شخصية تقنية"],["avatar_08","👽","الكائن الفضائي","صورة من عالم الفضاء"],["avatar_09","🧙","الساحر","صورة شخصية خيالية"],["avatar_10","🥷","النينجا","صورة شخصية غامضة"],["avatar_11","🦅","الصقر","صورة شخصية للصقر"],["avatar_12","🐼","الباندا","صورة شخصية لطيفة"]
 ];
-
 const frameItems=[
  ["frame_01","🔷","إطار الماس","إطار أزرق لامع"],["frame_02","🟣","إطار المجرة","إطار بنفسجي فضائي"],["frame_03","🟡","إطار الذهب","إطار ذهبي"],["frame_04","🔴","إطار اللهب","إطار أحمر متوهج"],["frame_05","🟢","إطار الطاقة","إطار أخضر"],["frame_06","🌈","إطار الطيف","إطار متعدد الألوان"],["frame_07","🌙","إطار القمر","إطار ليلي"],["frame_08","⭐","إطار النجوم","إطار نجمي"],["frame_09","❄️","إطار الجليد","إطار بارد"],["frame_10","⚡","إطار البرق","إطار كهربائي"],["frame_11","🪐","إطار الكوكب","إطار كوني"],["frame_12","💠","إطار الكريستال","إطار كريستالي"]
 ];
-
 const badgeItems=[
  ["badge_01","🏆","شارة البطل","شارة إنجاز"],["badge_02","💎","شارة الماس","شارة تميز"],["badge_03","🚀","شارة المستكشف","شارة استكشاف"],["badge_04","🔥","شارة الناري","شارة نشاط"],["badge_05","👑","شارة النخبة","شارة خاصة"],["badge_06","🌟","شارة النجم","شارة تألق"],["badge_07","🛡️","شارة الحامي","شارة ثبات"],["badge_08","🎯","شارة الدقة","شارة تركيز"],["badge_09","🌌","شارة المجرة","شارة فضائية"],["badge_10","⚡","شارة الطاقة","شارة حيوية"],["badge_11","🦁","شارة الشجاعة","شارة قوة"],["badge_12","🎖️","شارة الشرف","شارة تقدير"]
 ];
-
 const decorationItems=[
  ["decor_01","✨","وهج أزرق","تأثير بجانب اسمك"],["decor_02","🌠","شهاب","زينة متحركة بالاسم لاحقًا"],["decor_03","💫","هالة لامعة","تأثير بصري للحساب"],["decor_04","🪐","كوكب صغير","زينة بجانب الاسم"],["decor_05","🌙","هلال فضي","زينة ليلية"],["decor_06","☄️","مذنب","زينة فضائية"],["decor_07","💥","انفجار نجمي","تأثير مميز"],["decor_08","🔮","كرة غامضة","زينة للحساب"],["decor_09","🌀","دوامة","زينة كونية"],["decor_10","🌈","قوس طيف","زينة ملونة"],["decor_11","🧿","عين زرقاء","زينة حماية شكلية"],["decor_12","💠","كريستالة","زينة كريستالية"]
 ];
-
-function addCosmetics(list,kind,price){
- list.forEach((x,i)=>boosterData.push({id:x[0],icon:x[1],name:x[2],description:x[3],category:kind,kind,price:price+i*5}));
-}
-addCosmetics(avatarItems,"صور شخصية",140);
-addCosmetics(frameItems,"إطارات",170);
-addCosmetics(badgeItems,"شارات",120);
-addCosmetics(decorationItems,"زينة الحساب",90);
-
-if(boosterData.length!==54)console.warn("Shop item count expected 54 before bonus items; got",boosterData.length);
-
+function addCosmetics(list,kind,price){list.forEach((x,i)=>boosterData.push({id:x[0],icon:x[1],name:x[2],description:x[3],category:kind,kind,price:price+i*5}))}
+addCosmetics(avatarItems,"صور شخصية",140);addCosmetics(frameItems,"إطارات",170);addCosmetics(badgeItems,"شارات",120);addCosmetics(decorationItems,"زينة الحساب",90);
 [
  ["special_01","🌟","نجمة الحساب","علامة مميزة للملف الشخصي","زينة الحساب",160],
  ["special_02","🪄","لمسة سحرية","زينة إضافية للحساب","زينة الحساب",180],
@@ -948,24 +619,17 @@ if(boosterData.length!==54)console.warn("Shop item count expected 54 before bonu
  ["special_05","🔱","رمز القوة","رمز يظهر ضمن عناصر الحساب","شارات",210],
  ["special_06","🏵️","وسام التميز","وسام للحساب","شارات",220]
 ].forEach(x=>boosterData.push({id:x[0],icon:x[1],name:x[2],description:x[3],category:x[4],kind:x[4]==="شارات"?"badge":"decoration",price:x[5]}));
+if(boosterData.length!==60)console.warn("SASA shop item count mismatch:",boosterData.length);
 
-/* العدد النهائي = 60: 6 معززات + 12 صورة + 12 إطار + 12 شارة + 12 زينة + 6 إضافية */
 let shopCategory="الكل";
 const shopCategories=["الكل","معززات","صور شخصية","إطارات","شارات","زينة الحساب"];
-
 function renderShop(search=""){
- const term=String(search).trim().toLowerCase();
- const filtered=boosterData.filter(p=>(p.name+" "+p.category+" "+p.description).toLowerCase().includes(term)&&(shopCategory==="الكل"||p.category===shopCategory));
+ const term=String(search).trim().toLowerCase(),filtered=boosterData.filter(p=>(p.name+" "+p.category+" "+p.description).toLowerCase().includes(term)&&(shopCategory==="الكل"||p.category===shopCategory));
  $("products").innerHTML=filtered.map(p=>`<div class="product"><span class="product-category">${safe(p.category)}</span><div class="art">${p.icon}</div><b>${safe(p.name)}</b><span class="product-desc">${safe(p.description)}</span>${p.multiplier?`<div class="task-details" style="justify-content:center"><span>×${p.multiplier}</span><span>${p.duration} دقيقة</span></div>`:""}<div class="product-price">${fmt(p.price)} ✦</div><button class="action secondary full" onclick="showProduct('${p.id}')">عرض التفاصيل</button></div>`).join("")||'<div class="empty">لا توجد عناصر مطابقة</div>';
  $("shopResultCount").textContent=filtered.length+" عنصر";
 }
-function renderShopCategories(){
- $("shopCategories").innerHTML=shopCategories.map(c=>`<button class="filter-chip ${shopCategory===c?"active":""}" onclick="setShopCategory('${c}')">${c}</button>`).join("");
-}
-function setShopCategory(category){
- shopCategory=shopCategories.includes(category)?category:"الكل";
- renderShopCategories();renderShop($("shopSearch").value);
-}
+function renderShopCategories(){$("shopCategories").innerHTML=shopCategories.map(c=>`<button class="filter-chip ${shopCategory===c?"active":""}" onclick="setShopCategory('${c}')">${c}</button>`).join("")}
+function setShopCategory(category){shopCategory=shopCategories.includes(category)?category:"الكل";renderShopCategories();renderShop($("shopSearch").value)}
 function showProduct(id){
  const p=boosterData.find(x=>x.id===id);if(!p)return;
  if(p.multiplier)notify(`${p.name} · ×${p.multiplier} لمدة ${p.duration} دقيقة · ${p.price} نقطة. الشراء غير مفعّل بعد.`);
@@ -973,74 +637,37 @@ function showProduct(id){
 }
 
 /* INVITATIONS */
-async function copyInvite(){
- try{await navigator.clipboard.writeText(BOT_URL);notify("تم نسخ رابط البوت")}
- catch(e){notify("تعذّر النسخ على هذا الجهاز")}
-}
-function shareInvite(){
- const url="https://t.me/share/url?url="+encodeURIComponent(BOT_URL);
- if(tg?.openTelegramLink)tg.openTelegramLink(url);
- else location.href=url;
-}
+async function copyInvite(){try{await navigator.clipboard.writeText(BOT_URL);notify("تم نسخ رابط البوت")}catch(e){notify("تعذّر النسخ على هذا الجهاز")}}
+function shareInvite(){const url="https://t.me/share/url?url="+encodeURIComponent(BOT_URL);if(tg?.openTelegramLink)tg.openTelegramLink(url);else location.href=url}
 
 /* BUTTON SOUND */
-document.addEventListener("click",event=>{
- const target=event.target.closest("button,label.action");
- if(!target||target.disabled)return;
- playTone("button");vibrate();
-});
+document.addEventListener("click",event=>{const target=event.target.closest("button,label.action");if(!target||target.disabled)return;playTone("button");vibrate()});
 
 /* GLOBAL FUNCTIONS */
 Object.assign(window,{
  showPage,loadProfile,loadTasks,refreshWallet,copyInvite,shareInvite,notify,
  renderShop,setShopCategory,showProduct,saveProfile,uploadAvatar,loadInventory,
- saveSoundSettings,testSound,toggleAmbient,taskAction,equipItem,
- changeLanguage:window.changeLanguage
+ saveSoundSettings,testSound,toggleAmbient,taskAction,equipItem,changeLanguage:window.changeLanguage
 });
 
 /* LOGIN */
 async function loadProfile(){
  if(!tg||!tg.initData){
-  $("welcome").textContent="افتح التطبيق من تيليجرام";
-  finishLoading("افتح التطبيق من خلال البوت");
-  $("profileStatus").textContent="يجب فتح التطبيق من داخل تيليجرام.";
-  $("profileStatus").className="status error";
-  return;
+  $("welcome").textContent="افتح التطبيق من تيليجرام";finishLoading("افتح التطبيق من خلال البوت");
+  $("profileStatus").textContent="يجب فتح التطبيق من داخل تيليجرام.";$("profileStatus").className="status error";return;
  }
  $("loadingMessage").textContent="جارٍ تأمين اتصال حسابك...";
  try{
-  const result=await api("login");
-  const data=result.profile||result.data||result;
+  const result=await api("login"),data=result.profile||result.data||result;
   if(data.telegram_id==null||data.balance==null)throw new Error("بيانات الحساب غير مكتملة");
-  displayProfile(data);
-  $("loadingMessage").textContent="جارٍ تحميل المهام والمحفظة...";
-  await loadTasks(true);
-  await refreshWallet();
-  finishLoading("أهلاً بك في SASA");
- }catch(error){
-  console.error("SASA API:",error);
-  finishLoading("تعذّر الاتصال، يمكنك إعادة المحاولة");
-  notify("لم يتم الاتصال بالخادم: "+error.message);
- }
+  displayProfile(data);$("loadingMessage").textContent="جارٍ تحميل المهام والمحفظة...";
+  await loadTasks(true);await refreshWallet();finishLoading("أهلاً بك في SASA");
+ }catch(error){console.error("SASA API:",error);finishLoading("تعذّر الاتصال، يمكنك إعادة المحاولة");notify("لم يتم الاتصال بالخادم: "+error.message)}
 }
 
 /* INITIALIZATION */
-try{
- tg?.ready();
- tg?.expand();
- tg?.setHeaderColor?.("#070b14");
- tg?.setBackgroundColor?.("#070b14");
- tg?.disableVerticalSwipes?.();
-}catch(e){console.error("TELEGRAM_INIT_ERROR:",e)}
-
-readSettings();
-readEquipped();
-loadTaskPreviewState();
-renderEquipped();
-renderShopCategories();
-renderShop();
-loadProfile();
-
+try{tg?.ready();tg?.expand();tg?.setHeaderColor?.("#070b14");tg?.setBackgroundColor?.("#070b14");tg?.disableVerticalSwipes?.()}catch(e){console.error("TELEGRAM_INIT_ERROR:",e)}
+readSettings();readEquipped();loadTaskPreviewState();renderEquipped();renderShopCategories();renderShop();renderAdTasks();loadProfile();
 })();
 </script>
 </body>
