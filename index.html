@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -50,14 +51,13 @@ box-shadow:0 0 35px #168cff88,0 0 90px #168cff33;animation:logoPulse 2s ease-in-
 #loadingMessage{font-size:12px;color:#8daaca;margin-top:14px}
 .loader-version{position:absolute;bottom:35px;color:#617c9f;font-size:11px}
 .app{width:min(100%,560px);margin:auto;min-height:100vh;padding:20px 16px 115px}
-.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:10px}
 .brand{display:flex;align-items:center;gap:11px}
 .logo{width:46px;height:46px;border-radius:16px;display:grid;place-items:center;font-size:23px;font-weight:900;background:linear-gradient(145deg,#43cfff,#1266dc);box-shadow:0 7px 20px #0879ff44}
 .brand h1{font-size:22px;margin:0;font-weight:900}
 .brand h1 span{color:var(--cyan)}
 .brand small{display:block;color:var(--muted);font-size:13px;margin-top:4px}
 .icon-btn{min-height:43px;padding:0 13px;border-radius:15px;background:#12213a;border:1px solid var(--line);font-size:13px;font-weight:800;display:flex;align-items:center;gap:7px}
-.icon-btn span{font-size:19px}
 .page{display:none}
 .page.active{display:block;animation:enter .25s ease}
 @keyframes enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -130,18 +130,10 @@ box-shadow:0 0 35px #168cff88,0 0 90px #168cff33;animation:logoPulse 2s ease-in-
 .volume-value{color:var(--cyan);font-weight:900}
 input[type=range]{width:100%;accent-color:#55d9ff;margin:15px 0}
 .avatar-fallback{display:grid;place-items:center;width:100%;height:100%}
-
-/* WALLET REDESIGN */
-.wallet-hero{
-position:relative;overflow:hidden;padding:20px;border-radius:25px;
-background:linear-gradient(135deg,#123e78,#0d65bd 55%,#092b58);
-border:1px solid #65caff55;box-shadow:0 15px 38px #0879ff24;margin-bottom:13px
-}
+.wallet-hero{position:relative;overflow:hidden;padding:20px;border-radius:25px;background:linear-gradient(135deg,#123e78,#0d65bd 55%,#092b58);border:1px solid #65caff55;box-shadow:0 15px 38px #0879ff24;margin-bottom:13px}
 .wallet-hero:after{content:"";position:absolute;width:190px;height:190px;border:1px solid #ffffff18;border-radius:50%;left:-65px;top:-75px;box-shadow:0 0 0 22px #ffffff08,0 0 0 48px #ffffff05}
-.wallet-hero .balance-label{position:relative;z-index:1}
-.wallet-hero .points{position:relative;z-index:1;font-size:39px}
-.wallet-hero .points-sub{position:relative;z-index:1}
-.wallet-hero .balance-note{position:relative;z-index:1}
+.wallet-hero .balance-label,.wallet-hero .points,.wallet-hero .points-sub,.wallet-hero .balance-note{position:relative;z-index:1}
+.wallet-hero .points{font-size:39px}
 .wallet-hero-icon{position:absolute;left:18px;bottom:20px;font-size:48px;opacity:.9}
 .wallet-mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 .wallet-box{padding:16px;border-radius:19px;background:linear-gradient(145deg,#172d4b,#0c192b);border:1px solid var(--line);position:relative;overflow:hidden}
@@ -157,8 +149,6 @@ border:1px solid #65caff55;box-shadow:0 15px 38px #0879ff24;margin-bottom:13px
 .wallet-note{font-size:12px;line-height:1.7;color:#a9bfd9;margin:0}
 .wallet-stat-line{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #ffffff0c;font-size:13px}
 .wallet-stat-line:last-child{border-bottom:0}
-.wallet-stat-line span{color:var(--muted)}
-/* SHOP REDESIGN */
 .shop-intro{padding:17px;border-radius:20px;background:linear-gradient(130deg,#172e4e,#0b1b30);border:1px solid var(--line);margin-bottom:13px}
 .shop-intro b{font-size:17px}
 .shop-intro p{color:var(--muted);font-size:12px;line-height:1.7;margin:6px 0 0}
@@ -176,14 +166,14 @@ border:1px solid #65caff55;box-shadow:0 15px 38px #0879ff24;margin-bottom:13px
 .product-category{position:absolute;top:9px;right:9px;font-size:9px;color:#9fdfff;background:#123b5b;padding:4px 7px;border-radius:20px}
 .shop-filters{padding:13px;border-radius:17px;background:#0d1b2e;border:1px solid var(--line);margin:10px 0 14px}
 .filter-label{font-size:12px;color:#b8cce4;font-weight:800;margin:2px 0 9px}
-.category-chips,.currency-filters{display:flex;gap:7px;overflow-x:auto;padding:2px 1px 9px;scrollbar-width:thin}
+.category-chips,.currency-filters{display:flex;gap:7px;overflow-x:auto;padding:2px 1px 9px}
 .filter-chip{flex:0 0 auto;padding:8px 12px;border-radius:20px;background:#132640;border:1px solid var(--line);color:#b9cbe0;font-size:11px;font-weight:800}
 .filter-chip.active{background:linear-gradient(110deg,#126fc8,#164b8e);border-color:#55d9ff88;color:#fff}
 .product-price.dollar{color:#9ce7ff}
-.product .action{margin-top:5px}
 .task-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
 .task-actions button{font-size:11px;padding:8px 10px;border-radius:10px}
-.task-slot{border-style:dashed;opacity:.7}
+.task-slot{border-style:dashed}
+.setting-select{width:100%;padding:12px;border-radius:13px;background:#0c192b;color:white;border:1px solid var(--line);margin-top:8px}
 @media(max-width:370px){
 .app{padding-left:11px;padding-right:11px}
 .nav{padding-left:3px;padding-right:3px}
@@ -211,12 +201,7 @@ border:1px solid #65caff55;box-shadow:0 15px 38px #0879ff24;margin-bottom:13px
 <div class="app">
 <header class="topbar">
  <div class="brand"><div class="logo">S</div><div><h1>SASA <span>MINI APP</span></h1><small>رحلتك تبدأ من هنا</small></div></div>
-<button class="tile" onclick="showPage('profile')">
- <span class="emoji">👤</span>
- <b>حسابي</b>
- <small>بياناتك الشخصية</small>
-</button>
-</div>
+ <button class="icon-btn" onclick="showPage('profile')"><span>👤</span> حسابي</button>
 </header>
 
 <main>
@@ -238,48 +223,41 @@ border:1px solid #65caff55;box-shadow:0 15px 38px #0879ff24;margin-bottom:13px
  <div class="grid">
   <button class="tile" onclick="showPage('tasks')"><span class="emoji">🎯</span><b>المهام اليومية</b><small>المهام المتاحة لك</small></button>
   <button class="tile" onclick="showPage('friends')"><span class="emoji">👥</span><b>الأصدقاء</b><small>مشاركة رابط البوت</small></button>
-  <button class="tile" onclick="showPage('shop')"><span class="emoji">🎁</span><b>المتجر</b><small>عناصر SASA</small></button>
+  <button class="tile" onclick="showPage('shop')"><span class="emoji">🚀</span><b>المتجر</b><small>معززات SASA</small></button>
   <button class="tile" onclick="showPage('wallet')"><span class="emoji">💠</span><b>المحفظة</b><small>النقاط والأرصدة</small></button>
   <button class="tile" onclick="showPage('inventory')"><span class="emoji">🎒</span><b>مخزني</b><small>العناصر التي تمتلكها</small></button>
-  <button class="tile" onclick="showPage('profile')"><span class="emoji">👤</span><b>حسابي</b><small>بياناتك الشخصية</small></ </div>
+  <button class="tile" onclick="showPage('settings')"><span class="emoji">⚙️</span><b>الإعدادات</b><small>تخصيص التطبيق</small></button>
+ </div>
  <p class="footer-note">SASA MINI APP · الأرصدة حسب سجل الخادم</p>
 </section>
 
 <section class="page" id="tasks">
  <div class="section-head"><h3>🎯 مهام اليوم</h3><button class="action secondary" onclick="loadTasks(true)">تحديث</button></div>
- <div id="tasksStatus" class="status loading">جارٍ تحميل مهامك...</div>
+ <div id="tasksStatus" class="status loading">جارٍ تجهيز المهام...</div>
  <div class="section-head"><h3>المهام اليومية</h3><span id="dailyCount">0 / 10</span></div>
- <div class="list" id="regularTasks"><div class="empty">جارٍ تحميل المهام...</div></div>
- <div class="section-head"><h3>⭐ المهمة الخاصة</h3><span>1 مهمة</span></div>
- <div class="list" id="specialTasks"><div class="empty">جارٍ تحميل المهمة الخاصة...</div></div>
- <div class="section-head"><h3>📺 مهام الإعلانات</h3><span>5 خانات</span></div>
- <div class="list" id="adTasks"></div>
- <p class="info">أزرار البدء والتحقق واستلام المكافأة معروضة كمعاينة فقط. تفعيلها وصرف المكافآت يحتاج ربطًا خادميًا للتحقق ومنع تكرار الصرف.</p>
+ <div class="list" id="regularTasks"></div>
+ <div class="section-head"><h3>⭐ المهمة الخاصة</h3><span>مهمة واحدة</span></div>
+ <div class="list" id="specialTasks"></div>
+ <p class="info">هذه حالات معاينة للواجهة. التحقق الفعلي من المهام وصرف المكافآت يحتاج ربطًا خادميًا قبل تفعيله.</p>
 </section>
 
 <section class="page" id="shop">
- <div class="section-head"><h3>🎁 متجر SASA</h3><span>64 عنصرًا رقميًا</span></div>
+ <div class="section-head"><h3>🚀 متجر معززات SASA</h3><span>معززات الأداء</span></div>
  <div class="shop-intro">
-  <b>متجر SASA الرقمي ✦</b>
-  <p>اختَر من 64 عنصرًا رقميًا: بوسترات وخلفيات وإطارات وشارات وألقاب وملصقات وثيمات وبطاقات. الأسعار بنقاط SASA أو دولارات SASA فقط.</p>
+  <b>ضاعف تقدمك ✦</b>
+  <p>معززات تساعدك على زيادة النقاط المكتسبة خلال مدة محددة. الأسعار والتأثيرات المعروضة تحتاج اعتمادها وربطها بالخادم قبل الشراء أو التفعيل.</p>
   <div class="shop-currencies">
    <div class="currency-chip"><small>رصيد نقاط SASA</small><b id="shopPoints">— ✦</b></div>
    <div class="currency-chip"><small>رصيد دولارات SASA</small><b id="shopDollars">$—</b></div>
   </div>
  </div>
- <div class="status">المتجر في وضع المعاينة حاليًا. لن يتم خصم أي رصيد أو تسجيل شراء قبل ربط عملية شراء آمنة بالخادم.</div>
- <input id="shopSearch" class="search" placeholder="ابحث عن بوستر أو خلفية أو شارة..." oninput="renderShop(this.value)">
+ <div class="status">معاينة المتجر: لن يتم خصم رصيد أو تفعيل معزز حقيقي من هذه الواجهة.</div>
+ <input id="shopSearch" class="search" placeholder="ابحث عن معزز..." oninput="renderShop(this.value)">
  <div class="shop-filters">
-  <div class="filter-label">التصنيف</div>
+  <div class="filter-label">نوع المعزز</div>
   <div id="shopCategories" class="category-chips"></div>
-  <div class="filter-label">العملة</div>
-  <div class="currency-filters">
-   <button class="filter-chip active" data-currency="all" onclick="setShopCurrency('all')">الكل</button>
-   <button class="filter-chip" data-currency="points" onclick="setShopCurrency('points')">✦ نقاط SASA</button>
-   <button class="filter-chip" data-currency="dollars" onclick="setShopCurrency('dollars')">$ دولارات SASA</button>
-  </div>
  </div>
- <div class="section-head"><h3>العناصر المتاحة</h3><span id="shopResultCount">64 عنصرًا</span></div>
+ <div class="section-head"><h3>المعززات المتاحة</h3><span id="shopResultCount">0 معزز</span></div>
  <div class="product-grid" id="products"></div>
 </section>
 
@@ -302,7 +280,7 @@ border:1px solid #65caff55;box-shadow:0 15px 38px #0879ff24;margin-bottom:13px
   <div class="wallet-stat-line"><span>رصيد النقاط</span><b id="walletSummaryPoints">—</b></div>
   <div class="wallet-stat-line"><span>الرصيد المتاح</span><b id="walletSummaryAvailable">$—</b></div>
   <div class="wallet-stat-line"><span>الرصيد المحجوز</span><b id="walletSummaryReserved">$—</b></div>
-  <p class="wallet-note">الأرقام دي للعرض حسب البيانات اللي بيرجعها الخادم. أي حركة مالية أو طلب سحب تحتاج مراجعة وإشراف شخص بالغ ومزود خدمة معتمد.</p>
+  <p class="wallet-note">تعرض المحفظة الأرصدة وسجل الحركات وطلبات السحب التي يرجعها الخادم. أي إجراء مالي فعلي يجب أن يتم بمراجعة شخص بالغ ومن خلال مزود خدمة معتمد.</p>
  </div>
  <div class="section-head"><h3>طلبات السحب السابقة</h3><span>سجل الطلبات</span></div>
  <div class="list" id="withdrawalsList"><div class="empty">جارٍ التحميل...</div></div>
@@ -364,14 +342,25 @@ border:1px solid #65caff55;box-shadow:0 15px 38px #0879ff24;margin-bottom:13px
  <div class="card">
   <div class="section-head" style="margin-top:0"><h3>🔊 إعدادات الصوت</h3><span>تحكم في الأصوات</span></div>
   <label class="sound-row"><span><b>صوت الأزرار</b><small>نقرة إلكترونية قصيرة عند الضغط</small></span><input type="checkbox" id="soundButtons" checked onchange="saveSoundSettings()"></label>
-  <label class="sound-row"><span><b>صوت إنجاز المهام</b><small>نغمة نجاح عند إتمام المهمة</small></span><input type="checkbox" id="soundTasks" checked onchange="saveSoundSettings()"></label>
-  <label class="sound-row"><span><b>صوت الإشعارات</b><small>تنبيه صوتي بسيط للإشعارات</small></span><input type="checkbox" id="soundNotifications" checked onchange="saveSoundSettings()"></label>
+  <label class="sound-row"><span><b>صوت إنجاز المهام</b><small>نغمة نجاح قصيرة</small></span><input type="checkbox" id="soundTasks" checked onchange="saveSoundSettings()"></label>
+  <label class="sound-row"><span><b>صوت الإشعارات</b><small>جرس بسيط للإشعارات</small></span><input type="checkbox" id="soundNotifications" checked onchange="saveSoundSettings()"></label>
+  <label class="sound-row"><span><b>الموسيقى الخلفية</b><small>خلفية فضائية هادئة</small></span><input type="checkbox" id="ambientEnabled" onchange="toggleAmbient(this.checked)"></label>
+  <label class="sound-row"><span><b>الاهتزاز</b><small>اهتزاز خفيف عند التفاعل (إذا كان الجهاز يدعم ذلك)</small></span><input type="checkbox" id="vibrationEnabled" onchange="saveSoundSettings()"></label>
   <div class="sound-row" style="display:block">
    <div style="display:flex;justify-content:space-between;align-items:center"><b>مستوى الصوت</b><span class="volume-value" id="soundVolumeValue">65%</span></div>
    <input type="range" id="soundVolume" min="0" max="100" value="65" oninput="saveSoundSettings()">
   </div>
   <button class="action secondary full" onclick="testSound()">🔔 تجربة الصوت</button>
-  <p class="info" id="soundStatus">يتم حفظ إعدادات الصوت على جهازك تلقائيًا.</p>
+  <p class="info" id="soundStatus">يتم حفظ الإعدادات على جهازك تلقائيًا.</p>
+ </div>
+ <div class="card">
+  <div class="section-head" style="margin-top:0"><h3>🌐 اللغة</h3></div>
+  <label class="field-label" for="languageSelect">لغة التطبيق</label>
+  <select id="languageSelect" class="setting-select" onchange="changeLanguage(this.value)">
+   <option value="ar">العربية</option>
+   <option value="en">English</option>
+  </select>
+  <p class="info">اختيار اللغة محفوظ على جهازك. بعض المحتوى الذي يرسله الخادم قد يظل باللغة التي يوفرها الخادم.</p>
  </div>
  <div class="card">
   <div class="section-head" style="margin-top:0"><h3>ℹ️ معلومات التطبيق</h3></div>
@@ -385,7 +374,7 @@ border:1px solid #65caff55;box-shadow:0 15px 38px #0879ff24;margin-bottom:13px
 <nav class="nav">
  <button class="nav-btn active" data-page="home" onclick="showPage('home')"><span class="nav-icon">⌂</span><span>الرئيسية</span></button>
  <button class="nav-btn" data-page="tasks" onclick="showPage('tasks')"><span class="nav-icon">◈</span><span>المهام</span></button>
- <button class="nav-btn" data-page="shop" onclick="showPage('shop')"><span class="nav-icon">🎁</span><span>المتجر</span></button>
+ <button class="nav-btn" data-page="shop" onclick="showPage('shop')"><span class="nav-icon">🚀</span><span>المتجر</span></button>
  <button class="nav-btn" data-page="wallet" onclick="showPage('wallet')"><span class="nav-icon">💠</span><span>المحفظة</span></button>
  <button class="nav-btn" data-page="inventory" onclick="showPage('inventory')"><span class="nav-icon">🎒</span><span>مخزني</span></button>
  <button class="nav-btn" data-page="settings" onclick="showPage('settings')"><span class="nav-icon">⚙️</span><span>إعدادات</span></button>
@@ -401,89 +390,12 @@ const BOT_URL="https://t.me/mostafa_sasa710bot";
 const tg=window.Telegram?.WebApp;
 
 let profile=null,wallet=null;
-let loadingWallet=false,requestBusy=false;
-let tasksLoaded=false,loadingTasks=false;
-let loadingInventory=false,inventoryLoaded=false;
-let profileSaving=false,avatarUploading=false;
-
+let loadingWallet=false,loadingTasks=false,loadingInventory=false;
+let inventoryLoaded=false,profileSaving=false,avatarUploading=false;
+let tasksLoaded=false;
 const $=id=>document.getElementById(id);
 
-const adTaskData=[
-"مشاهدة الإعلان الأول","مشاهدة الإعلان الثاني",
-"مشاهدة الإعلان الثالث","مشاهدة الإعلان الرابع",
-"مشاهدة الإعلان الخامس"
-];
-
-/* كتالوج متجر SASA: 64 عنصرًا رقميًا مفيدًا */
-const productData=[
- {icon:"🖼️",name:"بوستر إنجاز",description:"بوستر يعلن إكمالك لهدف مهم",price:90,currency:"points",category:"بوسترات"},
- {icon:"🎉",name:"بوستر تهنئة",description:"تصميم تهنئة قابل للمشاركة",price:110,currency:"points",category:"بوسترات"},
- {icon:"🎂",name:"بوستر عيد ميلاد",description:"بطاقة احتفال بعيد الميلاد",price:1.25,currency:"dollars",category:"بوسترات"},
- {icon:"🏆",name:"بوستر بطل الأسبوع",description:"احتفل بأفضل إنجاز أسبوعي",price:130,currency:"points",category:"بوسترات"},
- {icon:"🌙",name:"بوستر رمضان",description:"تصميم موسمي للمشاركة",price:1.5,currency:"dollars",category:"بوسترات"},
- {icon:"🎓",name:"بوستر نجاح",description:"تهنئة بالنجاح والتفوق",price:120,currency:"points",category:"بوسترات"},
- {icon:"🚀",name:"بوستر انطلاقة جديدة",description:"تصميم لبداية تحدٍ جديد",price:100,currency:"points",category:"بوسترات"},
- {icon:"💫",name:"بوستر مميز",description:"قالب أنيق لمناسباتك",price:1.75,currency:"dollars",category:"بوسترات"},
- {icon:"🌌",name:"خلفية المجرة",description:"خلفية فضائية لملفك",price:80,currency:"points",category:"خلفيات"},
- {icon:"🌃",name:"خلفية المدينة",description:"أضواء مدينة ليلية",price:90,currency:"points",category:"خلفيات"},
- {icon:"🌊",name:"خلفية المحيط",description:"ألوان هادئة مستوحاة من البحر",price:1.1,currency:"dollars",category:"خلفيات"},
- {icon:"🌅",name:"خلفية الشروق",description:"بداية مشرقة لملفك",price:85,currency:"points",category:"خلفيات"},
- {icon:"🌠",name:"خلفية النجوم",description:"سماء مليئة بالنجوم",price:95,currency:"points",category:"خلفيات"},
- {icon:"🏜️",name:"خلفية الصحراء",description:"مشهد صحراوي أنيق",price:1.2,currency:"dollars",category:"خلفيات"},
- {icon:"🍃",name:"خلفية الطبيعة",description:"ألوان طبيعية مريحة",price:100,currency:"points",category:"خلفيات"},
- {icon:"💠",name:"خلفية النيون",description:"تدرج نيون أزرق",price:1.4,currency:"dollars",category:"خلفيات"},
- {icon:"🔷",name:"إطار أزرق",description:"إطار بسيط للصورة الشخصية",price:140,currency:"points",category:"إطارات"},
- {icon:"✨",name:"إطار لامع",description:"إطار بتأثير بريق",price:160,currency:"points",category:"إطارات"},
- {icon:"👑",name:"إطار ملكي",description:"إطار بطابع ملكي",price:1.8,currency:"dollars",category:"إطارات"},
- {icon:"🌌",name:"إطار فضائي",description:"إطار مستوحى من الفضاء",price:150,currency:"points",category:"إطارات"},
- {icon:"💎",name:"إطار كريستال",description:"إطار بتفاصيل كريستالية",price:1.6,currency:"dollars",category:"إطارات"},
- {icon:"⚡",name:"إطار برق",description:"إطار بطابع طاقة",price:145,currency:"points",category:"إطارات"},
- {icon:"🌿",name:"إطار طبيعي",description:"إطار هادئ بألوان الطبيعة",price:130,currency:"points",category:"إطارات"},
- {icon:"🏅",name:"إطار النخبة",description:"إطار مميز للملف",price:2.0,currency:"dollars",category:"إطارات"},
- {icon:"🏅",name:"شارة المثابر",description:"للاحتفاء بالاستمرار",price:100,currency:"points",category:"شارات"},
- {icon:"🔥",name:"شارة النشاط",description:"تُظهر نشاطك داخل التطبيق",price:120,currency:"points",category:"شارات"},
- {icon:"🌟",name:"شارة النجم",description:"شارة بتصميم نجمي",price:1.0,currency:"dollars",category:"شارات"},
- {icon:"🎯",name:"شارة الهدف",description:"لأصحاب الأهداف الواضحة",price:110,currency:"points",category:"شارات"},
- {icon:"🧠",name:"شارة المبدع",description:"تقدير للإبداع",price:125,currency:"points",category:"شارات"},
- {icon:"🚀",name:"شارة المنطلق",description:"شارة بطابع الانطلاق",price:1.2,currency:"dollars",category:"شارات"},
- {icon:"💎",name:"شارة المميز",description:"شارة بتصميم كريستالي",price:140,currency:"points",category:"شارات"},
- {icon:"👑",name:"شارة القائد",description:"شارة قيادة أنيقة",price:1.5,currency:"dollars",category:"شارات"},
- {icon:"🌱",name:"لقب المبتدئ",description:"لقب لبداية رحلتك",price:60,currency:"points",category:"ألقاب"},
- {icon:"⚡",name:"لقب النشيط",description:"لقب يعكس نشاطك",price:75,currency:"points",category:"ألقاب"},
- {icon:"🏆",name:"لقب البطل",description:"لقب إنجاز مميز",price:1.0,currency:"dollars",category:"ألقاب"},
- {icon:"🧭",name:"لقب المستكشف",description:"لقب لمحبي التجربة",price:70,currency:"points",category:"ألقاب"},
- {icon:"🧩",name:"لقب المحلل",description:"لقب لعشاق التفكير",price:80,currency:"points",category:"ألقاب"},
- {icon:"🌌",name:"لقب رائد الفضاء",description:"لقب بطابع فضائي",price:1.25,currency:"dollars",category:"ألقاب"},
- {icon:"🎨",name:"لقب الفنان",description:"لقب للمبدعين",price:85,currency:"points",category:"ألقاب"},
- {icon:"💠",name:"لقب الأسطورة",description:"لقب نادر للتزيين",price:1.75,currency:"dollars",category:"ألقاب"},
- {icon:"😎",name:"ملصق رائع",description:"ملصق للتعبير عن الإعجاب",price:35,currency:"points",category:"ملصقات"},
- {icon:"👏",name:"ملصق أحسنت",description:"تهنئة وتشجيع",price:40,currency:"points",category:"ملصقات"},
- {icon:"🎉",name:"ملصق احتفال",description:"للمناسبات والإنجازات",price:0.5,currency:"dollars",category:"ملصقات"},
- {icon:"💙",name:"ملصق قلب أزرق",description:"لمسة لطيفة في المشاركات",price:38,currency:"points",category:"ملصقات"},
- {icon:"🚀",name:"ملصق انطلق",description:"للتشجيع على البدء",price:42,currency:"points",category:"ملصقات"},
- {icon:"😂",name:"ملصق ضحكة",description:"للمواقف المرحة",price:0.6,currency:"dollars",category:"ملصقات"},
- {icon:"🤝",name:"ملصق تعاون",description:"للتقدير وروح الفريق",price:45,currency:"points",category:"ملصقات"},
- {icon:"⭐",name:"ملصق نجمة",description:"لمسة نجومية",price:0.7,currency:"dollars",category:"ملصقات"},
- {icon:"🌊",name:"ثيم المحيط",description:"ألوان بحرية لواجهة حسابك",price:180,currency:"points",category:"ثيمات"},
- {icon:"🌌",name:"ثيم الفضاء",description:"ألوان فضائية داكنة",price:2.0,currency:"dollars",category:"ثيمات"},
- {icon:"💙",name:"ثيم أزرق",description:"تدرجات زرقاء هادئة",price:160,currency:"points",category:"ثيمات"},
- {icon:"🌿",name:"ثيم الطبيعة",description:"ألوان طبيعية متوازنة",price:1.8,currency:"dollars",category:"ثيمات"},
- {icon:"🌅",name:"ثيم الغروب",description:"ألوان دافئة للواجهة",price:170,currency:"points",category:"ثيمات"},
- {icon:"⚡",name:"ثيم النيون",description:"لمسات نيون مضيئة",price:2.2,currency:"dollars",category:"ثيمات"},
- {icon:"🌑",name:"ثيم منتصف الليل",description:"مظهر داكن بسيط",price:175,currency:"points",category:"ثيمات"},
- {icon:"💎",name:"ثيم كريستال",description:"مظهر لامع أنيق",price:2.5,currency:"dollars",category:"ثيمات"},
- {icon:"💌",name:"بطاقة دعوة",description:"بطاقة دعوة لمشاركة SASA",price:55,currency:"points",category:"بطاقات"},
- {icon:"🎁",name:"بطاقة هدية",description:"بطاقة إهداء رقمية",price:0.8,currency:"dollars",category:"بطاقات"},
- {icon:"🏆",name:"بطاقة إنجاز",description:"توثيق إنجازك ومشاركته",price:65,currency:"points",category:"بطاقات"},
- {icon:"🎂",name:"بطاقة عيد ميلاد",description:"بطاقة معايدة جاهزة",price:0.9,currency:"dollars",category:"بطاقات"},
- {icon:"🙏",name:"بطاقة شكر",description:"عبّر عن امتنانك",price:60,currency:"points",category:"بطاقات"},
- {icon:"🌟",name:"بطاقة تهنئة",description:"بطاقة تهنئة بتصميم أنيق",price:0.85,currency:"dollars",category:"بطاقات"},
- {icon:"📣",name:"بطاقة إعلان",description:"بطاقة للإعلان عن خبر",price:70,currency:"points",category:"بطاقات"},
- {icon:"🤝",name:"بطاقة صداقة",description:"بطاقة مشاركة مع الأصدقاء",price:0.95,currency:"dollars",category:"بطاقات"}
-];
-let shopCategory="الكل",shopCurrency="all";
-const shopCategories=["الكل","بوسترات","خلفيات","إطارات","شارات","ألقاب","ملصقات","ثيمات","بطاقات"];
- let loadProgress=0;
+let loadProgress=0;
 const loadTimer=setInterval(()=>{
  loadProgress=Math.min(loadProgress+7,90);
  $("loaderProgress").style.width=loadProgress+"%";
@@ -496,90 +408,197 @@ function finishLoading(message="تم تجهيز التطبيق"){
  setTimeout(()=>$("loadingScreen").classList.add("hide"),450);
 }
 
-// SOUND SETTINGS
-const SOUND_KEY="sasa_sound_settings_v1";
-let soundSettings={buttons:true,tasks:true,notifications:true,volume:65};
-let audioContext=null;
+/* SOUND + SETTINGS */
+const SETTINGS_KEY="sasa_app_settings_v2";
+let settings={
+ buttons:true,tasks:true,notifications:true,
+ vibration:false,ambient:false,volume:65,language:"ar"
+};
+let audioContext=null,ambientNodes=null;
 
-function loadSoundSettings(){
+function readSettings(){
  try{
-  const saved=localStorage.getItem(SOUND_KEY);
-  if(saved){
-   const parsed=JSON.parse(saved);
-   soundSettings={
-    buttons:parsed.buttons!==false,
-    tasks:parsed.tasks!==false,
-    notifications:parsed.notifications!==false,
-    volume:Math.max(0,Math.min(100,Number(parsed.volume??65)))
-   };
-  }
- }catch(error){console.warn("SOUND_SETTINGS_READ:",error)}
- $("soundButtons").checked=soundSettings.buttons;
- $("soundTasks").checked=soundSettings.tasks;
- $("soundNotifications").checked=soundSettings.notifications;
- $("soundVolume").value=soundSettings.volume;
- $("soundVolumeValue").textContent=soundSettings.volume+"%";
+  const saved=JSON.parse(localStorage.getItem(SETTINGS_KEY)||"{}");
+  settings={...settings,...saved};
+ }catch(e){}
+ settings.volume=Math.max(0,Math.min(100,Number(settings.volume)||0));
+ settings.language=settings.language==="en"?"en":"ar";
+ $("soundButtons").checked=settings.buttons!==false;
+ $("soundTasks").checked=settings.tasks!==false;
+ $("soundNotifications").checked=settings.notifications!==false;
+ $("vibrationEnabled").checked=!!settings.vibration;
+ $("ambientEnabled").checked=!!settings.ambient;
+ $("soundVolume").value=settings.volume;
+ $("soundVolumeValue").textContent=settings.volume+"%";
+ $("languageSelect").value=settings.language;
+ applyLanguage(settings.language);
 }
 
-function saveSoundSettings(){
- soundSettings.buttons=$("soundButtons").checked;
- soundSettings.tasks=$("soundTasks").checked;
- soundSettings.notifications=$("soundNotifications").checked;
- soundSettings.volume=Math.max(0,Math.min(100,Number($("soundVolume").value)));
- $("soundVolumeValue").textContent=soundSettings.volume+"%";
+function saveSettings(){
+ settings.buttons=$("soundButtons").checked;
+ settings.tasks=$("soundTasks").checked;
+ settings.notifications=$("soundNotifications").checked;
+ settings.vibration=$("vibrationEnabled").checked;
+ settings.volume=Number($("soundVolume").value);
+ settings.ambient=$("ambientEnabled").checked;
+ $("soundVolumeValue").textContent=settings.volume+"%";
  try{
-  localStorage.setItem(SOUND_KEY,JSON.stringify(soundSettings));
-  $("soundStatus").textContent="تم حفظ إعدادات الصوت على جهازك.";
- }catch(error){$("soundStatus").textContent="تعذّر حفظ الإعدادات على هذا الجهاز."}
+  localStorage.setItem(SETTINGS_KEY,JSON.stringify(settings));
+  $("soundStatus").textContent="تم حفظ الإعدادات على جهازك.";
+ }catch(e){
+  $("soundStatus").textContent="تعذّر حفظ الإعدادات على هذا الجهاز.";
+ }
 }
 
 function getAudioContext(){
- const AudioContextClass=window.AudioContext||window.webkitAudioContext;
- if(!AudioContextClass)return null;
- if(!audioContext)audioContext=new AudioContextClass();
+ const C=window.AudioContext||window.webkitAudioContext;
+ if(!C)return null;
+ if(!audioContext)audioContext=new C();
  if(audioContext.state==="suspended")audioContext.resume().catch(()=>{});
  return audioContext;
 }
 
 function playTone(type="button"){
- const enabled=type==="button"?soundSettings.buttons:
-  type==="task"?soundSettings.tasks:soundSettings.notifications;
- if(!enabled||soundSettings.volume<=0)return;
+ const enabled=type==="button"?settings.buttons:
+  type==="task"?settings.tasks:settings.notifications;
+ if(!enabled||settings.volume<=0)return;
  try{
   const ctx=getAudioContext();if(!ctx)return;
   const now=ctx.currentTime,master=ctx.createGain();
-  master.gain.setValueAtTime(soundSettings.volume/100*0.12,now);
+  master.gain.setValueAtTime(settings.volume/100*.12,now);
   master.connect(ctx.destination);
-  const notes=type==="task"?[660,880]:type==="notification"?[740]:[520];
+  const notes=type==="task"?[660,880]:type==="notification"?[740,880]:[520];
   notes.forEach((frequency,index)=>{
    const oscillator=ctx.createOscillator(),gain=ctx.createGain();
-   const start=now+index*(type==="task"?0.12:0);
-   const duration=type==="button"?0.055:0.16;
+   const start=now+index*(type==="task"?.12:.09);
+   const duration=type==="button"?.055:.16;
    oscillator.type="sine";
    oscillator.frequency.setValueAtTime(frequency,start);
-   gain.gain.setValueAtTime(0.001,start);
-   gain.gain.exponentialRampToValueAtTime(0.8,start+0.015);
-   gain.gain.exponentialRampToValueAtTime(0.001,start+duration);
+   gain.gain.setValueAtTime(.001,start);
+   gain.gain.exponentialRampToValueAtTime(.8,start+.015);
+   gain.gain.exponentialRampToValueAtTime(.001,start+duration);
    oscillator.connect(gain);gain.connect(master);
-   oscillator.start(start);oscillator.stop(start+duration+0.02);
+   oscillator.start(start);oscillator.stop(start+duration+.02);
   });
- }catch(error){console.warn("AUDIO_ERROR:",error)}
+ }catch(e){console.warn("AUDIO_ERROR",e)}
 }
 
-function testSound(){playTone("notification");notify("دي تجربة لصوت الإشعارات")}
+function stopAmbient(){
+ if(!ambientNodes)return;
+ try{
+  ambientNodes.oscillators.forEach(o=>o.stop());
+  ambientNodes.master.disconnect();
+ }catch(e){}
+ ambientNodes=null;
+}
 
+function startAmbient(){
+ const ctx=getAudioContext();if(!ctx)return false;
+ if(ambientNodes)return true;
+ try{
+  const master=ctx.createGain();
+  master.gain.value=settings.volume/100*.018;
+  master.connect(ctx.destination);
+  const oscillators=[];
+  [55,82.4,110].forEach((frequency,index)=>{
+   const osc=ctx.createOscillator(),gain=ctx.createGain();
+   osc.type="sine";osc.frequency.value=frequency;
+   gain.gain.value=index===0?.7:.25;
+   osc.connect(gain);gain.connect(master);osc.start();
+   oscillators.push(osc);
+  });
+  ambientNodes={master,oscillators};
+  return true;
+ }catch(e){return false}
+}
+
+function toggleAmbient(enabled){
+ settings.ambient=!!enabled;
+ if(enabled){
+  const ok=startAmbient();
+  if(!ok){
+   settings.ambient=false;
+   $("ambientEnabled").checked=false;
+   notify("الموسيقى غير مدعومة على هذا الجهاز");
+  }else notify("تم تشغيل الخلفية الفضائية");
+ }else{
+  stopAmbient();notify("تم إيقاف الموسيقى الخلفية");
+ }
+ saveSettings();
+}
+
+function saveSoundSettings(){
+ saveSettings();
+ if(ambientNodes)ambientNodes.master.gain.value=settings.volume/100*.018;
+}
+function vibrate(){
+ if(settings.vibration&&navigator.vibrate){
+  try{navigator.vibrate(25)}catch(e){}
+ }
+}
+function testSound(){playTone("notification");notify("دي تجربة لصوت الإشعارات")}
 function notify(message){
  const el=$("toast");el.textContent=message;el.classList.add("show");
  clearTimeout(notify.timer);
  notify.timer=setTimeout(()=>el.classList.remove("show"),2800);
- playTone("notification");
+ playTone("notification");vibrate();
 }
 
+/* BASIC LANGUAGE SWITCH */
+const translations={
+ "الرئيسية":"Home","المهام":"Tasks","المتجر":"Shop","المحفظة":"Wallet",
+ "مخزني":"Inventory","إعدادات":"Settings","حسابي":"Profile",
+ "أهلاً بك 👋":"Welcome 👋","استكشف التطبيق":"Explore the app",
+ "المهام اليومية":"Daily tasks","الأصدقاء":"Friends",
+ "معززات SASA":"SASA Boosters","فتح المحفظة":"Open wallet",
+ "دعوة الأصدقاء":"Invite friends","نسخ رابط البوت":"Copy bot link",
+ "مشاركة الرابط":"Share link","تحديث":"Refresh",
+ "طلبات السحب السابقة":"Previous withdrawal requests",
+ "سجل حركة الدولار":"Dollar activity history","رصيد نقاطك":"Your points balance",
+ "رصيد الدولار":"Dollar balance","محجوز للسحب":"Reserved",
+ "المهمة الخاصة":"Special task","المهام المتاحة لك":"Your available tasks",
+ "تخصيص التطبيق":"Customize app","لغة التطبيق":"App language"
+};
+function applyLanguage(language){
+ document.documentElement.lang=language;
+ document.documentElement.dir=language==="ar"?"rtl":"ltr";
+ document.querySelectorAll(".nav-btn span:last-child").forEach(el=>{
+  const ar=el.dataset.ar||el.textContent;
+  el.dataset.ar=ar;
+  el.textContent=language==="en"?(translations[ar]||ar):ar;
+ });
+ document.querySelectorAll("[data-page-title]").forEach(el=>{
+  const ar=el.dataset.ar||el.textContent;el.dataset.ar=ar;
+  el.textContent=language==="en"?(translations[ar]||ar):ar;
+ });
+}
+function changeLanguage(language){
+ settings.language=language==="en"?"en":"ar";
+ saveSettings();applyLanguage(settings.language);
+ notify(settings.language==="en"?"Language changed":"تم تغيير اللغة");
+}
+
+/* HELPERS */
 function money(value){
  const n=Number(value??0);
  return "$"+(Number.isFinite(n)?n.toFixed(2):"0.00");
 }
 function fmt(value){return Number(value??0).toLocaleString("en-US")}
+function safe(value){
+ return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+async function api(action,extra={}){
+ if(!tg?.initData)throw new Error("افتح التطبيق من داخل بوت تيليجرام");
+ const response=await fetch(API_URL,{
+  method:"POST",headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({initData:tg.initData,action,...extra})
+ });
+ let result;
+ try{result=await response.json()}catch(e){throw new Error("استجابة الخادم غير مفهومة")}
+ if(!response.ok||result.ok===false)throw new Error(result.error||result.message||"حدث خطأ في الخادم");
+ return result;
+}
 
 function showPage(id){
  const page=$(id);if(!page)return;
@@ -590,22 +609,10 @@ function showPage(id){
  if(id==="wallet")refreshWallet();
  if(id==="tasks")loadTasks();
  if(id==="inventory")loadInventory();
- if(id==="settings")loadSoundSettings();
+ if(id==="settings")readSettings();
 }
 
-async function api(action,extra={}){
- if(!tg?.initData)throw new Error("افتح التطبيق من داخل بوت تيليجرام");
- const response=await fetch(API_URL,{
-  method:"POST",headers:{"Content-Type":"application/json"},
-  body:JSON.stringify({initData:tg.initData,action,...extra})
- });
- let result;
- try{result=await response.json()}catch{throw new Error("استجابة الخادم غير مفهومة")}
- if(!response.ok||result.ok===false)throw new Error(result.error||result.message||"حدث خطأ في الخادم");
- return result;
-}
-
-// PROFILE
+/* PROFILE */
 function displayAvatar(url){
  const image=$("profileAvatarImage"),fallback=$("profileAvatarFallback");
  if(url){
@@ -689,7 +696,7 @@ async function uploadAvatar(input){
  }finally{avatarUploading=false;input.value=""}
 }
 
-// INVENTORY
+/* INVENTORY */
 async function loadInventory(force=false){
  if(loadingInventory)return;if(inventoryLoaded&&!force)return;
  if(!tg?.initData){$("inventoryStatus").textContent="افتح التطبيق من تيليجرام لعرض المخزون.";$("inventoryStatus").className="status error";return}
@@ -710,11 +717,7 @@ async function loadInventory(force=false){
  }finally{loadingInventory=false}
 }
 
-function safe(value){
- return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
-function safeAttr(value){return String(value??"").replace(/[^a-zA-Z0-9-]/g,"")}
- function renderInventory(items){
+function renderInventory(items){
  const el=$("inventoryList");
  if(!items.length){el.innerHTML='<div class="empty">مخزونك فارغ حاليًا. العناصر التي تمتلكها ستظهر هنا.</div>';return}
  el.innerHTML=items.map(item=>{
@@ -729,109 +732,204 @@ function safeAttr(value){return String(value??"").replace(/[^a-zA-Z0-9-]/g,"")}
  }).join("");
 }
 
-// TASKS
-function taskStatusLabel(status){
- return({assigned:"جديدة",in_progress:"جارية",completed:"مكتملة",claimed:"تم استلامها"})[status]||status||"غير محددة";
-}
-function taskDifficultyLabel(level){
- const n=Number(level||1);
- return({1:"سهلة",2:"عادية",3:"متوسطة",4:"صعبة",5:"صعبة جدًا"})[n]||("المستوى "+n);
-}
+/* DAILY TASK TEMPLATES */
+const dailyTaskSets=[
+ [
+  ["تسجيل الدخول اليومي","افتح التطبيق وتفقد حسابك",10],
+  ["زيارة المتجر","افتح متجر SASA وتصفح المعززات",8],
+  ["مراجعة المحفظة","افتح المحفظة وراجع بياناتها",8],
+  ["زيارة مخزني","تفقد العناصر الموجودة في مخزونك",8],
+  ["تحديث الملف الشخصي","راجع بيانات ملفك الشخصي",12],
+  ["زيارة صفحة الأصدقاء","افتح صفحة دعوة الأصدقاء",8],
+  ["استكشاف المهام","راجع قائمة المهام اليومية",10],
+  ["قراءة الإعدادات","افتح صفحة إعدادات التطبيق",8],
+  ["استكشاف الرئيسية","تفقد أقسام الصفحة الرئيسية",8],
+  ["العودة إلى SASA","أكمل جولة استكشاف التطبيق",15]
+ ],
+ [
+  ["جولة المحفظة","راجع ملخص المحفظة وسجل الحركات",10],
+  ["جولة المتجر","تصفح قائمة المعززات",8],
+  ["مراجعة المخزون","افتح مخزنك وتفقد محتوياته",8],
+  ["زيارة حسابك","راجع معلومات حسابك",10],
+  ["استكشاف الأصدقاء","افتح قسم الأصدقاء",8],
+  ["جولة الإعدادات","راجع خيارات الصوت واللغة",10],
+  ["تفقد رصيدك","شاهد رصيد النقاط في الرئيسية",8],
+  ["مراجعة المهام","افتح صفحة المهام",8],
+  ["جولة SASA","انتقل بين أقسام التطبيق",12],
+  ["نشاط اليوم","عد إلى التطبيق وأكمل جولتك",15]
+ ],
+ [
+  ["تسجيل حضورك","ابدأ يومك بزيارة SASA",10],
+  ["اكتشاف المعززات","تصفح معززات المتجر",10],
+  ["مراجعة الرصيد","افتح ملخص المحفظة",8],
+  ["زيارة ملفك","راجع بيانات حسابك",8],
+  ["استكشاف المخزون","افتح قائمة العناصر",8],
+  ["مشاركة SASA","افتح صفحة مشاركة رابط البوت",10],
+  ["تفقد إعداداتك","راجع إعدادات التطبيق",8],
+  ["مراجعة تقدمك","افتح المهام اليومية",10],
+  ["زيارة الرئيسية","ارجع إلى الصفحة الرئيسية",8],
+  ["جولة الاستكشاف","استكشف صفحات التطبيق المختلفة",15]
+ ]
+];
+const specialTaskTemplates=[
+ ["مستكشف SASA","افتح خمس صفحات مختلفة داخل التطبيق وتعرّف على أقسامها",50],
+ ["جولة الفضاء","زر الرئيسية والمهام والمتجر والمحفظة والمخزون",50],
+ ["تحدي الاستكشاف","راجع حسابك وإعداداتك وصفحة الأصدقاء والمتجر",50]
+];
+let taskPreviewState={};
 
-function renderTaskCard(task,isSpecial=false){
+function cairoDayIndex(){
+ const parts=new Intl.DateTimeFormat("en-CA",{
+  timeZone:"Africa/Cairo",year:"numeric",month:"2-digit",day:"2-digit"
+ }).format(new Date()).split("-");
+ const date=new Date(Date.UTC(Number(parts[0]),Number(parts[1])-1,Number(parts[2])));
+ return Math.floor(date.getTime()/86400000);
+}
+function loadTaskPreviewState(){
+ try{
+  const saved=JSON.parse(localStorage.getItem("sasa_task_preview_v1")||"{}");
+  taskPreviewState=saved.day===cairoDayIndex()?saved.states||{}:{};
+ }catch(e){taskPreviewState={}}
+}
+function saveTaskPreviewState(){
+ try{
+  localStorage.setItem("sasa_task_preview_v1",JSON.stringify({
+   day:cairoDayIndex(),states:taskPreviewState
+  }));
+ }catch(e){}
+}
+function taskState(id){return taskPreviewState[id]||"new"}
+function taskStateLabel(state){
+ return({new:"جديدة",started:"قيد التجربة",verify:"بانتظار التحقق",claimed:"تمت المعاينة"})[state]||"جديدة";
+}
+function renderTaskCard(task,isSpecial=false,index=0){
+ const id=String(task.id||((isSpecial?"special-":"daily-")+index));
+ const state=taskState(id);
  const title=task.title_ar||task.title||task.name||"مهمة SASA";
  const description=task.description_ar||task.description||"أكمل المهمة حسب شروطها";
- const reward=Number(task.reward_points??0);
+ const reward=Number(task.reward_points??task.reward??0);
  const target=Math.max(1,Number(task.target_count??1));
- const progress=Math.min(target,Math.max(0,Number(task.progress??0)));
- const status=task.status||"assigned";
+ const progress=state==="claimed"?target:state==="verify"?Math.max(0,target-1):state==="started"?Math.min(1,target):0;
  const percent=Math.min(100,Math.round(progress/target*100));
- const done=status==="completed"||status==="claimed";
- const icon=isSpecial?"⭐":"🎯";
+ const buttonOne=state==="new"
+  ?`<button class="action secondary" onclick="taskAction('${safe(id)}','start')">تشغيل</button>`
+  :`<button class="action secondary" disabled>تم التشغيل</button>`;
+ const buttonTwo=state==="started"
+  ?`<button class="action secondary" onclick="taskAction('${safe(id)}','verify')">تحقق</button>`
+  :`<button class="action secondary" ${state==="new"?"disabled":""}>${state==="verify"||state==="claimed"?"تم التحقق":"التحقق"}</button>`;
+ const buttonThree=state==="verify"
+  ?`<button class="action" onclick="taskAction('${safe(id)}','claim')">استلام تجريبي</button>`
+  :`<button class="action" disabled>${state==="claimed"?"تمت المعاينة":"استلام"}</button>`;
  return `<div class="item ${isSpecial?"special-task":""}">
-  <div class="item-icon">${icon}</div>
+  <div class="item-icon">${isSpecial?"⭐":"🎯"}</div>
   <div class="item-info">
    <b>${safe(title)}</b><small>${safe(description)}</small>
    <div class="task-details">
-    <span>الصعوبة: ${safe(taskDifficultyLabel(task.difficulty))}</span>
-    <span>المكافأة: ${fmt(reward)} نقطة</span>
+    <span>المكافأة المقترحة: ${fmt(reward)} نقطة</span>
     <span>التقدم: ${progress}/${target}</span>
    </div>
    <div class="task-progress"><span style="width:${percent}%"></span></div>
-   <div class="task-actions">
-    <button class="action secondary" disabled>بدء المهمة</button>
-    <button class="action secondary" disabled>التحقق</button>
-    <button class="action" disabled>${done?"تم الاستلام":"استلام المكافأة"}</button>
-   </div>
+   <div class="task-actions">${buttonOne}${buttonTwo}${buttonThree}</div>
   </div>
-  <span class="tag ${done?"green":isSpecial?"gold":""}">${safe(taskStatusLabel(status))}</span>
+  <span class="tag ${state==="claimed"?"green":isSpecial?"gold":""}">${taskStateLabel(state)}</span>
  </div>`;
 }
 
-function renderTaskPlaceholder(index){
- return `<div class="item task-slot"><div class="item-icon">🔒</div><div class="item-info"><b>المهمة اليومية ${index}</b><small>بانتظار بيانات المهمة من الخادم</small></div><span class="tag">قريبًا</span></div>`;
+function taskAction(id,action){
+ const state=taskState(id);
+ if(action==="start"&&state==="new"){
+  taskPreviewState[id]="started";
+  notify("بدأت معاينة المهمة");
+ }else if(action==="verify"&&state==="started"){
+  taskPreviewState[id]="verify";
+  notify("تم تجهيز حالة التحقق للمعاينة");
+ }else if(action==="claim"&&state==="verify"){
+  taskPreviewState[id]="claimed";
+  notify("اكتملت معاينة المهمة — لم تتم إضافة نقاط");
+ }else return;
+ saveTaskPreviewState();
+ renderTasks(currentTasks,currentTasksAreServer);
+}
+let currentTasks=[],currentTasksAreServer=false;
+
+function buildLocalTasks(){
+ const day=cairoDayIndex();
+ const set=dailyTaskSets[((day%dailyTaskSets.length)+dailyTaskSets.length)%dailyTaskSets.length];
+ const daily=set.map((x,i)=>({
+  id:"local-daily-"+i,title_ar:x[0],description_ar:x[1],
+  reward_points:x[2],target_count:1,task_type:"daily"
+ }));
+ const special=specialTaskTemplates[((day%specialTaskTemplates.length)+specialTaskTemplates.length)%specialTaskTemplates.length];
+ daily.push({
+  id:"local-special",title_ar:special[0],description_ar:special[1],
+  reward_points:special[2],target_count:1,task_type:"special"
+ });
+ return daily;
 }
 
-function renderTasks(tasks){
+function renderTasks(tasks,fromServer=false){
  const all=Array.isArray(tasks)?tasks:[];
  const daily=all.filter(t=>(t.task_type||t.type)==="daily").slice(0,10);
  const special=all.filter(t=>(t.task_type||t.type)==="special").slice(0,1);
-
- $("dailyCount").textContent=daily.length+" / 10";
- const dailyCards=daily.map(t=>renderTaskCard(t,false));
- for(let i=daily.length+1;i<=10;i++)dailyCards.push(renderTaskPlaceholder(i));
- $("regularTasks").innerHTML=dailyCards.join("");
-
- $("specialTasks").innerHTML=special.length?
-  renderTaskCard(special[0],true):
-  '<div class="item task-slot"><div class="item-icon">⭐</div><div class="item-info"><b>المهمة الخاصة</b><small>بانتظار بيانات المهمة الخاصة من الخادم</small></div><span class="tag gold">قريبًا</span></div>';
-}
-
-function renderAdTasks(){
- $("adTasks").innerHTML=adTaskData.map(n=>`<div class="item"><div class="item-icon">📺</div><div class="item-info"><b>${n}</b><small>بانتظار مزود إعلانات وتحقق خادمي</small></div><span class="tag gold">غير مفعّل</span></div>`).join("");
+ let finalDaily=daily;
+ let finalSpecial=special;
+ if(!fromServer||daily.length<10){
+  const local=buildLocalTasks();
+  const localDaily=local.filter(t=>t.task_type==="daily");
+  const used=new Set(daily.map(t=>String(t.id||"")));
+  finalDaily=[...daily];
+  for(const t of localDaily){
+   if(finalDaily.length>=10)break;
+   if(!used.has(String(t.id)))finalDaily.push(t);
+  }
+ }
+ if(!finalSpecial.length){
+  finalSpecial=buildLocalTasks().filter(t=>t.task_type==="special");
+ }
+ currentTasks=[...finalDaily,...finalSpecial];
+ currentTasksAreServer=fromServer;
+ $("dailyCount").textContent=finalDaily.length+" / 10";
+ $("regularTasks").innerHTML=finalDaily.slice(0,10).map((t,i)=>renderTaskCard(t,false,i)).join("");
+ $("specialTasks").innerHTML=renderTaskCard(finalSpecial[0],true,0);
 }
 
 async function loadTasks(force=false){
  if(loadingTasks)return;if(tasksLoaded&&!force)return;
- if(!tg?.initData){$("tasksStatus").textContent="افتح التطبيق من داخل بوت تيليجرام لتحميل المهام.";$("tasksStatus").className="status error";return}
- loadingTasks=true;$("tasksStatus").textContent="جارٍ جلب مهامك من الخادم...";$("tasksStatus").className="status loading";
+ loadTaskPreviewState();
+ renderTasks(buildLocalTasks(),false);
+ if(!tg?.initData){
+  $("tasksStatus").textContent="المهام المعروضة معاينة محلية. افتح التطبيق من تيليجرام لتحميل مهام الخادم.";
+  $("tasksStatus").className="status";
+  return;
+ }
+ loadingTasks=true;
+ $("tasksStatus").textContent="جارٍ تحديث بيانات المهام من الخادم...";
+ $("tasksStatus").className="status loading";
  try{
   const result=await api("tasks_get");
   const tasks=Array.isArray(result.tasks)?result.tasks:
    Array.isArray(result.data?.tasks)?result.data.tasks:
-   Array.isArray(result.data)?result.data:
-   Array.isArray(result)?result:[];
-  renderTasks(tasks);tasksLoaded=true;
-  $("tasksStatus").textContent="تم تحميل المهام من الخادم. المعروض 10 خانات يومية ومهمة خاصة واحدة.";
-  $("tasksStatus").className="status";
+   Array.isArray(result.data)?result.data:[];
+  if(tasks.length){
+   renderTasks(tasks,true);
+   $("tasksStatus").textContent="تم تحميل بيانات الخادم. الأزرار الحالية للمعاينة فقط.";
+  }else{
+   renderTasks(buildLocalTasks(),false);
+   $("tasksStatus").textContent="لا توجد مهام مرسلة من الخادم حاليًا؛ يتم عرض نموذج المهام اليومي.";
+  }
+  $("tasksStatus").className="status";tasksLoaded=true;
  }catch(error){
   console.error("tasks_get:",error);
-  $("tasksStatus").textContent="تعذّر تحميل المهام: "+error.message;$("tasksStatus").className="status error";
-  $("regularTasks").innerHTML=Array.from({length:10},(_,i)=>renderTaskPlaceholder(i+1)).join("");
-  $("specialTasks").innerHTML='<div class="empty">تعذّر جلب المهمة الخاصة.</div>';
+  renderTasks(buildLocalTasks(),false);
+  $("tasksStatus").textContent="تعذّر تحديث مهام الخادم؛ المعروض حاليًا نموذج معاينة يومي.";
+  $("tasksStatus").className="status error";
  }finally{loadingTasks=false}
 }
 
-// LOGIN
-async function loadProfile(){
- if(!tg||!tg.initData){$("welcome").textContent="افتح التطبيق من تيليجرام";finishLoading("تعذّر التحقق من الحساب");return}
- $("loadingMessage").textContent="جارٍ تأمين اتصال حسابك...";
- try{
-  const result=await api("login");
-  const data=result.profile||result.data||result;
-  if(data.telegram_id==null||data.balance==null)throw new Error("بيانات الحساب غير مكتملة");
-  displayProfile(data);
-  $("loadingMessage").textContent="جارٍ تحميل المهام والمحفظة...";
-  await loadTasks(true);await refreshWallet(true);
-  finishLoading("أهلاً بك في SASA");
- }catch(error){
-  console.error("SASA API:",error);finishLoading("تعذّر الاتصال، يمكنك إعادة المحاولة");
-  notify("لم يتم الاتصال بالخادم: "+error.message);
- }
-}
- // WALLET DISPLAY
-async function refreshWallet(fromLogin=false){
- if(loadingWallet||!tg?.initData)return;loadingWallet=true;
+/* WALLET */
+async function refreshWallet(){
+ if(loadingWallet||!tg?.initData)return;
+ loadingWallet=true;
  $("walletStatus").textContent="جارٍ تحديث المحفظة...";$("walletStatus").className="status loading";
  try{
   const result=await api("wallet_get");
@@ -852,10 +950,12 @@ async function refreshWallet(fromLogin=false){
   $("homeReserved").textContent=money(reserved);
   renderLedger(wallet.ledger||wallet.transactions||wallet.dollar_ledger||[]);
   renderWithdrawals(wallet.withdrawals||[]);
-  $("walletStatus").textContent="تم تحديث بيانات المحفظة ✓";$("walletStatus").className="status";
+  $("walletStatus").textContent="تم تحديث بيانات المحفظة ✓";
+  $("walletStatus").className="status";
  }catch(error){
   console.error("wallet_get:",error);
-  $("walletStatus").textContent="تعذّر تحميل المحفظة: "+error.message;$("walletStatus").className="status error";
+  $("walletStatus").textContent="تعذّر تحميل المحفظة: "+error.message;
+  $("walletStatus").className="status error";
   $("ledgerList").innerHTML='<div class="empty">تعذّر تحميل سجل العمليات</div>';
   $("withdrawalsList").innerHTML='<div class="empty">تعذّر تحميل طلبات السحب</div>';
  }finally{loadingWallet=false}
@@ -886,48 +986,53 @@ function renderWithdrawals(rows){
  }).join("");
 }
 
-// SHOP
+/* BOOSTER SHOP */
+const boosterData=[
+ {id:"boost_x2_30",icon:"⚡",name:"معزز السرعة ×2",description:"ضاعف النقاط المكتسبة لمدة 30 دقيقة",multiplier:2,duration:30,price:100,category:"قصير"},
+ {id:"boost_x2_60",icon:"🚀",name:"معزز السرعة ×2",description:"ضاعف النقاط المكتسبة لمدة ساعة كاملة",multiplier:2,duration:60,price:180,category:"قصير"},
+ {id:"boost_x3_30",icon:"🔥",name:"معزز القوة ×3",description:"ثلاثة أضعاف النقاط لمدة 30 دقيقة",multiplier:3,duration:30,price:220,category:"قوي"},
+ {id:"boost_x3_60",icon:"💎",name:"معزز القوة ×3",description:"ثلاثة أضعاف النقاط لمدة ساعة",multiplier:3,duration:60,price:400,category:"قوي"},
+ {id:"boost_x2_180",icon:"🌌",name:"معزز فضائي ×2",description:"مضاعفة النقاط لمدة 3 ساعات",multiplier:2,duration:180,price:450,category:"طويل"},
+ {id:"boost_x3_120",icon:"👑",name:"معزز النخبة ×3",description:"ثلاثة أضعاف النقاط لمدة ساعتين",multiplier:3,duration:120,price:650,category:"طويل"}
+];
+let shopCategory="الكل";
+const shopCategories=["الكل","قصير","قوي","طويل"];
+
 function renderShop(search=""){
  const term=String(search).trim().toLowerCase();
- const filtered=productData.filter(p=>{
+ const filtered=boosterData.filter(p=>{
   const text=(p.name+" "+p.category+" "+p.description).toLowerCase();
-  return text.includes(term) &&
-   (shopCategory==="الكل"||p.category===shopCategory) &&
-   (shopCurrency==="all"||p.currency===shopCurrency);
+  return text.includes(term)&&(shopCategory==="الكل"||p.category===shopCategory);
  });
- $("products").innerHTML=filtered.map(p=>{
-  const isDollar=p.currency==="dollars";
-  const currency=isDollar?"دولار SASA":"نقطة SASA";
-  const price=isDollar?"$"+Number(p.price).toFixed(2):fmt(p.price);
-  return `<div class="product">
+ $("products").innerHTML=filtered.map(p=>`
+  <div class="product">
    <span class="product-category">${safe(p.category)}</span>
    <div class="art">${p.icon}</div>
    <b>${safe(p.name)}</b>
    <span class="product-desc">${safe(p.description)}</span>
-   <div class="product-price ${isDollar?"dollar":""}">${price} ${currency}</div>
-   <button disabled class="action secondary full" title="الشراء غير مربوط بالخادم بعد">الشراء غير متاح حاليًا</button>
-  </div>`;
- }).join("")||'<div class="empty">لا توجد عناصر مطابقة للبحث أو الفلتر</div>';
- $("shopResultCount").textContent=fmt(filtered.length)+" عنصر";
+   <div class="task-details" style="justify-content:center">
+    <span>×${p.multiplier}</span><span>${p.duration} دقيقة</span>
+   </div>
+   <div class="product-price">${fmt(p.price)} ✦</div>
+   <button class="action secondary full" onclick="showBooster('${p.id}')">عرض التفاصيل</button>
+  </div>`).join("")||'<div class="empty">لا توجد معززات مطابقة</div>';
+ $("shopResultCount").textContent=filtered.length+" معزز";
 }
 function renderShopCategories(){
- $("shopCategories").innerHTML=shopCategories.map(category=>
-  `<button class="filter-chip ${shopCategory===category?"active":""}" onclick="setShopCategory('${category}')">${category}</button>`
+ $("shopCategories").innerHTML=shopCategories.map(c=>
+  `<button class="filter-chip ${shopCategory===c?"active":""}" onclick="setShopCategory('${c}')">${c}</button>`
  ).join("");
 }
 function setShopCategory(category){
  shopCategory=shopCategories.includes(category)?category:"الكل";
  renderShopCategories();renderShop($("shopSearch").value);
 }
-function setShopCurrency(currency){
- shopCurrency=["all","points","dollars"].includes(currency)?currency:"all";
- document.querySelectorAll("[data-currency]").forEach(button=>
-  button.classList.toggle("active",button.dataset.currency===shopCurrency)
- );
- renderShop($("shopSearch").value);
+function showBooster(id){
+ const p=boosterData.find(x=>x.id===id);if(!p)return;
+ notify(`${p.name} · ×${p.multiplier} لمدة ${p.duration} دقيقة · ${p.price} نقطة. المعاينة لا تخصم رصيدًا.`);
 }
 
-// INVITATIONS
+/* INVITATIONS */
 async function copyInvite(){
  try{await navigator.clipboard.writeText(BOT_URL);notify("تم نسخ رابط البوت")}
  catch(e){notify("تعذّر النسخ على هذا الجهاز")}
@@ -937,14 +1042,14 @@ function shareInvite(){
  if(tg?.openTelegramLink)tg.openTelegramLink(url);else location.href=url;
 }
 
-// BUTTON SOUNDS
+/* BUTTON INTERACTIONS */
 document.addEventListener("click",event=>{
  const target=event.target.closest("button,label.action");
  if(!target||target.disabled)return;
- playTone("button");
+ playTone("button");vibrate();
 });
 
-// GLOBAL FUNCTIONS
+/* GLOBAL FUNCTIONS */
 window.showPage=showPage;
 window.loadProfile=loadProfile;
 window.loadTasks=loadTasks;
@@ -954,14 +1059,43 @@ window.shareInvite=shareInvite;
 window.notify=notify;
 window.renderShop=renderShop;
 window.setShopCategory=setShopCategory;
-window.setShopCurrency=setShopCurrency;
+window.showBooster=showBooster;
 window.saveProfile=saveProfile;
 window.uploadAvatar=uploadAvatar;
 window.loadInventory=loadInventory;
 window.saveSoundSettings=saveSoundSettings;
 window.testSound=testSound;
+window.toggleAmbient=toggleAmbient;
+window.changeLanguage=changeLanguage;
+window.taskAction=taskAction;
 
-// TELEGRAM INITIALIZATION
+/* LOGIN */
+async function loadProfile(){
+ if(!tg||!tg.initData){
+  $("welcome").textContent="افتح التطبيق من تيليجرام";
+  finishLoading("افتح التطبيق من خلال البوت");
+  $("profileStatus").textContent="يجب فتح التطبيق من داخل تيليجرام.";
+  $("profileStatus").className="status error";
+  return;
+ }
+ $("loadingMessage").textContent="جارٍ تأمين اتصال حسابك...";
+ try{
+  const result=await api("login");
+  const data=result.profile||result.data||result;
+  if(data.telegram_id==null||data.balance==null)throw new Error("بيانات الحساب غير مكتملة");
+  displayProfile(data);
+  $("loadingMessage").textContent="جارٍ تحميل المهام والمحفظة...";
+  await loadTasks(true);
+  await refreshWallet();
+  finishLoading("أهلاً بك في SASA");
+ }catch(error){
+  console.error("SASA API:",error);
+  finishLoading("تعذّر الاتصال، يمكنك إعادة المحاولة");
+  notify("لم يتم الاتصال بالخادم: "+error.message);
+ }
+}
+
+/* TELEGRAM INITIALIZATION */
 try{
  tg?.ready();tg?.expand();
  tg?.setHeaderColor?.("#070b14");
@@ -969,8 +1103,8 @@ try{
  tg?.disableVerticalSwipes?.();
 }catch(e){console.error("TELEGRAM_INIT_ERROR:",e)}
 
-loadSoundSettings();
-renderAdTasks();
+readSettings();
+loadTaskPreviewState();
 renderShopCategories();
 renderShop();
 loadProfile();
