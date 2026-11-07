@@ -203,7 +203,20 @@ button,input,select{font:inherit}button{color:inherit;border:0;cursor:pointer}bu
  <button class="nav-btn" data-page="inventory" onclick="showPage('inventory')"><span class="nav-icon">🎒</span><span>مخزني</span></button>
  <button class="nav-btn" data-page="settings" onclick="showPage('settings')"><span class="nav-icon">⚙️</span><span>إعدادات</span></button>
 </nav>
-<div class="toast" id="toast"></<script>
+<div class="toast" id="toast"></div>
+<script>
+(() => {
+"use strict";
+
+const API_URL="https://spxxnptaeqjrfrxfgzjw.supabase.co/functions/v1/sasa-api";
+const BOT_URL="https://t.me/mostafa_sasa710bot";
+const tg=window.Telegram?.WebApp;
+const $=id=>document.getElementById(id);
+
+let profile=null,profileSaving=false,avatarUploading=false;
+let loadingInventory=false,inventoryLoaded=false,inventoryItems=[];
+let loadingTasks=false,tasksLoaded=false;
+let loadingWallet=false,wallet={};
 (() => {
   "use strict";
 
@@ -212,7 +225,7 @@ button,input,select{font:inherit}button{color:inherit;border:0;cursor:pointer}bu
   const translations = {
     "الرئيسية":"Home",
     "المهام":"Tasks",
-    "المتجر":"Shop",
+    "المتجر":"Shop", 
     "المحفظة":"Wallet",
     "مخزني":"Inventory",
     "إعدادات":"Settings",
